@@ -12,12 +12,14 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const config = { locale, locales }
   const productsPromise = commerce.getAllProducts({
+    //this commerse can include all the data fetch functions.
     variables: { first: 6 },
     config,
     preview,
     // Saleor provider only
     ...({ featured: true } as any),
   })
+  //a version of the page will be generated for each locale.
   const pagesPromise = commerce.getAllPages({ config, preview })
   const siteInfoPromise = commerce.getSiteInfo({ config, preview })
   const { products } = await productsPromise

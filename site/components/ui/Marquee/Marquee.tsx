@@ -32,7 +32,7 @@ const Marquee: FC<MarqueeProps> = ({
           className: cn(child.props.className, `${variant}`),
         },
       }))}
-    </FastMarquee>
+    </FastMarquee> //this FastMarquee is a npm package that can be used to create the moving Marquee.
   )
 }
 

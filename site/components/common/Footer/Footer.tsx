@@ -25,6 +25,8 @@ const links = [
 const Footer: FC<Props> = ({ className, pages }) => {
   const { sitePages } = usePages(pages)
   const rootClassName = cn(s.root, className)
+  //by using clsx, now you can combine classname from
+  //.module.css with global css classname.
 
   return (
     <footer className={rootClassName}>

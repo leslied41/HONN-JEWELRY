@@ -2,7 +2,10 @@
   @apply sticky top-0 bg-primary z-40 transition-all duration-150;
   min-height: 74px;
 }
-
+/* the reason why using sticky instead of fixed is that by using sticky and top:0px, 
+the normal dom flow will not be interrupted, and the main content will not be covered by
+navbar. But using fixed, the navbar will cover the main content.
+*/
 .nav {
   @apply relative flex flex-row justify-between py-4 md:py-4;
 }

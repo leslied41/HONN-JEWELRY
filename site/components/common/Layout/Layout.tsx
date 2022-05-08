@@ -23,10 +23,15 @@ const Loading = () => (
     <LoadingDots />
   </div>
 )
+// Normal import is to import module at the top.
+//Dynamic import means it would be imported dynamically, so it can optimize performance as not all the modules will be
+//imported at the top. Also, dynamic() can't be used inside of React rendering, so it need to be put put outside of the rendering.
 
 const dynamicProps = {
   loading: Loading,
 }
+//An optional loading component can be added to this dynamic import to render a loading state while
+//the dynamic component is being loaded.  As below, dynamicProps is added.
 
 const SignUpView = dynamic(() => import('@components/auth/SignUpView'), {
   ...dynamicProps,
@@ -47,6 +52,8 @@ const Modal = dynamic(() => import('@components/ui/Modal'), {
   ...dynamicProps,
   ssr: false,
 })
+//when this moudle only work in the browser, you can set ssr:false that can make it not include on the severside.
+// the reason why this Modal only work in the browser is that it does not have any props from severside.
 
 interface Props {
   pageProps: {
@@ -115,11 +122,15 @@ const Layout: React.FC<Props> = ({
 
   return (
     <CommerceProvider locale={locale}>
+      {/* CommerceProvider is to use  useContext */}
       <div className={cn(s.root)}>
         <Navbar links={navBarlinks} />
         <main className="fit">{children}</main>
         <Footer pages={pageProps.pages} />
         <ModalUI />
+        {/* this ModalUI includes login and signup view, the reason why
+        it is put here is because that this view should be able to appear in every page.
+        So it is sensible to put it in the layout. Then every page can have access to it.  */}
         <CheckoutProvider>
           <SidebarUI links={navBarlinks} />
         </CheckoutProvider>

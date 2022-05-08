@@ -5,3 +5,9 @@
 @import './components.css';
 
 @tailwind utilities;
+
+/* above three @tailwind are to introduce tailwind to this project. After that, tailwind can be used in this project */
+/* beside tailwind, you can still define your own classes */
+/* the reason why this work is that this main.css file will be imported in _app.tsx.
+Therefore this css file just work like global.css. 
+*/

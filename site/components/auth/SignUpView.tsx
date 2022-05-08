@@ -23,7 +23,7 @@ const SignUpView: FC<Props> = () => {
 
   const handleSignup = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-
+    //at beginning, dirty and disabled are false.
     if (!dirty && !disabled) {
       setDirty(true)
       handleValidation()
@@ -47,12 +47,14 @@ const SignUpView: FC<Props> = () => {
   }
 
   const handleValidation = useCallback(() => {
+    //this function is to validate if password match the requirments like length and foramt.
     // Test for Alphanumeric password
     const validPassword = /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)
 
     // Unable to send form unless fields are valid.
     if (dirty) {
       setDisabled(!validate(email) || password.length < 7 || !validPassword)
+      //if not match the password requirements, set disabled===true
     }
   }, [email, password, dirty])
 

@@ -20,8 +20,6 @@ import type {
 
 import type { Fetcher, SWRHook, MutationHook } from './utils/types'
 
-const Commerce = createContext<CommerceContextValue<any> | {}>({})
-
 export type Provider = CommerceConfig & {
   fetcher: Fetcher
   cart?: {
@@ -87,11 +85,15 @@ export type CommerceProviderProps = {
   children?: ReactNode
 } & Partial<CommerceConfig>
 
+// beside is to use useContext
+
+const Commerce = createContext<CommerceContextValue<any> | {}>({})
+//below is a functional component for useContext. Every elemments inside this component can use the data provided by it.
 export function CoreCommerceProvider<P extends Provider>({
   provider,
   children,
 }: CommerceProps<P>) {
-  const providerRef = useRef(provider)
+  const providerRef = useRef(provider) //here is to use useRef to store thie provide object.
   // TODO: Remove the fetcherRef
   const fetcherRef = useRef(provider.fetcher)
   // If the parent re-renders this provider will re-render every
@@ -106,6 +108,7 @@ export function CoreCommerceProvider<P extends Provider>({
 }
 
 export function getCommerceProvider<P extends Provider>(provider: P) {
+  //here is using closure, that provider inside getCommerceProvider can be accessed in its child functions.
   return function CommerceProvider({
     children,
     ...props

@@ -37,6 +37,8 @@ const Navbar: FC<NavbarProps> = ({ links }) => (
         </div>
         {process.env.COMMERCE_SEARCH_ENABLED && (
           <div className="justify-center flex-1 hidden lg:flex">
+            {/* flex:1; means flex: 1 1 0; flex-grow:1;flex-shrink:1; flex-basis:0; flex-basis means that the initial width
+            of this item. If it is 0, there will be no initial width. And its width will depend on its content.  */}
             <Searchbar />
           </div>
         )}

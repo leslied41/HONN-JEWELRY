@@ -3,7 +3,7 @@ import {
   CommerceAPIConfig,
   getCommerceApi as commerceApi,
 } from '@vercel/commerce/api'
-
+//this commerse/api is universal for all the cms providers.
 import {
   API_URL,
   API_TOKEN,
@@ -11,9 +11,13 @@ import {
   SHOPIFY_CHECKOUT_ID_COOKIE,
 } from '../const'
 
+//all the API_URL...are stored in the ../const file and inside this file using env to connect your shopify.
+
 import fetchGraphqlApi from './utils/fetch-graphql-api'
+//this is the function to use graphql to get data from shopify.
 
 import * as operations from './operations'
+//this is to import all the functions that fetch  the different kinds of data.
 
 if (!API_URL) {
   throw new Error(
@@ -41,7 +45,7 @@ const config: ShopifyConfig = {
 
 export const provider = {
   config,
-  operations,
+  operations, //this contains all the function to fetch data.
 }
 
 export type Provider = typeof provider
@@ -49,7 +53,8 @@ export type Provider = typeof provider
 export type ShopifyAPI<P extends Provider = Provider> = CommerceAPI<P>
 
 export function getCommerceApi<P extends Provider>(
-  customProvider: P = provider as any
+  customProvider: P = provider as any //customProvider's type is P and default value is provider whose type is any.
 ): ShopifyAPI<P> {
   return commerceApi(customProvider)
-}
+} //and this function will return commerceApi(customProvider) that is commerceApi(proivder).
+//And as provider includes confing and operations. So all the functions that fetch data can be generated.

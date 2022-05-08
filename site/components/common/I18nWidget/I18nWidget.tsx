@@ -80,6 +80,8 @@ const I18nWidget: FC = () => {
                 {options.map((locale) => (
                   <li key={locale}>
                     <Link href={currentPath} locale={locale}>
+                      {/* this one is like using router.push({ pathname, query }, asPath, { locale: nextLocale })
+                      it will implement the locale transition according to locale={locale}  */}
                       <a
                         className={cn(s.item)}
                         onClick={() => setDisplay(false)}

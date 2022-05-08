@@ -13,6 +13,7 @@ import {
 import { Mutation, MutationCustomerAccessTokenCreateArgs } from '../../schema'
 
 export default useLogin as UseLogin<typeof handler>
+//typeof can be used to get its type
 
 export const handler: MutationHook<LoginHook> = {
   fetchOptions: {

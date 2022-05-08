@@ -10,6 +10,8 @@ module.exports = {
         '8xl': '1920px',
       },
       colors: {
+        //these CSS custom properties (variables) can be used below is because they have been
+        //defined in css files under :root.
         primary: 'var(--primary)',
         'primary-2': 'var(--primary-2)',
         secondary: 'var(--secondary)',
