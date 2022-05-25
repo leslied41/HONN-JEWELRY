@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { DatePickers } from '../../ui/DatePicker'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import s from './AppointForm.module.css'
-import { HandleClickArgs } from '../../../pages/scheduler'
+import { HandleClickArgs } from '../../../pages/request'
 
 type FormValues = {
   name: string
@@ -13,12 +13,12 @@ type FormValues = {
 
 interface AppointFormProps {
   handleClick: (data: HandleClickArgs) => void
+  time: string
+  startDate: Date | null
 }
 
-export const AppointForm: FC<AppointFormProps> = ({ handleClick }) => {
+export const AppointForm: FC<AppointFormProps> = ({ handleClick, time, startDate }) => {
   const { register, handleSubmit } = useForm<FormValues>()
-  const [startDate, setStartDate] = useState<Date | null>(new Date())
-  const [time, setTime] = useState<string>('')
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     if (!time) return
@@ -31,14 +31,6 @@ export const AppointForm: FC<AppointFormProps> = ({ handleClick }) => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-        <div>
-          <DatePickers
-            time={time}
-            setTime={setTime}
-            startDate={startDate}
-            setStartDate={setStartDate}
-          />
-        </div>
         <div>
           <input
             type="text"

@@ -10,10 +10,10 @@
 .times_container {
   display: flex;
   align-items: center;
-  width: 250px;
-  background-color: gray;
+  width: 100%;
   overflow: hidden;
   position: relative;
+  justify-content: center;
 }
 .center {
   justify-content: center;
@@ -27,4 +27,9 @@
   width: max-content;
 
   /* So if you want to make elements full with a row and come out the max-width, you need to use flex.; */
+}
+
+
+.selected {
+  background-color: gray;
 }

@@ -96,15 +96,15 @@ export const DatePickers: FC<DatePickerProps> = ({
         <div className={btnsGroupClassName}>
           <div className={s.times} ref={timesRef}>
             {timeOfEachDay &&
-              timeOfEachDay.map((time, index) => {
+              timeOfEachDay.map((t, index) => {
                 return (
                   <button
                     key={index}
                     type="button"
                     className={s.time}
-                    onClick={() => setTime(time)}
+                    onClick={() => setTime(t)}
                   >
-                    {converTimeFormat(time)}
+                    <span className={(t === time) ? s.selected : ''}>{t}</span>
                   </button>
                 )
               })}

@@ -14,7 +14,7 @@ import getAllPagesQuery from '../../utils/queries/get-all-pages-query'
 
 export default function getAllPagesOperation({
   commerce,
-}: OperationContext<Provider>) {
+}: OperationContext<>) {
   async function getAllPages<T extends GetAllPagesOperation>(opts?: {
     config?: Partial<ShopifyConfig>
     preview?: boolean
@@ -41,7 +41,7 @@ export default function getAllPagesOperation({
     const {
       fetch,
       locale,
-      locales = ['en-US', 'es'],
+      locales = ['en-US', 'sv'],
     } = commerce.getConfig(config)
 
     const { data } = await fetch<GetAllPagesQuery, GetAllPagesQueryVariables>(
