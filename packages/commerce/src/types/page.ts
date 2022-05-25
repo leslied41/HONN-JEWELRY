@@ -12,6 +12,7 @@ export type Page = {
   is_visible?: boolean
   // Order in which this page should display on the storefront. (Lower integers specify earlier display.)
   sort_order?: number
+  availableTime?: Metafield | undefined;
 }
 
 export type PageTypes = {
@@ -25,4 +26,13 @@ export type GetAllPagesOperation<T extends PageTypes = PageTypes> = {
 export type GetPageOperation<T extends PageTypes = PageTypes> = {
   data: { page?: T['page'] }
   variables: { id: string }
+}
+
+export type Metafield = {
+  description?: string | undefined
+  id?: string | undefined
+  key?: string | undefined
+  namespace?: string | undefined
+  value?: string[] | undefined // depend on your metafield content type
+  valueType?: string | undefined
 }

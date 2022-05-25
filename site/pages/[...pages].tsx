@@ -6,6 +6,7 @@ import type {
 import commerce from '@lib/api/commerce'
 import { Text } from '@components/ui'
 import { Layout } from '@components/common'
+import Request from '@components/request'
 import getSlug from '@lib/get-slug'
 import { missingLocaleInPages } from '@lib/usage-warns'
 import type { Page } from '@commerce/types/page'
@@ -44,7 +45,7 @@ export async function getStaticProps({
   }
 
   return {
-    props: { pages, page, categories },
+    props: { pages, page, categories, path },
     revalidate: 60 * 60, // Every hour
   }
 }
@@ -70,15 +71,22 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   }
 }
 
-export default function Pages({ page }: { page: Page }) {
+export default function Pages({ page, path }: { page: Page, path: string }) {
   const router = useRouter()
 
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
-    <div className="max-w-2xl mx-8 sm:mx-auto py-20">
-      {page?.body && <Text html={page.body} />}
-    </div>
+    <>
+      
+      {path === 'request-for-quote' ? (
+        <Request available_time={page.availableTime?.value}/>
+      ) : (
+        <div className="max-w-2xl mx-8 sm:mx-auto py-20">
+          {page?.body && <Text html={page.body} />}
+        </div>
+      )}
+    </>
   )
 }
 

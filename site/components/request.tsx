@@ -1,31 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Layout } from '@components/common'
 import { Button, Text, Container } from '@components/ui'
 import AppointForm from '../components/common/apponitment'
 import { DatePickers } from '../components/ui/DatePicker'
-import type { GetStaticPropsContext } from 'next'
 import useCart from '@framework/cart/use-cart'
 import usePrice from '@framework/product/use-price'
-import commerce from '@lib/api/commerce'
 import { Bag, Cross, Check, MapPin, CreditCard } from '@components/icons'
 import { CartItem } from '@components/cart'
 import { useUI } from '@components/ui/context'
-
-export async function getStaticProps({
-  preview,
-  locale,
-  locales,
-}: GetStaticPropsContext) {
-  const config = { locale, locales }
-  const pagesPromise = commerce.getAllPages({ config, preview })
-  const siteInfoPromise = commerce.getSiteInfo({ config, preview })
-  const { pages } = await pagesPromise
-  const { categories } = await siteInfoPromise
-  return {
-    props: { pages, categories },
-  }
-}
 
 export type HandleClickArgs = {
   name: string
@@ -35,7 +17,7 @@ export type HandleClickArgs = {
   date: string
 }
 
-const Scheduler = () => {
+const Request = ({ available_time }: { available_time: string[] | undefined }) => {
   const error = null
   const success = null
   const { data, isLoading, isEmpty } = useCart()
@@ -152,6 +134,7 @@ const Scheduler = () => {
               setTime={setTime}
               startDate={startDate}
               setStartDate={setStartDate}
+              available_time={available_time}
             />
           </section>
           {/* <div className="flex flex-row justify-end">
@@ -180,6 +163,5 @@ const Scheduler = () => {
     </Container>
   )
 }
-Scheduler.Layout = Layout
 
-export default Scheduler
+export default Request

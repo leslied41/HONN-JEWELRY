@@ -10,12 +10,14 @@ interface DatePickerProps {
   setTime: React.Dispatch<React.SetStateAction<string>>
   startDate: Date | null
   setStartDate: React.Dispatch<React.SetStateAction<Date | null>>
+  available_time: string[] | undefined
 }
 export const DatePickers: FC<DatePickerProps> = ({
   time,
   setTime,
   startDate,
   setStartDate,
+  available_time,
 }) => {
   const [timeOfEachDay, setTimeOfEachDay] = useState<string[]>([])
   const timesRef = useRef<HTMLDivElement>(null)
@@ -52,7 +54,7 @@ export const DatePickers: FC<DatePickerProps> = ({
         setTimeOfEachDay(['13:00', '14:00', '16:00'])
         break
       case 3:
-        setTimeOfEachDay(['10:00', '12:00', '14:00', '16:00'])
+        setTimeOfEachDay(['10:00', '12:00', '14:00', '16:00', '17:00'])
         break
       case 5:
         setTimeOfEachDay(['13:00', '14:00', '16:00'])
@@ -63,7 +65,7 @@ export const DatePickers: FC<DatePickerProps> = ({
   }, [startDate])
 
   const handleMove = (dir: string) => {
-    if (timeOfEachDay.length === 3) return
+    if (timeOfEachDay.length <= 5) return
 
     if (dir === 'left') {
       if (timesRef.current === null) return
@@ -77,6 +79,7 @@ export const DatePickers: FC<DatePickerProps> = ({
   return (
     <>
       <div>
+        {available_time}
         <DatePicker
           filterDate={isWeekday}
           onChange={(date) => {
@@ -89,10 +92,12 @@ export const DatePickers: FC<DatePickerProps> = ({
         />
       </div>
       <div className={s.outter}>
-        <AiOutlineLeft
-          className={s.control}
-          onClick={() => handleMove('left')}
-        />
+        { timeOfEachDay.length >= 5 &&(
+          <AiOutlineLeft
+            className={s.control}
+            onClick={() => handleMove('left')}
+          />
+        )}
         <div className={btnsGroupClassName}>
           <div className={s.times} ref={timesRef}>
             {timeOfEachDay &&
@@ -110,10 +115,12 @@ export const DatePickers: FC<DatePickerProps> = ({
               })}
           </div>
         </div>
-        <AiOutlineRight
-          className={s.control}
-          onClick={() => handleMove('right')}
-        />
+        { timeOfEachDay.length >= 5 &&(
+          <AiOutlineRight
+            className={s.control}
+            onClick={() => handleMove('right')}
+          />
+        )}
       </div>
     </>
   )

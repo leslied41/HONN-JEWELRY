@@ -44,8 +44,8 @@ export type Product = {
   price: ProductPrice
   options: ProductOption[]
   vendor?: string
-  diamondShape?: Metafield[]
-  diamondColor?: Metafield[]
+  diamondShape?: Metafield
+  diamondColor?: Metafield
 }
 
 export type SearchProductsBody = {

@@ -33,3 +33,7 @@
 .selected {
   background-color: gray;
 }
+
+.times button {
+  padding: 0px 10px;
+}
