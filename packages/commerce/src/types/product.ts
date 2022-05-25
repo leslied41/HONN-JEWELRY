@@ -12,6 +12,14 @@ export type ProductPrice = {
   extendedSalePrice?: number
   extendedListPrice?: number
 }
+export type Metafield = {
+  id: string
+  namespace: string
+  key: string
+  value: string
+  valueType: string
+  description: string
+} //customized
 
 export type ProductOption = {
   __typename?: 'MultipleChoiceOption'
@@ -44,6 +52,8 @@ export type Product = {
   price: ProductPrice
   options: ProductOption[]
   vendor?: string
+  //customized fields
+  metafields: Metafield[]
 }
 
 export type SearchProductsBody = {

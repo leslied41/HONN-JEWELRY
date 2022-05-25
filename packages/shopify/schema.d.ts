@@ -5532,21 +5532,6 @@ export type GetProductBySlugQuery = { __typename?: 'QueryRoot' } & {
             'amount' | 'currencyCode'
           >
         }
-        metafields: { __typename?: 'MetafieldConnection' } & {
-          edges: Array<
-            { __typename?: 'MetafieldEdge' } & {
-              node: { __typename?: 'Metafield' } & Pick<
-                Metafield,
-                | 'id'
-                | 'namespace'
-                | 'key'
-                | 'value'
-                | 'valueType'
-                | 'description'
-              >
-            }
-          >
-        }
         variants: { __typename?: 'ProductVariantConnection' } & {
           pageInfo: { __typename?: 'PageInfo' } & Pick<
             PageInfo,
