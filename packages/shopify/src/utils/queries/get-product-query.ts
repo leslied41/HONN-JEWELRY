@@ -24,6 +24,22 @@ const getProductQuery = /* GraphQL */ `
           currencyCode
         }
       }
+      diamondColor: metafield(namespace: "my_fields", key: "diamond_color") {
+        description
+        id
+        key
+        namespace
+        value
+        valueType
+      }
+      diamondShape: metafield(namespace: "my_fields", key: "diamond_shape") {
+        description
+        id
+        key
+        namespace
+        value
+        valueType
+      }
       variants(first: 250) {
         pageInfo {
           hasNextPage

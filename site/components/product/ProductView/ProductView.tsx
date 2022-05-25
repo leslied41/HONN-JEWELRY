@@ -24,6 +24,8 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
 
   return (
     <>
+      {JSON.stringify(product.diamondShape)}
+      {JSON.stringify(product.diamondColor)}
       <Container className="max-w-none w-full" clean>
         <div className={cn(s.root, 'fit')}>
           <div className={cn(s.main, 'fit')}>
