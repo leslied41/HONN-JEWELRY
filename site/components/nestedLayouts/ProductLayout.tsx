@@ -38,8 +38,8 @@ const ProductLayout: React.FC<Props> = ({
     const main_stone_obj = pageProps.product.metafields.find(
       (i: any) => i.key === 'main_stone'
     )
-    if (!color) setColor(diamond_color_obj.value)
-    if (!shape) setShape(main_stone_obj.value)
+    if (!color) setColor(diamond_color_obj?.value)
+    if (!shape) setShape(main_stone_obj?.value)
   }, [])
 
   useEffect(() => {
