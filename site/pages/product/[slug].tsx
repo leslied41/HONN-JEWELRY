@@ -7,6 +7,9 @@ import { useRouter } from 'next/router'
 import commerce from '@lib/api/commerce'
 import { Layout } from '@components/common'
 import { ProductView } from '@components/product'
+import ProductLayout from '@components/nestedLayouts/ProductLayout'
+import { useGlobalContext } from '@components/ui/ProductLayoutContext'
+import { useEffect } from 'react'
 
 export async function getStaticProps({
   params,
@@ -24,14 +27,15 @@ export async function getStaticProps({
   })
 
   const allProductsPromise = commerce.getAllProducts({
-    variables: { first: 4 },
+    //variables: { first: 4 },
     config,
     preview,
   })
+
   const { pages } = await pagesPromise
   const { categories } = await siteInfoPromise
   const { product } = await productPromise
-  const { products: relatedProducts } = await allProductsPromise
+  const { products: allProducts } = await allProductsPromise
 
   if (!product) {
     throw new Error(`Product with slug '${params!.slug}' not found`)
@@ -41,10 +45,10 @@ export async function getStaticProps({
     props: {
       pages,
       product,
-      relatedProducts,
+      allProducts,
       categories,
     },
-    revalidate: 5,
+    revalidate: 200,
   }
 }
 
@@ -67,10 +71,14 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 
 export default function Slug({
   product,
-  relatedProducts,
+  allProducts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { setProducts } = useGlobalContext()
   const router = useRouter()
-  console.log(product)
+  const relatedProducts = allProducts.slice(0, 4)
+  useEffect(() => {
+    setProducts(allProducts)
+  }, [])
   return router.isFallback ? (
     <h1>Loading...</h1>
   ) : (
@@ -79,3 +87,4 @@ export default function Slug({
 }
 
 Slug.Layout = Layout
+Slug.NestedLayout = ProductLayout
