@@ -19,6 +19,10 @@
 .submit_btn_div {
   @apply text-center;
 }
+
+.submit_btn_div:hover {
+  cursor: pointer;
+}
 .form input[type='submit'] {
   width: fit-content;
 }

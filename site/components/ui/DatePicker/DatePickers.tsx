@@ -13,85 +13,99 @@ interface DatePickerProps {
   available_time: string[] | undefined
 }
 export const DatePickers: FC<DatePickerProps> = ({
-  time,
+  // time,
   setTime,
   startDate,
   setStartDate,
   available_time,
 }) => {
-  const [timeOfEachDay, setTimeOfEachDay] = useState<string[]>([])
+  // const [timeOfEachDay, setTimeOfEachDay] = useState<string[]>([])
   const timesRef = useRef<HTMLDivElement>(null)
 
-  const btnsGroupClassName = clsx(s.times_container, {
-    [s.center]: timeOfEachDay?.length === 3,
-  })
+  // const btnsGroupClassName = clsx(s.times_container, {
+  //   [s.center]: timeOfEachDay?.length === 3,
+  // })
 
-  const isWeekday = (date: Date) => {
-    const day = date.getDay()
-    return day !== 0 && day !== 6 && day !== 2 && day !== 4
-  }
+  // const isWeekday = (date: Date) => {
+  //   const day = date.getDay()
+  //   return day !== 0 && day !== 6 && day !== 2 && day !== 4
+  // }
 
-  const converTimeFormat = (time: string) => {
-    let hour_string = time.split(':')[0]
-    let hour = Number(hour_string)
-    let minutes = time.split(':')[1]
-    let amOrPm
-    if (hour > 12) {
-      hour = hour - 12
-      amOrPm = 'PM'
-    } else if (hour == 12) {
-      amOrPm = 'PM'
-    } else {
-      amOrPm = 'AM'
-    }
-    time = `${hour}:${minutes} ${amOrPm}`
-    return time
-  }
-  useEffect(() => {
-    let day = startDate!.getDay()
-    switch (day) {
-      case 1:
-        setTimeOfEachDay(['13:00', '14:00', '16:00'])
-        break
-      case 3:
-        setTimeOfEachDay(['10:00', '12:00', '14:00', '16:00', '17:00'])
-        break
-      case 5:
-        setTimeOfEachDay(['13:00', '14:00', '16:00'])
-        break
-      default:
-        setTimeOfEachDay([])
-    }
-  }, [startDate])
+  // const converTimeFormat = (time: string) => {
+  //   let hour_string = time.split(':')[0]
+  //   let hour = Number(hour_string)
+  //   let minutes = time.split(':')[1]
+  //   let amOrPm
+  //   if (hour > 12) {
+  //     hour = hour - 12
+  //     amOrPm = 'PM'
+  //   } else if (hour == 12) {
+  //     amOrPm = 'PM'
+  //   } else {
+  //     amOrPm = 'AM'
+  //   }
+  //   time = `${hour}:${minutes} ${amOrPm}`
+  //   return time
+  // }
+  // useEffect(() => {
+    // let day = startDate!.getDay()
+    // switch (day) {
+    //   case 1:
+    //     setTimeOfEachDay(['13:00', '14:00', '16:00'])
+    //     break
+    //   case 3:
+    //     setTimeOfEachDay(['10:00', '12:00', '14:00', '16:00', '17:00'])
+    //     break
+    //   case 5:
+    //     setTimeOfEachDay(['13:00', '14:00', '16:00'])
+    //     break
+    //   default:
+    //     setTimeOfEachDay([])
+    // }
+  // }, [startDate])
 
-  const handleMove = (dir: string) => {
-    if (timeOfEachDay.length <= 5) return
+  // const handleMove = (dir: string) => {
+  //   if (timeOfEachDay.length <= 5) return
 
-    if (dir === 'left') {
-      if (timesRef.current === null) return
-      timesRef.current.style.transform = `translateX(0px)`
-    }
-    if (dir === 'right') {
-      if (timesRef.current === null) return
-      timesRef.current.style.transform = `translateX(-55px)`
-    }
-  }
+  //   if (dir === 'left') {
+  //     if (timesRef.current === null) return
+  //     timesRef.current.style.transform = `translateX(0px)`
+  //   }
+  //   if (dir === 'right') {
+  //     if (timesRef.current === null) return
+  //     timesRef.current.style.transform = `translateX(-55px)`
+  //   }
+  // }
+
+  // const filterPassedTime = (time: string) => {
+  //   const currentDate = new Date();
+  //   const selectedDate = new Date(time);
+
+  //   return currentDate.getTime() < selectedDate.getTime();
+  // };
+
   return (
     <>
       <div>
         {available_time}
         <DatePicker
-          filterDate={isWeekday}
+          // filterDate={isWeekday}
+          // filterTime={filterPassedTime}
+          selected={startDate}
           onChange={(date) => {
             setStartDate(date)
-            setTime('')
-            if (timesRef.current === null) return
-            timesRef.current.style.transform = `translateX(0px)`
+            // setTime('')
+            // if (timesRef.current === null) return
+            // timesRef.current.style.transform = `translateX(0px)`
           }}
+          minTime={new Date(0, 0, 0, 10, 30)} // 7:30am
+          maxTime={new Date(0, 0, 0, 16, 30)} // 4:30pm
+          timeIntervals={60}
+          showTimeSelect
           inline
         />
       </div>
-      <div className={s.outter}>
+      {/* <div className={s.outter}>
         { timeOfEachDay.length >= 5 &&(
           <AiOutlineLeft
             className={s.control}
@@ -121,7 +135,7 @@ export const DatePickers: FC<DatePickerProps> = ({
             onClick={() => handleMove('right')}
           />
         )}
-      </div>
+      </div> */}
     </>
   )
 }

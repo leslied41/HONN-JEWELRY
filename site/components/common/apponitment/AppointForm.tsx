@@ -58,9 +58,7 @@ export const AppointForm: FC<AppointFormProps> = ({ handleClick, time, startDate
             {...register('comment', { required: false, maxLength: 500 })}
           />
         </div>
-        <div className={s.submit_btn_div}>
-          <input type="submit" value="Submit" />
-        </div>
+        <input type="submit" value="Submit" className={s.submit_btn_div}/>
       </form>
     </div>
   )
