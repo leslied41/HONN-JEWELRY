@@ -1,6 +1,6 @@
 import cn from 'clsx'
 import { FC, ReactNode, Component } from 'react'
-import s from './Grid.module.css'
+import s from './GridContainer.module.css'
 
 interface GridProps {
   className?: string
@@ -9,7 +9,7 @@ interface GridProps {
   variant?: 'default' | 'filled'
 }
 
-const Grid: FC<GridProps> = ({
+const GridContainer: FC<GridProps> = ({
   className,
   layout = 'A',
   children,
@@ -33,4 +33,4 @@ const Grid: FC<GridProps> = ({
   return <div className={rootClassName}>{children}</div>
 }
 
-export default Grid
+export default GridContainer

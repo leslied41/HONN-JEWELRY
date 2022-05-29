@@ -32,6 +32,11 @@
   --accent-9: #000;
   --font-sans: -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue',
     'Helvetica', sans-serif;
+  /* added by myself */
+  --gray: #f7f2ee;
+  --brown: #8d5535;
+  --black-0: #393939;
+  --gold: #cab69e;
 }
 
 [data-theme='dark'] {

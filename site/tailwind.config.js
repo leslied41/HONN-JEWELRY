@@ -38,10 +38,13 @@ module.exports = {
         blue: 'var(--blue)',
         green: 'var(--green)',
         red: 'var(--red)',
+        // added by myself
+        gray: 'var(--gray)',
+        gold: 'var(--gold)',
       },
       textColor: {
-        base: 'var(--text-base)',
-        primary: 'var(--text-primary)',
+        basic: 'var(--black-0)',
+        primary: 'var(--brown)',
         secondary: 'var(--text-secondary)',
       },
       boxShadow: {

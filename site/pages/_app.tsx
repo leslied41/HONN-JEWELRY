@@ -17,7 +17,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }
   {
     /* pageProps is an object with the initial props that were preloaded for your page 
-           by one of our data fetching methods, otherwise it's an empty object.*/
+           by one of our data fetching methods, otherwise it's an empty object.
+       And this pageProps if from each page*/
   }
   const Layout = (Component as any).Layout || Noop
   //as is type assertion in typescript. it is used to specify the type.

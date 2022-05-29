@@ -6,7 +6,7 @@
   height: 500px;
   max-height: 800px;
 }
-
+/* all the direct children of .root */
 .default > * {
   @apply bg-transparent;
 }
