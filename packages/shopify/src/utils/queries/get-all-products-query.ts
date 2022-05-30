@@ -16,6 +16,18 @@ export const productConnectionFragment = /* GraphQL */ `
             currencyCode
           }
         }
+        metafields(first: 30) {
+          edges {
+            node {
+              description
+              id
+              key
+              namespace
+              value
+              valueType
+            }
+          }
+        }
         images(first: 1) {
           pageInfo {
             hasNextPage

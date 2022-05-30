@@ -6,6 +6,7 @@ import { FC, useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import { Head } from '@components/common'
 import { ManagedUIContext } from '@components/ui/context'
+import { ProductLayoutProvider } from '@components/ui/ProductLayoutContext'
 
 const Noop: FC = ({ children }) => <>{children}</>
 
@@ -24,6 +25,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }
   const Layout = (Component as any).Layout || Noop
   //as is type assertion in typescript. it is used to specify the type.
+  //this NestedLayout is for another layout for a specefic page other than the common layout.
+  const NestedLayout = (Component as any).NestedLayout || Noop
 
   useEffect(() => {
     document.body.classList?.remove('loading')
@@ -35,7 +38,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Head />
       <ManagedUIContext>
         <Layout pageProps={pageProps}>
-          <Component {...pageProps} />
+          <ProductLayoutProvider>
+            <NestedLayout pageProps={pageProps}>
+              <Component {...pageProps} />
+            </NestedLayout>
+          </ProductLayoutProvider>
         </Layout>
       </ManagedUIContext>
     </>
