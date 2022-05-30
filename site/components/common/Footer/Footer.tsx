@@ -22,98 +22,85 @@ const links = [
   },
 ]
 
-const Footer: FC<Props> = ({ className, pages }) => {
-  const { sitePages } = usePages(pages)
-  const rootClassName = cn(s.root, className)
+const Footer: FC<Props> = ({}) => {
+  //pages from props is the pages created by user on shopify  and passed here to show them on footer.
+  //but for this project, we would not embed these pages in this website and we will create new pages instead.
+  //therefore, these pages would be unuseful.
+
   //by using clsx, now you can combine classname from
   //.module.css with global css classname.
-
   return (
-    <footer className={rootClassName}>
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-b border-accent-2 py-12 text-primary bg-primary transition-colors duration-150">
-          <div className="col-span-1 lg:col-span-2">
-            <Link href="/">
-              <a className="flex flex-initial items-center font-bold md:mr-24">
-                <span className="rounded-full border border-accent-6 mr-2">
-                  <Logo />
-                </span>
-                <span>ACME</span>
-              </a>
-            </Link>
-          </div>
-          <div className="col-span-1 lg:col-span-8">
-            <div className="grid md:grid-rows-4 md:grid-cols-3 md:grid-flow-col">
-              {[...links, ...sitePages].map((page) => (
-                <span key={page.url} className="py-3 md:py-0 md:pb-4">
-                  <Link href={page.url!}>
-                    <a className="text-accent-9 hover:text-accent-6 transition ease-in-out duration-150">
-                      {page.name}
-                    </a>
-                  </Link>
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="col-span-1 lg:col-span-2 flex items-start lg:justify-end text-primary">
-            <div className="flex space-x-6 items-center h-10">
-              <a
-                className={s.link}
-                aria-label="Github Repository"
-                href="https://github.com/vercel/commerce"
-              >
-                <Github />
-              </a>
-              <I18nWidget />
-            </div>
-          </div>
-        </div>
-        <div className="pt-6 pb-10 flex flex-col md:flex-row justify-between items-center space-y-4 text-accent-6 text-sm">
+    <footer className={s.root}>
+      <div className="grid grid-cols-12 p-10 gap-x-20 gap-y-12">
+        <div className="col-span-2">
           <div>
-            <span>&copy; 2020 ACME, Inc. All rights reserved.</span>
-          </div>
-          <div className="flex items-center text-primary text-sm">
-            <span className="text-primary">Created by</span>
-            <a
-              rel="noopener noreferrer"
-              href="https://vercel.com"
-              aria-label="Vercel.com Link"
-              target="_blank"
-              className="text-primary"
-            >
-              <Vercel
-                className="inline-block h-6 ml-3 text-primary"
-                alt="Vercel.com Logo"
-              />
-            </a>
+            <ul>
+              <li>
+                <Link href="/">Contact us</Link>
+              </li>
+              <li>Birger Jarlsgatan 23 111 45 Stockholm +45 555324 1</li>
+              <li>
+                <Link href="/">Book an appointment</Link>
+              </li>
+            </ul>
           </div>
         </div>
-      </Container>
+        <div className="col-span-2">
+          <div>
+            <ul>
+              <li>
+                <Link href="/">Size Guide</Link>
+              </li>
+              <li>Ring Size Tool</li>
+              <li>
+                <Link href="/">Lifetime Warranty</Link>
+              </li>
+              <li>Shipping & Delivery</li>
+              <li>B2B</li>
+            </ul>
+          </div>
+        </div>
+        <div className="col-span-2">
+          <div>
+            <ul>
+              <li>
+                <a href="">Facebook</a>
+              </li>
+              <li>
+                <a href="">Instagram</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="col-span-6">
+          <div className="flex">
+            <input
+              type="email"
+              placeholder="Email Address"
+              className="outline-none bg-inherit placeholder-gold border-b border-brown pb-2 w-full"
+            />
+            <button className="border-b border-brown pb-2"> Subscribe</button>
+          </div>
+        </div>
+        <div className="col-span-6">
+          <div>
+            <p>
+              Currency: <span>GBP £</span>
+            </p>
+          </div>
+        </div>
+        <div className="col-span-6 justify-self-end">
+          <div>
+            <ul className="flex gap-x-10">
+              <li>Returns and Exchanges </li>
+              <li>Returns and Exchanges</li>
+              <li>© HONN</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </footer>
   )
-}
-
-function usePages(pages?: Page[]) {
-  const { locale } = useRouter()
-  const sitePages: Page[] = []
-
-  if (pages) {
-    pages.forEach((page) => {
-      const slug = page.url && getSlug(page.url)
-      if (!slug) return
-      if (locale && !slug.startsWith(`${locale}/`)) return
-      sitePages.push(page)
-    })
-  }
-
-  return {
-    sitePages: sitePages.sort(bySortOrder),
-  }
-}
-
-// Sort pages by the sort order assigned in the BC dashboard
-function bySortOrder(a: Page, b: Page) {
-  return (a.sort_order ?? 0) - (b.sort_order ?? 0)
 }
 
 export default Footer

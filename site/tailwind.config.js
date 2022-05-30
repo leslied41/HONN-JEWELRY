@@ -41,6 +41,7 @@ module.exports = {
         // added by myself
         gray: 'var(--gray)',
         gold: 'var(--gold)',
+        brown: 'var(--brown)',
       },
       textColor: {
         basic: 'var(--black-0)',

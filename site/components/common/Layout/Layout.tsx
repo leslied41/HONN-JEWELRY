@@ -121,8 +121,8 @@ const Layout: React.FC<Props> = ({
     href: `/search/${c.slug}`,
   }))
   // console
-  console.log(categories)
-  console.log(navBarlinks)
+  // console.log(categories)
+  // console.log(navBarlinks)
 
   return (
     <CommerceProvider locale={locale}>
@@ -130,7 +130,7 @@ const Layout: React.FC<Props> = ({
       <div className={cn(s.root)}>
         <Navbar links={navBarlinks} />
         <main className="fit">{children}</main>
-        <Footer pages={pageProps.pages} />
+        <Footer />
         <ModalUI />
         {/* this ModalUI includes login and signup view, the reason why
         it is put here is because that this view should be able to appear in every page.

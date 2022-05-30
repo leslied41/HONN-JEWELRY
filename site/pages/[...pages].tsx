@@ -1,3 +1,4 @@
+//so this page is to transfer shopify's pages created by user to here and embed them in this page.
 import type {
   GetStaticPathsContext,
   GetStaticPropsContext,

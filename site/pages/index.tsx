@@ -1,7 +1,7 @@
 import commerce from '@lib/api/commerce'
 import { Layout } from '@components/common'
 import { ProductCard } from '@components/product'
-import { Grid, Marquee, Hero, GridContainer } from '@components/ui'
+import { Grid, Marquee, Hero } from '@components/ui'
 import Image from 'next/image'
 // import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
@@ -22,6 +22,7 @@ export async function getStaticProps({
   })
   //a version of the page will be generated for each locale.
   const pagesPromise = commerce.getAllPages({ config, preview })
+  //this function getAllPages is to get all the pages created by user on shopify.
   const siteInfoPromise = commerce.getSiteInfo({ config, preview })
   const { products } = await productsPromise
   const { pages } = await pagesPromise
