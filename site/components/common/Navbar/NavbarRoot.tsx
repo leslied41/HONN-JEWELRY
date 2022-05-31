@@ -2,10 +2,16 @@ import { FC, useState, useEffect } from 'react'
 import throttle from 'lodash.throttle'
 import cn from 'clsx'
 import s from './Navbar.module.css'
+import { useRouter } from 'next/router'
 
 const NavbarRoot: FC = ({ children }) => {
   const [hasScrolled, setHasScrolled] = useState(false)
-
+  const router = useRouter()
+  const className = cn(s.root, {
+    [s.bgColorA]: router.pathname === '/',
+    [s.bgColorB]: router.pathname === '/product/[slug]',
+    'shadow-magical': hasScrolled,
+  })
   useEffect(() => {
     const handleScroll = throttle(() => {
       const offset = 0
@@ -25,11 +31,7 @@ const NavbarRoot: FC = ({ children }) => {
     }
   }, [hasScrolled])
 
-  return (
-    <div className={cn(s.root, { 'shadow-magical': hasScrolled })}>
-      {children}
-    </div>
-  )
+  return <div className={className}>{children}</div>
 }
 
 export default NavbarRoot

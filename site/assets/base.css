@@ -49,8 +49,8 @@
   --hover-2: rgba(255, 255, 255, 0.25);
   --selection: var(--purple);
   --text-base: white;
-  --text-primary: white;
-  --text-secondary: black;
+  --text-primary: #8d5535;
+  --text-secondary: #393939;
   --accent-9: #fff;
   --accent-8: #fafafa;
   --accent-7: #eaeaea;

@@ -6,6 +6,12 @@
 the normal dom flow will not be interrupted, and the main content will not be covered by
 navbar. But using fixed, the navbar will cover the main content.
 */
+.bgColorA {
+  @apply bg-primary;
+}
+.bgColorB {
+  @apply bg-gray;
+}
 .nav {
   @apply relative flex flex-row justify-between py-4 md:py-4;
 }

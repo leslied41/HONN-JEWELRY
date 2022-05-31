@@ -46,11 +46,11 @@
   }
 
   .main {
-    @apply mx-0 col-span-8;
+    @apply mx-0 col-span-6;
   }
 
   .sidebar {
-    @apply col-span-4 py-6;
+    @apply col-span-6 py-6;
   }
 
   .imageContainer {

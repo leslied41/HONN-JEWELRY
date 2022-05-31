@@ -16,6 +16,11 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
 }) => {
   return (
     <div>
+      {/* so in shopify, options are associated with variants. when creating a new variant, the corresponding option
+      would alos be created. Therefore, we can choose different variants by chosing different options.
+      For a pdocut, we can search it by metafield, once it was found, inside its product page, we can choose different variant of
+      this product and chosse ring size,metal,engraving text,text style and quantity for ring. Currently, the issue is that
+      I do not know how to choose options like ring size, metal when added to cart.*/}
       {options.map((opt) => (
         <div className="pb-4" key={opt.displayName}>
           <h2 className="uppercase font-medium text-sm tracking-wide">
