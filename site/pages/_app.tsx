@@ -9,8 +9,6 @@ import { ManagedUIContext } from '@components/ui/context'
 const Noop: FC = ({ children }) => <>{children}</>
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  console.log(Component)
-  console.log(pageProps)
   {
     /* The Component prop is the active page, so whenever you navigate between routes, 
           Component will change to the new page. Therefore, any props you send to Component will

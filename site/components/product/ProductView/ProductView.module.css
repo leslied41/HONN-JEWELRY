@@ -1,10 +1,10 @@
 .root {
-  @apply relative grid items-start gap-1 grid-cols-1 overflow-x-hidden;
+  @apply relative grid items-start gap-1 grid-cols-1 mt-10;
   min-height: auto;
 }
 
 .main {
-  @apply relative px-0 pb-0 box-border  flex flex-col col-span-1;
+  @apply relative px-0 pb-0 box-border   col-span-1;
   min-height: 500px;
 }
 
@@ -46,11 +46,11 @@
   }
 
   .main {
-    @apply mx-0 col-span-6;
+    @apply mx-0 col-span-7;
   }
 
   .sidebar {
-    @apply col-span-6 py-6;
+    @apply col-span-5 py-6;
   }
 
   .imageContainer {

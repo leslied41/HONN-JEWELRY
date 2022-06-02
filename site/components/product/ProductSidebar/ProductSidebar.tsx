@@ -9,18 +9,12 @@ import {
   selectDefaultOptionFromProduct,
   SelectedOptions,
 } from '../helpers'
-import { useRouter } from 'next/router'
-import { productReducer, ActionType } from '../ProductSearchReducer'
-import useEffectSkipInitial from '../../../lib/hooks/useEffectSkipInitial'
+import ProductSearchOps from '../ProductSearchOptions'
 
 interface ProductSidebarProps {
   product: Product
   className?: string
   allProducts: Product[]
-}
-const initialState = {
-  shape: '',
-  color: '',
 }
 
 const ProductSidebar: FC<ProductSidebarProps> = ({
@@ -32,56 +26,14 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   const { openSidebar } = useUI()
   const [loading, setLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
-  const [clicked, setClicked] = useState<Boolean>(false)
-  const [state, dispatch] = useReducer(productReducer, initialState)
-  const router = useRouter()
-
-  const setShape = useCallback(
-    (shape) => dispatch({ type: ActionType.SHAPE, payload: shape }),
-    [dispatch]
-  )
-  const setColor = useCallback(
-    (color) => dispatch({ type: ActionType.COLOR, payload: color }),
-    [dispatch]
-  )
-
-  const filterProduct = () => {
-    allProducts.forEach((p: any) => {
-      const { metafields } = p
-      const main_stone_obj = metafields.find((i: any) => i.key === 'main_stone')
-      const diamond_color_obj = metafields.find(
-        (i: any) => i.key === 'diamond_color'
-      )
-      if (
-        main_stone_obj?.value === state.shape &&
-        diamond_color_obj?.value === state.color
-      ) {
-        if (router.query.slug === p.slug) return
-        router.replace(`/product/${p.slug}`)
-      }
-    })
-  }
-
-  useEffect(() => {
-    const diamond_color_obj = product.metafields.find(
-      (i: any) => i.key === 'diamond_color'
-    )
-    const main_stone_obj = product.metafields.find(
-      (i: any) => i.key === 'main_stone'
-    )
-    if (!state.color) setColor(diamond_color_obj?.value)
-    if (!state.shape) setShape(main_stone_obj?.value)
-  }, [])
-
-  useEffectSkipInitial(() => {
-    filterProduct()
-  }, [clicked])
 
   useEffect(() => {
     selectDefaultOptionFromProduct(product, setSelectedOptions)
   }, [product])
 
   const variant = getProductVariant(product, selectedOptions)
+  //this addToCart function is to add options selectd by customers to cart.
+  //besides productId and variantId, some more customized info like metafields also need to be added.
   const addToCart = async () => {
     setLoading(true)
     try {
@@ -105,60 +57,15 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       be dark implying this cannot be chosen. 通过options array，和metadata array的对比，如果medata array的item不在options array中
       则设该item css为dark. 然后对于有的item，则设为亮的。同时在该item中选择metadata时同时也选择options。则可以解决该问题。
       还应注意问题是，search product时候，当在ring页面时应该只能search同类产品，不能search耳环，项链之类。 */}
-      <section>
-        <div>
-          <div>
-            <p>color</p>
-            <ul className="list-none flex">
-              <li className="mr-2">
-                <button
-                  onClick={() => {
-                    setColor('#f44336')
-                    setClicked(!clicked)
-                  }}
-                >
-                  red
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    setColor('#e91e63')
-                    setClicked(!clicked)
-                  }}
-                >
-                  purple
-                </button>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <p>shape</p>
-            <ul className="list-none flex">
-              <li className="mr-2">
-                <button
-                  onClick={() => {
-                    setShape('square')
-                    setClicked(!clicked)
-                  }}
-                >
-                  square
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    setShape('round')
-                    setClicked(!clicked)
-                  }}
-                >
-                  round
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+
+      <div data-name-price>
+        <p>{product.name}</p>
+        <p>
+          {product.price.value} <span>{product.price.currencyCode}</span>
+        </p>
+      </div>
+      <ProductSearchOps product={product} allProducts={allProducts} />
+
       <ProductOptions
         options={product.options}
         selectedOptions={selectedOptions}
@@ -168,10 +75,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
         className="pb-4 break-words w-full max-w-xl"
         html={product.descriptionHtml || product.description}
       />
-      {/* <div className="flex flex-row justify-between items-center">
-        <Rating value={4} />
-        <div className="text-accent-6 pr-1 font-medium text-sm">36 reviews</div>
-      </div> */}
+
       <div>
         {process.env.COMMERCE_CART_ENABLED && (
           <Button
@@ -188,7 +92,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           </Button>
         )}
       </div>
-      <div className="mt-6">
+      <div className="mt-6 sticky top-40">
         <Collapse title="Care">
           This is a limited edition production run. Printing starts when the
           drop ends.

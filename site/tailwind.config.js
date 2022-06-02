@@ -59,6 +59,15 @@ module.exports = {
       scale: {
         120: '1.2',
       },
+      borderWidth: {
+        DEFAULT: '0.5px',
+        0: '0',
+        2: '1px',
+        3: '3px',
+        4: '4px',
+        6: '6px',
+        8: '8px',
+      },
     },
   },
 }
