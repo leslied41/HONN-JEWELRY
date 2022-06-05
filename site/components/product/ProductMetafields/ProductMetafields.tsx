@@ -7,7 +7,6 @@ const ProductMetafelds = (props: Props) => {
   return (
     <div>
       <Carat />
-      <br />
     </div>
   )
 }
