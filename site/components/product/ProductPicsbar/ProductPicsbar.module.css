@@ -1,0 +1,3 @@
+.thumbnail_border {
+  @apply border-[0.5px] border-black;
+}

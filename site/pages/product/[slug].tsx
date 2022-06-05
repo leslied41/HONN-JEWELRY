@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import commerce from '@lib/api/commerce'
 import { Layout } from '@components/common'
 import { ProductView } from '@components/product'
-
 export async function getStaticProps({
   params,
   locale,

@@ -10,6 +10,7 @@ import {
   SelectedOptions,
 } from '../helpers'
 import ProductSearchOps from '../ProductSearchOptions'
+import ProductMetafields from '../ProductMetafields'
 
 interface ProductSidebarProps {
   product: Product
@@ -65,7 +66,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
         </p>
       </div>
       <ProductSearchOps product={product} allProducts={allProducts} />
-
+      <ProductMetafields />
       <ProductOptions
         options={product.options}
         selectedOptions={selectedOptions}
