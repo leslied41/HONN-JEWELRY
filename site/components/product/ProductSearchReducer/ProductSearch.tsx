@@ -1,7 +1,7 @@
 import React, { useReducer, useCallback, useMemo } from 'react'
 
 type ProducSearchType = {
-  shape: string
+  shape: { value: string; label: string }
   color: string
 }
 

@@ -4,7 +4,10 @@ import Select from 'react-select'
 import { productReducer, ActionType } from '../ProductSearchReducer'
 import type { Product } from '@commerce/types/product'
 import { useRouter } from 'next/router'
-
+import ColorOption from '../ColorOption'
+//so the better solution is to use useContext, all the state and setState and other data needed in these components
+//should be put into useContext, and put it on the product page. That is because the state including these search options
+//and fields data need to be upload to shopify in ProductSidebar component using addToCart function.
 interface Props {
   product: Product
   allProducts: Product[]
@@ -86,27 +89,7 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
             id="long-value-select"
             instanceId="long-value-select"
           />
-          <p>color</p>
-          <ul className="list-none flex">
-            <li className="mr-2">
-              <button
-                onClick={() => {
-                  setColor('#f44336')
-                }}
-              >
-                red
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setColor('#e91e63')
-                }}
-              >
-                purple
-              </button>
-            </li>
-          </ul>
+          <ColorOption setColor={setColor} state={state} />
         </div>
       </div>
     </div>
