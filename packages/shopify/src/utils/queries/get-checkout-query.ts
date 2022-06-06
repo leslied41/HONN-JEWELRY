@@ -53,6 +53,10 @@ export const checkoutDetailsFragment = /* GraphQL */ `
             }
           }
           quantity
+          customAttributes {
+            key
+            value
+          }
         }
       }
     }

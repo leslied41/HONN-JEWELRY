@@ -20,9 +20,12 @@ export const checkoutCreate = async (
   lineItems: CheckoutLineItemInput[]
 ): Promise<CheckoutCreatePayload> => {
   const { checkoutCreate } = await fetch<Mutation, MutationCheckoutCreateArgs>({
-    query: checkoutCreateMutation,
+    query: checkoutCreateMutation, //this is the fucntion that create new checkout
     variables: {
-      input: { lineItems },
+      input: {
+        //this is the args passed to the checkoutCreateMutation function.
+        lineItems,
+      },
     },
   })
 

@@ -20,6 +20,7 @@ export const handler: MutationHook<AddItemHook> = {
     query: checkoutLineItemAddMutation,
   },
   async fetcher({ input: item, options, fetch }) {
+    //if quantity is not int or less that 1, throw error.
     if (
       item.quantity &&
       (!Number.isInteger(item.quantity) || item.quantity! < 1)
@@ -28,19 +29,27 @@ export const handler: MutationHook<AddItemHook> = {
         message: 'The item quantity has to be a valid integer greater than 0',
       })
     }
-
+    //the added lineItems
     const lineItems = [
       {
         variantId: item.variantId,
         quantity: item.quantity ?? 1,
+        customAttributes: [
+          {
+            key: 'shape',
+            value: 'square',
+          },
+        ], // added this for test
       },
     ]
-
+    //get checkoutID
     let checkoutId = getCheckoutId()
 
     if (!checkoutId) {
+      //if no checkoutid, create one.
       return checkoutToCart(await checkoutCreate(fetch, lineItems))
     } else {
+      //now add checkoutLineItems using graphql on shopify.
       const { checkoutLineItemsAdd } = await fetch<
         Mutation,
         MutationCheckoutLineItemsAddArgs
@@ -51,6 +60,7 @@ export const handler: MutationHook<AddItemHook> = {
           lineItems,
         },
       })
+      //console.log(checkoutLineItemsAdd)
       return checkoutToCart(checkoutLineItemsAdd)
     }
   },
