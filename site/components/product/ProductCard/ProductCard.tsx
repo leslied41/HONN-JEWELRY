@@ -62,13 +62,6 @@ const ProductCard: FC<Props> = ({
 
         {variant === 'simple' && (
           <>
-            {process.env.COMMERCE_WISHLIST_ENABLED && (
-              <WishlistButton
-                className={s.wishlistButton}
-                productId={product.id}
-                variant={product.variants[0]}
-              />
-            )}
             {!noNameTag && (
               <div className={s.header}>
                 <h3 className={s.name}>
@@ -100,13 +93,6 @@ const ProductCard: FC<Props> = ({
 
         {variant === 'default' && (
           <>
-            {process.env.COMMERCE_WISHLIST_ENABLED && (
-              <WishlistButton
-                className={s.wishlistButton}
-                productId={product.id}
-                variant={product.variants[0] as any}
-              />
-            )}
             <ProductTag
               name={product.name}
               price={`${price} ${product.price?.currencyCode}`}

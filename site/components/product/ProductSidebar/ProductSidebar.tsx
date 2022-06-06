@@ -72,10 +72,6 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
       />
-      <Text
-        className="pb-4 break-words w-full max-w-xl"
-        html={product.descriptionHtml || product.description}
-      />
 
       <div>
         {process.env.COMMERCE_CART_ENABLED && (
@@ -93,6 +89,10 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           </Button>
         )}
       </div>
+      <Text
+        className="pb-4 break-words w-full max-w-xl"
+        html={product.descriptionHtml || product.description}
+      />
       <div className="mt-6 sticky top-40">
         <Collapse title="Care">
           This is a limited edition production run. Printing starts when the

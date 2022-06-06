@@ -4,11 +4,11 @@ import s from './ProductView.module.css'
 import { FC } from 'react'
 import type { Product } from '@commerce/types/product'
 import usePrice from '@framework/product/use-price'
-import { ProductSlider, ProductCard } from '@components/product'
 import { Container, Text } from '@components/ui'
 import { SEO } from '@components/common'
 import ProductSidebar from '../ProductSidebar'
 import ProductPicsbar from '../ProductPicsbar'
+import Link from 'next/link'
 
 interface ProductViewProps {
   product: Product
@@ -16,7 +16,7 @@ interface ProductViewProps {
 }
 
 const ProductView: FC<ProductViewProps> = ({ product, allProducts }) => {
-  const relatedProducts = allProducts.slice(0, 4)
+  const relatedProducts = allProducts.slice(0, 3)
   const { price } = usePrice({
     amount: product.price.value,
     baseAmount: product.price.retailPrice,
@@ -35,28 +35,97 @@ const ProductView: FC<ProductViewProps> = ({ product, allProducts }) => {
             className={s.sidebar}
           />
         </div>
-        <hr className="mt-7 border-accent-2" />
-        <section className="py-12 px-6 mb-10">
-          <Text variant="sectionHeading">Related Products</Text>
-          <div className={s.relatedProductsGrid}>
-            {relatedProducts.map((p) => (
-              <div
-                key={p.path}
-                className="animated fadeIn bg-accent-0 border border-accent-2"
-              >
-                <ProductCard
-                  noNameTag
-                  product={p}
-                  key={p.path}
-                  variant="simple"
-                  className="animated fadeIn"
-                  imgProps={{
-                    width: 300,
-                    height: 300,
-                  }}
+
+        <section className="py-12 px-10 mb-10">
+          <div className="grid grid-cols-3 gap-x-5 mb-10">
+            <div></div>
+            <div>
+              <p className="text-lg text-center">YOU MAY ALSO LIKE</p>
+            </div>
+            <div></div>
+          </div>
+          <div className="grid grid-cols-3 gap-x-5">
+            {relatedProducts.map((p) => {
+              return (
+                <div key={p.id} className="col-span-1">
+                  <Link href={`/product/${p.slug}`}>
+                    <a aria-label={p.name}>
+                      <Image
+                        quality="85"
+                        src={p.images[0]?.url}
+                        alt={p.name || 'Product Image'}
+                        height={500}
+                        width={360}
+                        layout="responsive"
+                      />
+                    </a>
+                  </Link>
+                </div>
+              )
+            })}
+          </div>
+          <div className="grid grid-cols-3 mx-[142px] gap-x-5 mt-[120px]">
+            <div>
+              <div className="text-center mb-10">
+                <img
+                  src="/Group19.png"
+                  alt="group19"
+                  className="inline-block"
                 />
               </div>
-            ))}
+              <p className="text-center mb-4 text-base-1">TRUE SUSTANIBILITY</p>
+              <p className="text-base text-basic">
+                Sustainably grown in America, our diamonds are the world’s first
+                diamonds produced with zero carbon footprint. Each diamond is
+                cut and polished internationally by master craftsmen in our
+                workshops.
+              </p>
+              <div className="mt-4">
+                <a href="" className="border-b-2 ">
+                  READ MORE
+                </a>
+              </div>
+            </div>
+            <div>
+              <div className="text-center mb-10">
+                <img
+                  src="/Group20.png"
+                  alt="group19"
+                  className="inline-block"
+                />
+              </div>
+              <p className="text-center mb-4 text-base-1">TRUE SUSTANIBILITY</p>
+              <p className="text-base text-basic">
+                Each made to order piece is designed by our master craftsmen and
+                individually cast using recycled gold within 10 business days.
+              </p>
+              <div className="mt-4">
+                <a href="" className="border-b-2 ">
+                  READ MORE
+                </a>
+              </div>
+            </div>
+            <div>
+              <div className="text-center mb-10">
+                <img
+                  src="/Group21.png"
+                  alt="group19"
+                  className="inline-block"
+                />
+              </div>
+              <p className="text-center mb-4 text-base-1">TRUE SUSTANIBILITY</p>
+              <p className="text-base text-basic">
+                Refined to the very last detail, our designers create fine
+                jewelry that spotlight your diamond first and foremost. With a
+                desire to do things differently, we only work with the highest
+                quality materials and reimagine timeless designs.
+              </p>
+              <div className="mt-4">
+                <a href="" className="border-b-2 ">
+                  READ MORE
+                </a>
+              </div>
+            </div>
           </div>
         </section>
       </Container>

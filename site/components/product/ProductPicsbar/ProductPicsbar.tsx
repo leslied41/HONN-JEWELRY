@@ -67,26 +67,24 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ product, className }) => {
       <div className="col-span-2 px-10 ">
         <div className="sticky top-[88px]">
           {product.images.map((image, i) => (
-            <div
-              key={image.url}
-              className={cn('mb-2 w-max', {
-                [s.thumbnail_border]: isVisible[i] === true,
-              })}
-            >
-              <a href={`#${i}`}>
+            <a href={`#${i}`}>
+              <div
+                key={image.url}
+                className={cn('mb-2 w-24 h-24 relative', {
+                  [s.thumbnail_border]: isVisible[i] === true,
+                })}
+              >
                 {/* <img src={image.url!} alt={image.alt || 'Product Image'} /> */}
                 <Image
                   src={image.url!}
                   alt={image.alt || 'Product Image'}
-                  layout="intrinsic"
-                  width="80px"
-                  height="110px"
+                  layout="fill"
                   priority={true}
-                  quality="75"
+                  quality="55"
                   objectFit="cover"
                 />
-              </a>
-            </div>
+              </div>
+            </a>
           ))}
         </div>
       </div>
