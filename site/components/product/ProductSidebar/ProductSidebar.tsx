@@ -38,6 +38,8 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   const addToCart = async () => {
     setLoading(true)
     try {
+      //so in product page, when you put a product into cart, you cannot choose the amount.
+      //but you can update this amount in cart.
       await addItem({
         productId: String(product.id),
         variantId: String(variant ? variant.id : product.variants[0]?.id),

@@ -19,7 +19,7 @@ const CartSidebarView: FC = () => {
   //one diffrent product, a new lineitem would be created. now the issue is that, evertime addtocart, metafiled can be
   //added to lineitem, but when cart use hook to get the lineitems info, metafileds data would not be returned. so I need
   //to fix useCart. If we need to display metafield info in cart page, otherwise it would not be necessary.
-  console.log(data)
+  //console.log(data)
 
   const { price: subTotal } = usePrice(
     data && {

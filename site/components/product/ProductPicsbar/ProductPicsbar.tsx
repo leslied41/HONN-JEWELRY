@@ -67,7 +67,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ product, className }) => {
       <div className="col-span-2 px-10 ">
         <div className="sticky top-[88px]">
           {product.images.map((image, i) => (
-            <a href={`#${i}`}>
+            <a href={`#${i}`} key={i}>
               <div
                 key={image.url}
                 className={cn('mb-2 w-24 h-24 relative', {
