@@ -2,7 +2,6 @@ import s from './ProductSidebar.module.css'
 import { useAddItem } from '@framework/cart'
 import { FC, useEffect, useState, useReducer, useCallback } from 'react'
 import { ProductOptions } from '@components/product'
-import type { Product } from '@commerce/types/product'
 import { Button, Text, Rating, Collapse, useUI } from '@components/ui'
 import {
   getProductVariant,
@@ -11,18 +10,15 @@ import {
 } from '../helpers'
 import ProductSearchOps from '../ProductSearchOptions'
 import ProductMetafields from '../ProductMetafields'
+import { useProductContext } from '../productProvider'
 
 interface ProductSidebarProps {
-  product: Product
   className?: string
-  allProducts: Product[]
 }
 
-const ProductSidebar: FC<ProductSidebarProps> = ({
-  product,
-  className,
-  allProducts,
-}) => {
+const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
+  const { product, allProducts } = useProductContext()
+
   const addItem = useAddItem()
   const { openSidebar } = useUI()
   const [loading, setLoading] = useState(false)
@@ -72,7 +68,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           {product.price.value} <span>{product.price.currencyCode}</span>
         </p>
       </div>
-      <ProductSearchOps product={product} allProducts={allProducts} />
+      <ProductSearchOps />
       <ProductMetafields />
       <ProductOptions
         options={product.options}

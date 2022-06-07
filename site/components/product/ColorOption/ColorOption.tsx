@@ -1,17 +1,8 @@
 import React, { FC } from 'react'
+import { useProductContext } from '../productProvider'
 
-interface Props {
-  setColor: (color: any) => void
-  state: {
-    shape: {
-      value: string
-      label: string
-    }
-    color: string
-  }
-}
-
-const ColorOption: FC<Props> = ({ setColor, state }) => {
+const ColorOption = () => {
+  const { setColor, state } = useProductContext()
   return (
     <div>
       <p>
@@ -21,7 +12,7 @@ const ColorOption: FC<Props> = ({ setColor, state }) => {
         <button
           className="w-6 h-6 rounded-xl  flex items-center justify-center mr-2 focus:border-2 focus:border-basic focus:bg-white"
           onClick={() => {
-            setColor('#f44336')
+            setColor ? setColor('#f44336') : null
           }}
         >
           <div className="w-[16px] h-[16px] rounded-xl bg-red"></div>
@@ -29,7 +20,7 @@ const ColorOption: FC<Props> = ({ setColor, state }) => {
         <button
           className="w-6 h-6 rounded-xl  flex items-center justify-center mr-2 focus:border-2 focus:border-basic focus:bg-white"
           onClick={() => {
-            setColor('#e91e63')
+            setColor ? setColor('#e91e63') : null
           }}
         >
           <div className="w-[16px] h-[16px] rounded-xl bg-blue"></div>

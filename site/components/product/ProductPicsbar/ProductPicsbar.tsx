@@ -1,16 +1,16 @@
 import React, { FC, useEffect, useState, createRef, useMemo } from 'react'
-import type { Product } from '@commerce/types/product'
 import cn from 'clsx'
 import Image from 'next/image'
 import s from './ProductPicsbar.module.css'
 import { useScrollDirection } from 'react-use-scroll-direction'
+import { useProductContext } from '../productProvider'
 
 interface ProductPicsbarProps {
-  product: Product
   className?: string
 }
 
-const ProductPicsbar: FC<ProductPicsbarProps> = ({ product, className }) => {
+const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
+  const { product } = useProductContext()
   const newImgArray = product.images.map((img, i) => false)
   const [isVisible, setIsVisible] = useState<boolean[]>(newImgArray)
   const { isScrollingUp } = useScrollDirection()

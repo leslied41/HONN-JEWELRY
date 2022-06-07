@@ -1,21 +1,16 @@
 import cn from 'clsx'
 import Image from 'next/image'
 import s from './ProductView.module.css'
-import { FC } from 'react'
-import type { Product } from '@commerce/types/product'
 import usePrice from '@framework/product/use-price'
 import { Container, Text } from '@components/ui'
 import { SEO } from '@components/common'
 import ProductSidebar from '../ProductSidebar'
 import ProductPicsbar from '../ProductPicsbar'
 import Link from 'next/link'
+import { useProductContext } from '../productProvider'
 
-interface ProductViewProps {
-  product: Product
-  allProducts: Product[]
-}
-
-const ProductView: FC<ProductViewProps> = ({ product, allProducts }) => {
+const ProductView = () => {
+  const { product, allProducts } = useProductContext()
   const relatedProducts = allProducts.slice(0, 3)
   const { price } = usePrice({
     amount: product.price.value,
@@ -27,13 +22,8 @@ const ProductView: FC<ProductViewProps> = ({ product, allProducts }) => {
     <>
       <Container className="max-w-none w-full" clean>
         <div className={cn(s.root, 'fit ')}>
-          <ProductPicsbar product={product} className={s.main} />
-          <ProductSidebar
-            key={product.id}
-            product={product}
-            allProducts={allProducts}
-            className={s.sidebar}
-          />
+          <ProductPicsbar className={s.main} />
+          <ProductSidebar key={product.id} className={s.sidebar} />
         </div>
 
         <section className="py-12 px-10 mb-10">

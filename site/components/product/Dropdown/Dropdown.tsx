@@ -1,18 +1,16 @@
-import React, { FC } from 'react'
+import React from 'react'
 import s from './Dropdown.module.css'
+import { useProductContext } from '../productProvider'
 
-interface Props {
-  setShape: (shape: string) => void
-}
-
-const Dropdown: FC<Props> = ({ setShape }) => {
+const Dropdown = () => {
+  const { setShape } = useProductContext()
   return (
     <div>
       <p>SHAPE</p>
       <select
         className={s.dropDown}
         onChange={(e) => {
-          setShape(e.target.value)
+          setShape ? setShape(e.target.value) : null
         }}
       >
         <option value="round">Round</option>
