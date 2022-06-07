@@ -44,11 +44,6 @@ const Carat = (props: Props) => {
   }
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      const width = lineRef.current!.offsetWidth
-      setLineWidth(width)
-    })
-    setLineWidth(lineRef.current!.offsetWidth)
     window.addEventListener(
       'mousemove',
       throttle((e: MouseEvent) => {
@@ -56,6 +51,14 @@ const Carat = (props: Props) => {
         setMouseDown(false)
       }, 100)
     )
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      const width = lineRef.current!.offsetWidth
+      setLineWidth((lineWidth) => (width ? width : lineWidth))
+    })
+    setLineWidth(lineRef.current!.offsetWidth)
   }, [])
 
   return (

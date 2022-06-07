@@ -1,0 +1,6 @@
+.button {
+  @apply w-6 h-6 rounded-xl  flex items-center justify-center mr-2 focus:border-2 focus:border-basic focus:bg-white;
+}
+.innerCircle {
+  @apply w-[16px] h-[16px] rounded-xl;
+}

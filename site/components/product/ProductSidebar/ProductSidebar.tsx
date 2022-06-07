@@ -17,7 +17,7 @@ interface ProductSidebarProps {
 }
 
 const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
-  const { product, allProducts } = useProductContext()
+  const { product, allProducts, state } = useProductContext()
 
   const addItem = useAddItem()
   const { openSidebar } = useUI()

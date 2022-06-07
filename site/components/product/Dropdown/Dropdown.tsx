@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import s from './Dropdown.module.css'
 import { useProductContext } from '../productProvider'
 
@@ -20,4 +20,4 @@ const Dropdown = () => {
   )
 }
 
-export default Dropdown
+export default memo(Dropdown)

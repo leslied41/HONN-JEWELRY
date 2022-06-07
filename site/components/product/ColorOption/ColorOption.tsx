@@ -1,5 +1,7 @@
 import React, { FC } from 'react'
 import { useProductContext } from '../productProvider'
+import s from './ColorOption.module.css'
+import cn from 'clsx'
 
 const ColorOption = () => {
   const { setColor, state } = useProductContext()
@@ -10,23 +12,23 @@ const ColorOption = () => {
       </p>
       <div className="flex">
         <button
-          className="w-6 h-6 rounded-xl  flex items-center justify-center mr-2 focus:border-2 focus:border-basic focus:bg-white"
+          className={s.button}
           onClick={() => {
             setColor ? setColor('#f44336') : null
           }}
         >
-          <div className="w-[16px] h-[16px] rounded-xl bg-red"></div>
+          <div className={cn(s.innerCircle, 'bg-red')}></div>
         </button>
         <button
-          className="w-6 h-6 rounded-xl  flex items-center justify-center mr-2 focus:border-2 focus:border-basic focus:bg-white"
+          className={s.button}
           onClick={() => {
             setColor ? setColor('#e91e63') : null
           }}
         >
-          <div className="w-[16px] h-[16px] rounded-xl bg-blue"></div>
+          <div className={cn(s.innerCircle, 'bg-blue')}></div>
         </button>
-        <button className="w-6 h-6 rounded-xl  flex items-center justify-center mr-2 focus:border-2 focus:border-basic focus:bg-white">
-          <div className="w-[16px] h-[16px] rounded-xl bg-pink"></div>
+        <button className={s.button}>
+          <div className={cn(s.innerCircle, 'bg-pink')}></div>
         </button>
       </div>
     </div>
