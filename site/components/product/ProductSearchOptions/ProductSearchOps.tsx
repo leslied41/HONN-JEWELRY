@@ -5,6 +5,7 @@ import { productReducer, ActionType } from '../ProductSearchReducer'
 import type { Product } from '@commerce/types/product'
 import { useRouter } from 'next/router'
 import ColorOption from '../ColorOption'
+import DropDown from '../Dropdown'
 //so the better solution is to use useContext, all the state and setState and other data needed in these components
 //should be put into useContext, and put it on the product page. That is because the state including these search options
 //and fields data need to be upload to shopify in ProductSidebar component using addToCart function.
@@ -13,26 +14,19 @@ interface Props {
   allProducts: Product[]
 }
 
-const shapeOptions = [
-  { value: 'round', label: 'round' },
-  { value: 'square', label: 'square' },
-]
 const initialState = {
-  shape: {
-    value: '',
-    label: '',
-  },
+  shape: '',
   color: '',
 }
 export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
   const [state, dispatch] = useReducer(productReducer, initialState)
   const router = useRouter()
   const setShape = useCallback(
-    (shape) => dispatch({ type: ActionType.SHAPE, payload: shape }),
+    (shape: string) => dispatch({ type: ActionType.SHAPE, payload: shape }),
     [dispatch]
   )
   const setColor = useCallback(
-    (color) => dispatch({ type: ActionType.COLOR, payload: color }),
+    (color: string) => dispatch({ type: ActionType.COLOR, payload: color }),
     [dispatch]
   )
 
@@ -46,7 +40,7 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
       if (
         main_stone_obj &&
         diamond_color_obj &&
-        main_stone_obj?.value === state.shape.value &&
+        main_stone_obj?.value === state.shape &&
         diamond_color_obj?.value === state.color
       ) {
         if (router.query.slug === p.slug) return
@@ -65,11 +59,7 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
     if (!diamond_color_obj) return
     if (!main_stone_obj) return
     if (!state.color) setColor(diamond_color_obj?.value)
-    if (!state.shape.value)
-      setShape({
-        value: main_stone_obj?.value,
-        label: main_stone_obj?.value,
-      })
+    if (!state.shape) setShape(main_stone_obj?.value)
   }, [])
 
   useEffectSkipInitial(() => {
@@ -80,15 +70,9 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
     <div>
       <div data-search-options>
         <div data-search-options="shape">
-          <p>SHAPE</p>
-          <Select
-            defaultValue={state.shape.value}
-            placeholder={state.shape.value}
-            onChange={setShape}
-            options={shapeOptions}
-            id="long-value-select"
-            instanceId="long-value-select"
-          />
+          <DropDown setShape={setShape} />
+        </div>
+        <div data-search-options="color">
           <ColorOption setColor={setColor} state={state} />
         </div>
       </div>

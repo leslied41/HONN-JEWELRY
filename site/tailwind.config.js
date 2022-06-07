@@ -43,6 +43,7 @@ module.exports = {
         gold: 'var(--gold)',
         brown: 'var(--brown)',
         basic: 'var(--black-0)',
+        darkGray: 'var(--dark-gray)',
       },
       fontSize: {
         tiny: ['9px', '16px'],
