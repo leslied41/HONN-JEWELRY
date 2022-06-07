@@ -44,21 +44,28 @@ const Carat = (props: Props) => {
   }
 
   useEffect(() => {
-    window.addEventListener(
-      'mousemove',
+    const throttleMove = () => {
       throttle((e: MouseEvent) => {
         if ((e.target as HTMLElement)!.closest('#line-round')) return
         setMouseDown(false)
       }, 100)
-    )
+    }
+    window.addEventListener('mousemove', throttleMove)
+    return () => {
+      window.removeEventListener('mousemove', throttleMove)
+    }
   }, [])
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
+    const getWidth = () => {
       const width = lineRef.current!.offsetWidth
       setLineWidth((lineWidth) => (width ? width : lineWidth))
-    })
+    }
+    window.addEventListener('resize', getWidth)
     setLineWidth(lineRef.current!.offsetWidth)
+    return () => {
+      window.removeEventListener('resize', getWidth)
+    }
   }, [])
 
   return (

@@ -7,6 +7,7 @@ import React, {
   useReducer,
 } from 'react'
 import type { Product } from '@commerce/types/product'
+
 type ProductContextType = {
   product: Product
   allProducts: Product[]
