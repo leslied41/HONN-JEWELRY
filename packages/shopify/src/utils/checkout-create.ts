@@ -27,6 +27,7 @@ export const checkoutCreate = async (
   })
 
   const checkout = checkoutCreate?.checkout
+  //added by me
 
   if (checkout) {
     const checkoutId = checkout?.id

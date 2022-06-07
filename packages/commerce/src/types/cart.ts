@@ -89,6 +89,7 @@ export type CartItemBody = {
   variantId: string
   productId?: string
   quantity?: number
+  customAttributes?: { key: string; value: string }[] //add by me
 }
 
 /**

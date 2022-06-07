@@ -43,6 +43,11 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       await addItem({
         productId: String(product.id),
         variantId: String(variant ? variant.id : product.variants[0]?.id),
+        //so now metafields passed here will be passed to checkout.
+        customAttributes: [
+          { key: 'color', value: 'red' },
+          { key: 'shape', value: 'round' },
+        ],
       })
       openSidebar()
       setLoading(false)

@@ -20,6 +20,8 @@ export const handler: MutationHook<AddItemHook> = {
     query: checkoutLineItemAddMutation,
   },
   async fetcher({ input: item, options, fetch }) {
+    //add by me
+    console.log(item)
     if (
       item.quantity &&
       (!Number.isInteger(item.quantity) || item.quantity! < 1)
@@ -28,19 +30,23 @@ export const handler: MutationHook<AddItemHook> = {
         message: 'The item quantity has to be a valid integer greater than 0',
       })
     }
-
+    //in order to add customAttributes in lineItems, I rewrite type CartItemBody that can be found by searching.
     const lineItems = [
       {
         variantId: item.variantId,
-        quantity: item.quantity ?? 1,
+        quantity: item.quantity ?? 1, //if item is null, it will be 1. That's because user cannot set amount in product
+        //page, but they can do in cart.
+        customAttributes: item.customAttributes,
       },
     ]
 
+    //if there is checokoutID, just grab this id.
     let checkoutId = getCheckoutId()
-
+    //if no, create a new one.
     if (!checkoutId) {
       return checkoutToCart(await checkoutCreate(fetch, lineItems))
     } else {
+      //otherwise, update it.
       const { checkoutLineItemsAdd } = await fetch<
         Mutation,
         MutationCheckoutLineItemsAddArgs

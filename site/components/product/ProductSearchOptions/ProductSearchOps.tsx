@@ -56,10 +56,10 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
   }
 
   useEffect(() => {
-    const diamond_color_obj = product.metafields.find(
+    const diamond_color_obj = product.metafields?.find(
       (i: any) => i.key === 'diamond_color'
     )
-    const main_stone_obj = product.metafields.find(
+    const main_stone_obj = product.metafields?.find(
       (i: any) => i.key === 'main_stone'
     )
     if (!diamond_color_obj) return
