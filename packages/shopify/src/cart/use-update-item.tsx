@@ -51,6 +51,7 @@ export const handler = {
     const { checkoutLineItemsUpdate } = await fetch<
       Mutation,
       MutationCheckoutLineItemsUpdateArgs
+      //here is to update graphql data of shopify, the cart.
     >({
       ...options,
       variables: {
@@ -58,7 +59,13 @@ export const handler = {
         lineItems: [
           {
             id: itemId,
-            quantity: item.quantity,
+            quantity: item.quantity, //here is to update quantity
+            // customAttributes: [
+            //   {
+            //     key: 'shape',
+            //     value: 'square',
+            //   },
+            // ],
           },
         ],
       },
