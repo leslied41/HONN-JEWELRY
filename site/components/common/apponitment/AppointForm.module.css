@@ -1,0 +1,28 @@
+.form {
+  width: 100%;
+}
+.form input,
+.form textarea {
+  border: none;
+  padding: 10px 10px 10px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 19px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  transition: box-shadow 0.15s ease;
+}
+.form input:focus,
+.form textarea:focus {
+  box-shadow: 0 1px 3px #32325d26, 0 1px #00000005;
+}
+.submit_btn_div {
+  @apply text-center;
+}
+
+.submit_btn_div:hover {
+  cursor: pointer;
+}
+.form input[type='submit'] {
+  width: fit-content;
+}

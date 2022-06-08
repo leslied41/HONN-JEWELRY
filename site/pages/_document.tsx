@@ -13,6 +13,9 @@ class MyDocument extends Document {
         <body className="loading">
           <Main />
           <NextScript />
+          <script type="text/javascript" src="/scripts/quote_params.js" />
+          <script type="text/javascript" src="/scripts/quote.js" />
+          <script type="text/javascript" src="//cdn.shopify.com/s/files/1/0264/3171/7422/t/7/assets/globorequestforquote.min.js?v=6522257995224210151653381403"></script>
         </body>
       </Html>
     )

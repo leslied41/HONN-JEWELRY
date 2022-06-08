@@ -10,6 +10,7 @@ const Head: VFC = () => {
         content="width=device-width, initial-scale=1"
       />
       <link rel="manifest" href="/site.webmanifest" key="site-manifest" />
+      <script type="text/javascript" src="https://cdn.shopify.com/s/files/1/0264/3171/7422/t/7/assets/globorequestforquote_init.min.js?shop=honn-jewelry.myshopify.com"></script>
     </SEO>
   )
 }

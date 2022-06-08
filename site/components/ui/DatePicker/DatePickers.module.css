@@ -1,0 +1,39 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.outter {
+  display: flex;
+  align-items: center;
+}
+.times_container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  justify-content: center;
+}
+.center {
+  justify-content: center;
+}
+.control {
+  position: relative;
+}
+
+.times {
+  display: flex;
+  width: max-content;
+
+  /* So if you want to make elements full with a row and come out the max-width, you need to use flex.; */
+}
+
+
+.selected {
+  background-color: gray;
+}
+
+.times button {
+  padding: 0px 10px;
+}

@@ -7,6 +7,14 @@ export const getPageQuery = /* GraphQL */ `
         handle
         body
         bodySummary
+        availableTime: metafield(namespace: "page", key: "available_time") {
+          description
+          id
+          key
+          namespace
+          value
+          valueType
+        }
       }
     }
   }
