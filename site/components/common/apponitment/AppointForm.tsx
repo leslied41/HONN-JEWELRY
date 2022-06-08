@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 // import { DatePickers } from '../../ui/DatePicker'
-import { useForm, SubmitHandler } from 'react-hook-form'
 import s from './AppointForm.module.css'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { HandleClickArgs } from '../../request'
 
 type FormValues = {
@@ -17,10 +17,14 @@ interface AppointFormProps {
   startDate: Date | null
 }
 
-export const AppointForm: FC<AppointFormProps> = ({ handleClick, time, startDate }) => {
+export const AppointForm: FC<AppointFormProps> = ({
+  handleClick,
+  time,
+  startDate,
+}) => {
   const { register, handleSubmit } = useForm<FormValues>()
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = (data: any) => {
     if (!startDate) return
     let dateTime = startDate!.toString().split(' ')
     dateTime.splice(4, 1, time)
@@ -59,7 +63,7 @@ export const AppointForm: FC<AppointFormProps> = ({ handleClick, time, startDate
             {...register('comment', { required: false, maxLength: 500 })}
           />
         </div>
-        <input type="submit" value="Submit" className={s.submit_btn_div}/>
+        <input type="submit" value="Submit" className={s.submit_btn_div} />
       </form>
     </div>
   )

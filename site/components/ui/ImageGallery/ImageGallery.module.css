@@ -1,0 +1,6 @@
+.layoutA {
+  @apply grid grid-cols-4 grid-rows-2;
+  & > *:first-child {
+    @apply col-span-2 row-span-2;
+  }
+}

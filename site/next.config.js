@@ -15,7 +15,8 @@ module.exports = withCommerceConfig({
     defaultLocale: 'en-US',
   },
   images: {
-    domains: ['img.rawpixel.com'],
+    //domains: ['img.rawpixel.com'],
+    domains: ['scontent.cdninstagram.com'],
   },
   rewrites() {
     return [

@@ -1,10 +1,19 @@
 import commerce from '@lib/api/commerce'
 import { Layout } from '@components/common'
-import { ProductCard } from '@components/product'
-import { Grid, Marquee, Hero } from '@components/ui'
 import Image from 'next/image'
-// import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
+import ImageGallery from '@components/ui/ImageGallery'
+import {
+  getStartAndToken,
+  getData,
+  update,
+} from '../lib/utilities/ins-accesskey-funcs'
+
+type InsData = {
+  media_url?: string
+  id: string
+  caption?: string
+}[]
 
 export async function getStaticProps({
   preview,
@@ -13,20 +22,31 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const config = { locale, locales }
   const productsPromise = commerce.getAllProducts({
-    //this commerse can include all the data fetch functions.
     variables: { first: 6 },
     config,
     preview,
-    // Saleor provider only
     ...({ featured: true } as any),
   })
   //a version of the page will be generated for each locale.
   const pagesPromise = commerce.getAllPages({ config, preview })
-  //this function getAllPages is to get all the pages created by user on shopify.
   const siteInfoPromise = commerce.getSiteInfo({ config, preview })
   const { products } = await productsPromise
   const { pages } = await pagesPromise
   const { categories, brands } = await siteInfoPromise
+  //this is to grab instagram data
+  let { start, access_key } = await getStartAndToken()
+  const insData: InsData = await getData(access_key)
+  if (Date.now() - start > 2592000000) {
+    start = Date.now()
+    update(start, access_key)
+  }
+  if (!insData) {
+    start = Date.now()
+    update(start, access_key)
+    return {
+      notFound: true,
+    }
+  }
 
   return {
     props: {
@@ -34,6 +54,7 @@ export async function getStaticProps({
       categories,
       brands,
       pages,
+      insData,
     },
     revalidate: 60,
   }
@@ -41,6 +62,7 @@ export async function getStaticProps({
 
 export default function Home({
   products,
+  insData,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -220,53 +242,15 @@ export default function Home({
           <div className="col-span-4"></div>
         </div>
 
-        {/* sixth section */}
-        <div className="grid-cols-12 grid  text-primary  mx-10 pt-60">
-          <div className="col-span-12">
+        {/* sixth section INSTAGRAM */}
+
+        <div className="grid grid-cols-1 text-primary  mx-10 pt-60">
+          <div>
             <p className="text-6xl pb-5">
               FOLLOW US ON <span>#HONN</span>
             </p>
           </div>
-          <div className="col-span-6 row-span-2">
-            <Image
-              src="/landing_pic6.png"
-              layout="responsive"
-              width="100%"
-              height="100%"
-            />
-          </div>
-          <div className="col-span-3 row-span-1">
-            <Image
-              src="/landing_pic5.png"
-              layout="responsive"
-              width="100%"
-              height="100%"
-            />
-          </div>
-          <div className="col-span-3 row-span-1">
-            <Image
-              src="/landing_pic5.png"
-              layout="responsive"
-              width="100%"
-              height="100%"
-            />
-          </div>
-          <div className="col-span-3 row-span-1">
-            <Image
-              src="/landing_pic5.png"
-              layout="responsive"
-              width="100%"
-              height="100%"
-            />
-          </div>
-          <div className="col-span-3 row-span-1">
-            <Image
-              src="/landing_pic5.png"
-              layout="responsive"
-              width="100%"
-              height="100%"
-            />
-          </div>
+          <ImageGallery insData={insData} layout="A" />
         </div>
       </div>
     </>

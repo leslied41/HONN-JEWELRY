@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+const axios = require('axios').default
 import { Button, Text, Container } from '@components/ui'
 import AppointForm from '../components/common/apponitment'
 import { DatePickers } from '../components/ui/DatePicker'
@@ -17,7 +17,11 @@ export type HandleClickArgs = {
   date: string
 }
 
-const Request = ({ available_time }: { available_time: string[] | undefined }) => {
+const Request = ({
+  available_time,
+}: {
+  available_time: string[] | undefined
+}) => {
   const error = null
   const success = null
   const { data, isLoading, isEmpty } = useCart()
@@ -52,33 +56,39 @@ const Request = ({ available_time }: { available_time: string[] | undefined }) =
 
     const quote_info = {
       shop: 'honn-jewelry.myshopify.com',
-      locale:"sv",
-      api_secret: "b5f9bc52f3246601cdb9b4b210dcfb01",
-      line_items: [{"id":6543634432046,"variant_id":39310293860398,"quantity":1}],
-      additional_data: {"name": data.name ,"email": data.email, "message": data.comment}
+      locale: 'sv',
+      api_secret: 'b5f9bc52f3246601cdb9b4b210dcfb01',
+      line_items: [
+        { id: 6543634432046, variant_id: 39310293860398, quantity: 1 },
+      ],
+      additional_data: {
+        name: data.name,
+        email: data.email,
+        message: data.comment,
+      },
     }
 
     let config = {
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     }
 
     axios
       .post(`http://localhost:3000/api/twilio`, sms_info)
-      .then(function (response) {
+      .then(function (response: any) {
         console.log(response)
       })
-      .catch(function (error) {
+      .catch(function (error: any) {
         console.log(error)
       })
 
     axios
       .post(`https://quote.globosoftware.net/api/quote`, quote_info, config)
-      .then(function (response) {
+      .then(function (response: any) {
         console.log(response)
       })
-      .catch(function (error) {
+      .catch(function (error: any) {
         console.log(error)
       })
   }
@@ -146,7 +156,11 @@ const Request = ({ available_time }: { available_time: string[] | undefined }) =
             <span>{total}</span>
           </div>
         </div>
-        <AppointForm handleClick={handleClick} time={time} startDate={startDate} />
+        <AppointForm
+          handleClick={handleClick}
+          time={time}
+          startDate={startDate}
+        />
       </div>
       <div className="lg:col-span-6">
         <div className="flex-shrink-0 px-4 sm:px-6">

@@ -48,20 +48,20 @@ export const DatePickers: FC<DatePickerProps> = ({
   //   return time
   // }
   // useEffect(() => {
-    // let day = startDate!.getDay()
-    // switch (day) {
-    //   case 1:
-    //     setTimeOfEachDay(['13:00', '14:00', '16:00'])
-    //     break
-    //   case 3:
-    //     setTimeOfEachDay(['10:00', '12:00', '14:00', '16:00', '17:00'])
-    //     break
-    //   case 5:
-    //     setTimeOfEachDay(['13:00', '14:00', '16:00'])
-    //     break
-    //   default:
-    //     setTimeOfEachDay([])
-    // }
+  // let day = startDate!.getDay()
+  // switch (day) {
+  //   case 1:
+  //     setTimeOfEachDay(['13:00', '14:00', '16:00'])
+  //     break
+  //   case 3:
+  //     setTimeOfEachDay(['10:00', '12:00', '14:00', '16:00', '17:00'])
+  //     break
+  //   case 5:
+  //     setTimeOfEachDay(['13:00', '14:00', '16:00'])
+  //     break
+  //   default:
+  //     setTimeOfEachDay([])
+  // }
   // }, [startDate])
 
   // const handleMove = (dir: string) => {
@@ -78,27 +78,30 @@ export const DatePickers: FC<DatePickerProps> = ({
   // }
 
   const showAvailabeTime = (time: string | number | Date) => {
-    const selectedDate = new Date(time);
-    const currentDate = new Date();
+    const selectedDate = new Date(time)
+    const currentDate = new Date()
     let convertedTime: number[] = []
-    const timeString = available_time ? available_time.toString() : ""
+    const timeString = available_time ? available_time.toString() : ''
     if (available_time) {
       JSON.parse(timeString).forEach((time: string | number | Date) => {
-        let date = new Date(time);
+        let date = new Date(time)
         convertedTime.push(date.getTime())
-      });
+      })
     }
-    return convertedTime.includes(selectedDate.getTime()) && currentDate.getTime() < selectedDate.getTime();
-  };
+    return (
+      convertedTime.includes(selectedDate.getTime()) &&
+      currentDate.getTime() < selectedDate.getTime()
+    )
+  }
 
   const availabeDate = () => {
     let convertedDate: Date[] = []
-    const timeString = available_time ? available_time.toString() : ""
+    const timeString = available_time ? available_time.toString() : ''
     if (available_time) {
       JSON.parse(timeString).forEach((time: string | number | Date) => {
-        let date = new Date(time);
+        let date = new Date(time)
         convertedDate.push(date)
-      });
+      })
     }
     return convertedDate
   }
