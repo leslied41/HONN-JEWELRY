@@ -22,7 +22,7 @@ export async function getStaticProps({
 }: GetStaticPropsContext) {
   const config = { locale, locales }
   const productsPromise = commerce.getAllProducts({
-    variables: { first: 6 },
+    variables: { first: 3 },
     config,
     preview,
     ...({ featured: true } as any),
@@ -163,7 +163,7 @@ export default function Home({
         </div>
 
         {/* fourth section */}
-        <div className="grid grid-cols-6    mx-10 text-primary gap-x-5 gap-y-20 border-b ">
+        <div className="grid grid-cols-6    mx-10 text-primary gap-x-5 gap-y-20 mb-20  ">
           {/*  row 1*/}
           <div className="col-span-2 row-span-1"></div>
           <div className="col-span-2 row-span-1 pt-32">
@@ -187,31 +187,14 @@ export default function Home({
           <div className="col-span-2 row-span-1 justify-self-end">
             <img src="/cherry.svg" alt="cherry svg" />
           </div>
-          {/*  row 3*/}
-          <div className="col-span-2 row-span-1 cursor-pointer pb-14 hover:border-b">
-            <Image
-              src="/test_pic.png"
-              layout="responsive"
-              width="360px"
-              height="500px"
-            />
-          </div>
-          <div className="col-span-2 row-span-1 cursor-pointer pb-14 hover:border-b">
-            <Image
-              src="/test_pic.png"
-              layout="responsive"
-              width="360px"
-              height="500px"
-            />
-          </div>
-          <div className="col-span-2 row-span-1 cursor-pointer pb-14 hover:border-b">
-            <Image
-              src="/test_pic.png"
-              layout="responsive"
-              width="360px"
-              height="500px"
-            />
-          </div>
+        </div>
+        {/*  row 3*/}
+        <div className="mx-10">
+          <ImageGallery
+            products={products}
+            layout="B"
+            variant="hover-bottom-line"
+          />
         </div>
 
         {/* fifth section */}

@@ -12,14 +12,15 @@ export type ProductPrice = {
   extendedSalePrice?: number
   extendedListPrice?: number
 }
+
 export type Metafield = {
-  id: string
-  namespace: string
-  key: string
-  value: string
-  valueType: string
-  description: string
-} //customized
+  description?: string
+  id?: string
+  key?: string
+  namespace?: string
+  value?: string // depend on your metafield content type
+  valueType?: string
+}
 
 export type ProductOption = {
   __typename?: 'MultipleChoiceOption'
@@ -106,13 +107,4 @@ export type GetAllProductsOperation<T extends ProductTypes = ProductTypes> = {
 export type GetProductOperation<T extends ProductTypes = ProductTypes> = {
   data: { product?: T['product'] }
   variables: { path: string; slug?: never } | { path?: never; slug: string }
-}
-
-export type Metafield = {
-  description?: string
-  id?: string
-  key?: string
-  namespace?: string
-  value?: string // depend on your metafield content type
-  valueType?: string
 }
