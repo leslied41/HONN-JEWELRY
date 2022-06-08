@@ -4,17 +4,17 @@ import s from './ColorOption.module.css'
 import cn from 'clsx'
 
 const ColorOption = () => {
-  const { setColor, state } = useProductContext()
+  const { setColor, color } = useProductContext()
   return (
     <div>
       <p>
-        METAL | <span>{state.color}</span>
+        METAL | <span>{color}</span>
       </p>
       <div className="flex">
         <button
           className={s.button}
           onClick={() => {
-            setColor ? setColor('#f44336') : null
+            setColor?.('#f44336')
           }}
         >
           <div className={cn(s.innerCircle, 'bg-red')}></div>
@@ -22,7 +22,7 @@ const ColorOption = () => {
         <button
           className={s.button}
           onClick={() => {
-            setColor ? setColor('#e91e63') : null
+            setColor?.('#e91e63')
           }}
         >
           <div className={cn(s.innerCircle, 'bg-blue')}></div>

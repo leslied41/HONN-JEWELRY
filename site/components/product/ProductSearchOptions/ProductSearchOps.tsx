@@ -10,7 +10,7 @@ import { useProductContext } from '../productProvider'
 //and fields data need to be upload to shopify in ProductSidebar component using addToCart function.
 
 export const ProductSearchOps = () => {
-  const { product, allProducts, state, setShape, setColor } =
+  const { product, allProducts, color, shape, setShape, setColor } =
     useProductContext()
 
   const router = useRouter()
@@ -25,8 +25,8 @@ export const ProductSearchOps = () => {
       if (
         main_stone_obj &&
         diamond_color_obj &&
-        main_stone_obj?.value === state.shape &&
-        diamond_color_obj?.value === state.color
+        main_stone_obj?.value === shape &&
+        diamond_color_obj?.value === color
       ) {
         if (router.query.slug === p.slug) return
         router.replace(`/product/${p.slug}`)
@@ -43,13 +43,13 @@ export const ProductSearchOps = () => {
     )
     if (!diamond_color_obj) return
     if (!main_stone_obj) return
-    if (!state.color) setColor ? setColor(diamond_color_obj?.value) : null
-    if (!state.shape) setShape ? setShape(main_stone_obj?.value) : null
+    if (!color) setColor?.(diamond_color_obj?.value)
+    if (!shape) setShape?.(main_stone_obj?.value)
   }, [])
 
   useEffectSkipInitial(() => {
     filterProduct()
-  }, [state])
+  }, [color, shape])
 
   return (
     <div>

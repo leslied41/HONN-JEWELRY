@@ -11,7 +11,8 @@ import type { Product } from '@commerce/types/product'
 type ProductContextType = {
   product: Product
   allProducts: Product[]
-  state: StateType
+  color: string
+  shape: string
   setShape?: (shape: string) => void
   setColor?: (color: string) => void
 }
@@ -23,7 +24,8 @@ interface Props {
 const defaultContextValue = {
   product: {} as Product,
   allProducts: [] as Product[],
-  state: {} as StateType,
+  color: '',
+  shape: '',
 }
 const ProductContext = createContext<ProductContextType>(defaultContextValue)
 //this type of defaultContextValue sholud be same as value in provider and ProductContextType.
@@ -70,15 +72,19 @@ export const ProductProvider: FC<Props> = ({
     (color: string) => dispatch({ type: ActionType.COLOR, payload: color }),
     [dispatch]
   )
+  const color = useMemo(() => state.color, [state.color])
+  const shape = useMemo(() => state.shape, [state.shape])
+
   const value = useMemo(
     () => ({
       product,
       allProducts,
-      state,
+      color,
+      shape,
       setShape,
       setColor,
     }),
-    [product, allProducts, state, setShape, setColor]
+    [product, allProducts, shape, color, setShape, setColor]
   )
   return (
     <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
