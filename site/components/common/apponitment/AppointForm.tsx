@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react'
-import { DatePickers } from '../../ui/DatePicker'
+import React, { FC } from 'react'
+// import { DatePickers } from '../../ui/DatePicker'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import s from './AppointForm.module.css'
 import { HandleClickArgs } from '../../request'
@@ -21,12 +21,13 @@ export const AppointForm: FC<AppointFormProps> = ({ handleClick, time, startDate
   const { register, handleSubmit } = useForm<FormValues>()
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    if (!time) return
+    if (!startDate) return
     let dateTime = startDate!.toString().split(' ')
     dateTime.splice(4, 1, time)
     let final_dateTime = dateTime.join(' ')
     const final_data = { ...data, date: final_dateTime }
     handleClick(final_data)
+    console.log(final_data)
   }
   return (
     <div>

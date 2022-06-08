@@ -50,8 +50,31 @@ const Request = ({ available_time }: { available_time: string[] | undefined }) =
       customer_number: `+${data.phone.toString()}`,
     }
 
+    const quote_info = {
+      shop: 'honn-jewelry.myshopify.com',
+      locale:"sv",
+      api_secret: "b5f9bc52f3246601cdb9b4b210dcfb01",
+      line_items: [{"id":6543634432046,"variant_id":39310293860398,"quantity":1}],
+      additional_data: {"name": data.name ,"email": data.email, "message": data.comment}
+    }
+
+    let config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+
     axios
       .post(`http://localhost:3000/api/twilio`, sms_info)
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+
+    axios
+      .post(`https://quote.globosoftware.net/api/quote`, quote_info, config)
       .then(function (response) {
         console.log(response)
       })

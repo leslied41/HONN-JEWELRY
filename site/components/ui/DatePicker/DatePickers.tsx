@@ -77,20 +77,39 @@ export const DatePickers: FC<DatePickerProps> = ({
   //   }
   // }
 
-  // const filterPassedTime = (time: string) => {
-  //   const currentDate = new Date();
-  //   const selectedDate = new Date(time);
+  const showAvailabeTime = (time: string | number | Date) => {
+    const selectedDate = new Date(time);
+    const currentDate = new Date();
+    let convertedTime: number[] = []
+    const timeString = available_time ? available_time.toString() : ""
+    if (available_time) {
+      JSON.parse(timeString).forEach((time: string | number | Date) => {
+        let date = new Date(time);
+        convertedTime.push(date.getTime())
+      });
+    }
+    return convertedTime.includes(selectedDate.getTime()) && currentDate.getTime() < selectedDate.getTime();
+  };
 
-  //   return currentDate.getTime() < selectedDate.getTime();
-  // };
+  const availabeDate = () => {
+    let convertedDate: Date[] = []
+    const timeString = available_time ? available_time.toString() : ""
+    if (available_time) {
+      JSON.parse(timeString).forEach((time: string | number | Date) => {
+        let date = new Date(time);
+        convertedDate.push(date)
+      });
+    }
+    return convertedDate
+  }
 
   return (
     <>
       <div>
-        {available_time}
         <DatePicker
           // filterDate={isWeekday}
-          // filterTime={filterPassedTime}
+          filterTime={showAvailabeTime}
+          includeDates={availabeDate()}
           selected={startDate}
           onChange={(date) => {
             setStartDate(date)
@@ -98,9 +117,9 @@ export const DatePickers: FC<DatePickerProps> = ({
             // if (timesRef.current === null) return
             // timesRef.current.style.transform = `translateX(0px)`
           }}
-          minTime={new Date(0, 0, 0, 10, 30)} // 7:30am
-          maxTime={new Date(0, 0, 0, 16, 30)} // 4:30pm
-          timeIntervals={60}
+          // minTime={new Date(0, 0, 0, 10, 30)} // 7:30am
+          // maxTime={new Date(0, 0, 0, 16, 30)} // 4:30pm
+          timeIntervals={30}
           showTimeSelect
           inline
         />
