@@ -22,6 +22,7 @@ export const handler: MutationHook<AddItemHook> = {
   async fetcher({ input: item, options, fetch }) {
     //add by me
     console.log(item)
+    //if quantity is not int or less that 1, throw error.
     if (
       item.quantity &&
       (!Number.isInteger(item.quantity) || item.quantity! < 1)
@@ -44,6 +45,7 @@ export const handler: MutationHook<AddItemHook> = {
     let checkoutId = getCheckoutId()
     //if no, create a new one.
     if (!checkoutId) {
+      //if no checkoutid, create one.
       return checkoutToCart(await checkoutCreate(fetch, lineItems))
     } else {
       //otherwise, update it.
@@ -57,6 +59,7 @@ export const handler: MutationHook<AddItemHook> = {
           lineItems,
         },
       })
+      //console.log(checkoutLineItemsAdd)
       return checkoutToCart(checkoutLineItemsAdd)
     }
   },
