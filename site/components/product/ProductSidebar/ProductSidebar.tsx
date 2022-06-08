@@ -17,7 +17,7 @@ interface ProductSidebarProps {
 }
 
 const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
-  const { product, allProducts, state } = useProductContext()
+  const { product, allProducts, color, shape } = useProductContext()
 
   const addItem = useAddItem()
   const { openSidebar } = useUI()
@@ -41,8 +41,8 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
         variantId: String(variant ? variant.id : product.variants[0]?.id),
         //so now metafields passed here will be passed to checkout.
         customAttributes: [
-          { key: 'color', value: 'red' },
-          { key: 'shape', value: 'round' },
+          { key: 'color', value: color },
+          { key: 'shape', value: shape },
         ],
       })
       openSidebar()

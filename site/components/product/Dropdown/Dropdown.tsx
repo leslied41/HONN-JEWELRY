@@ -10,7 +10,7 @@ const Dropdown = () => {
       <select
         className={s.dropDown}
         onChange={(e) => {
-          setShape ? setShape(e.target.value) : null
+          setShape?.(e.target.value)
         }}
       >
         <option value="round">Round</option>
