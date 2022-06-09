@@ -8,6 +8,7 @@ import ProductSidebar from '../ProductSidebar'
 import ProductPicsbar from '../ProductPicsbar'
 import Link from 'next/link'
 import { useProductContext } from '../productProvider'
+import ImageGallery from '@components/ui/ImageGallery'
 
 const ProductView = () => {
   const { product, allProducts } = useProductContext()
@@ -35,26 +36,7 @@ const ProductView = () => {
             </div>
             <div></div>
           </div>
-          <div className="grid grid-cols-3 gap-x-5">
-            {relatedProducts.map((p) => {
-              return (
-                <div key={p.id} className="col-span-1">
-                  <Link href={`/product/${p.slug}`}>
-                    <a aria-label={p.name}>
-                      <Image
-                        quality="85"
-                        src={p.images[0]?.url}
-                        alt={p.name || 'Product Image'}
-                        height={500}
-                        width={360}
-                        layout="responsive"
-                      />
-                    </a>
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
+          <ImageGallery products={relatedProducts} layout="B" link={true} />
           <div className="grid grid-cols-3 mx-[142px] gap-x-5 mt-[120px]">
             <div>
               <div className="text-center mb-10">
