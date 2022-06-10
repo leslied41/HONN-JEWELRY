@@ -204,7 +204,8 @@ export type AttributeInput = {
   /** Key or name of the attribute. */
   key: Scalars['String']
   /** Value of the attribute. */
-  value: Scalars['String']
+  //value: Scalars['String']
+  value?: Maybe<Scalars['String']> //add by me
 }
 
 /** Automatic discount applications capture the intentions of a discount that was automatically applied. */

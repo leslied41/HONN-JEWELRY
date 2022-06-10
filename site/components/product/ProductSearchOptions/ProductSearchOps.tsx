@@ -43,8 +43,9 @@ export const ProductSearchOps = () => {
     )
     if (!diamond_color_obj) return
     if (!main_stone_obj) return
-    if (!color) setColor?.(diamond_color_obj?.value)
-    if (!shape) setShape?.(main_stone_obj?.value)
+    if (!color)
+      setColor?.(diamond_color_obj?.value ? diamond_color_obj?.value : '')
+    if (!shape) setShape?.(main_stone_obj?.value ? main_stone_obj?.value : '')
   }, [])
 
   useEffectSkipInitial(() => {

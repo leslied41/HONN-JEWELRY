@@ -150,7 +150,7 @@ export function normalizeCart(checkout: Checkout): Cart {
 }
 
 function normalizeLineItem({
-  node: { id, title, variant, quantity },
+  node: { id, title, variant, quantity, customAttributes },
 }: CheckoutLineItemEdge): LineItem {
   return {
     id,
@@ -158,6 +158,7 @@ function normalizeLineItem({
     productId: String(variant?.id),
     name: `${title}`,
     quantity,
+    customAttributes: customAttributes,
     variant: {
       id: String(variant?.id),
       sku: variant?.sku ?? '',

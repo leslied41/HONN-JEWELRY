@@ -1,5 +1,30 @@
 import type { Discount, Measurement, Image } from './common'
 
+export type Maybe<T> = T | null
+
+export type Scalars = {
+  ID: string
+  String: string
+  Boolean: boolean
+  Int: number
+  Float: number
+  /** An ISO-8601 encoded UTC date time string. Example value: `"2019-07-03T20:47:55Z"`. */
+  DateTime: any
+  /** A signed decimal number, which supports arbitrary precision and is serialized as a string. Example value: `"29.99"`. */
+  Decimal: any
+  /** A string containing HTML code. Example value: `"<p>Grey cotton knit sweater.</p>"`. */
+  HTML: any
+  /** A monetary value string. Example value: `"100.57"`. */
+  Money: any
+  /**
+   * An RFC 3986 and RFC 3987 compliant URI string.
+   *
+   * Example value: `"https://johns-apparel.myshopify.com"`.
+   *
+   */
+  URL: any
+}
+
 export type SelectedOption = {
   // The option's id.
   id?: string
@@ -20,6 +45,7 @@ export type LineItem = {
   path: string
   variant: ProductVariant
   options?: SelectedOption[]
+  customAttributes?: Attribute[] //add by me
 }
 
 export type ProductVariant = {
@@ -89,7 +115,15 @@ export type CartItemBody = {
   variantId: string
   productId?: string
   quantity?: number
-  customAttributes?: { key: string; value: string }[] //add by me
+  customAttributes?: Attribute[] //add by me
+}
+//add by me
+export type Attribute = {
+  __typename?: 'Attribute'
+  /** Key or name of the attribute. */
+  key: Scalars['String']
+  /** Value of the attribute. */
+  value?: Maybe<Scalars['String']>
 }
 
 /**

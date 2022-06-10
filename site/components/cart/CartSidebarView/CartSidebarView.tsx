@@ -13,6 +13,7 @@ import SidebarLayout from '@components/common/SidebarLayout'
 const CartSidebarView: FC = () => {
   const { closeSidebar, setSidebarView } = useUI()
   const { data, isLoading, isEmpty } = useCart()
+  console.log(data)
   //this is to print the cart info including customerId, currecny , lineItems...
   //so the logic is that everytime you click addtocart, it will check if there is an existing lineitem,
   //if no, a new one would be created. If exists, the updated info would be add into this lineitem. if you choose
