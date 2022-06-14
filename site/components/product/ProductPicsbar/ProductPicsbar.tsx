@@ -26,7 +26,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
         .fill(null)
         .map((_, index) => elRefs[index] || createRef())
     )
-  }, [product.images.length])
+  }, [])
 
   const options = useMemo(() => {
     return { root: null, rooMargin: '0px', threshold: 0.6 }
@@ -53,13 +53,22 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
   }
 
   useEffect(() => {
+    //at first render, there are on elRefs as elRefs are generated in another useEffect
+    //at the same time in first render. when elrefs are created, setElrefs is called, so
+    //the second render will be triggered. and at this second render, this useeffec will work
+    //at second time due to the dependency elrefs changed from empty to normal. And after this time,
+    //as elrefs will not change, so this useeffecet will not work any more. Until this componet is about to
+    //disappear, the clean up function will be called, that is the observer.disconnect(). it will stop the observer.
     const observer = new IntersectionObserver(observeCallback, options)
     elRefs.forEach((ref, i) => {
       if (ref.current) observer.observe(ref.current)
-      return () => {
-        if (ref.current) observer.unobserve(ref.current)
-      }
+      // return () => {
+      //   if (ref.current) observer.unobserve(ref.current)
+      // }
     })
+    return () => {
+      observer.disconnect()
+    }
   }, [elRefs])
 
   return (

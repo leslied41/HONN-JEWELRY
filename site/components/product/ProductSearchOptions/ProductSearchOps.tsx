@@ -5,6 +5,7 @@ import ColorOption from '../ColorOption'
 import DropDown from '../Dropdown'
 import { useProductContext } from '../productProvider'
 import BandOption from '../BandOption'
+import MosaicOption from '../MosaicOption'
 
 //so the better solution is to use useContext, all the state and setState and other data needed in these components
 //should be put into useContext, and put it on the product page. That is because the state including these search options
@@ -17,9 +18,11 @@ export const ProductSearchOps = () => {
     color,
     shape,
     band,
+    mosaic,
     setBand,
     setShape,
     setColor,
+    setMosaic,
   } = useProductContext()
   console.log(product)
   const router = useRouter()
@@ -32,13 +35,17 @@ export const ProductSearchOps = () => {
         (i: any) => i.key === 'diamond_color'
       )
       const ring_band_obj = metafields.find((i: any) => i.key === 'ring_band')
+      const mosaic_obj = metafields.find((i: any) => i.key === 'mosaic')
+
       if (
         main_stone_obj &&
         diamond_color_obj &&
         ring_band_obj &&
+        mosaic_obj &&
         main_stone_obj?.value === shape &&
         diamond_color_obj?.value === color &&
-        ring_band_obj?.value === band
+        ring_band_obj?.value === band &&
+        mosaic_obj?.value === mosaic
       ) {
         if (router.query.slug === p.slug) return
         router.replace(`/product/${p.slug}`)
@@ -57,13 +64,13 @@ export const ProductSearchOps = () => {
     const ring_band_obj = product.metafields?.find(
       (i: any) => i.key === 'ring_band'
     )
-    if (!diamond_color_obj) return
-    if (!main_stone_obj) return
-    if (!ring_band_obj) return
+    const mosaic_obj = product.metafields?.find((i: any) => i.key === 'mosaic')
+
     if (!color)
       setColor?.(diamond_color_obj?.value ? diamond_color_obj?.value : '')
     if (!shape) setShape?.(main_stone_obj?.value ? main_stone_obj?.value : '')
     if (!band) setBand?.(ring_band_obj?.value ? ring_band_obj?.value : '')
+    if (!mosaic) setMosaic?.(mosaic_obj?.value ? mosaic_obj?.value : '')
   }, [])
 
   useEffectSkipInitial(() => {
@@ -81,6 +88,9 @@ export const ProductSearchOps = () => {
         </div>
         <div data-search-options="band">
           <BandOption />
+        </div>
+        <div data-search-options="mosaic">
+          <MosaicOption />
         </div>
       </div>
     </div>
