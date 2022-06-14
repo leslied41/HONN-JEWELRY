@@ -1,6 +1,9 @@
 .button {
-  @apply flex justify-center items-center w-8 h-8 rounded-2xl focus:border-[0.5px] focus:border-black;
+  @apply flex justify-center items-center w-8 h-8 rounded-2xl;
 }
 .innerCircle {
   @apply relative w-6 h-6 rounded-xl overflow-hidden;
+}
+.outterCircle {
+  @apply border-[0.5px] border-black;
 }

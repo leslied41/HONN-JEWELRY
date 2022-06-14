@@ -3,16 +3,18 @@ import s from './Dropdown.module.css'
 import { useProductContext } from '../productProvider'
 
 const Dropdown = () => {
-  const { setShape } = useProductContext()
+  const { setShape, shape } = useProductContext()
   return (
     <div>
       <p>SHAPE</p>
       <select
+        value={shape}
         className={s.dropDown}
         onChange={(e) => {
           setShape?.(e.target.value)
         }}
       >
+        <option value="">Please Select</option>
         <option value="round">Round</option>
         <option value="square">Square</option>
       </select>

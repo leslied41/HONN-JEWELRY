@@ -2,11 +2,15 @@ import React from 'react'
 import Image from 'next/image'
 import s from './BandOption.module.css'
 import { useProductContext } from '../productProvider'
-
+import cn from 'clsx'
 const BandOption = () => {
   const { setBand, band } = useProductContext()
-  console.log(band)
-
+  const aButtonClassName = cn(s.button, {
+    [s.outterCircle]: band === 'a',
+  })
+  const bButtonClassName = cn(s.button, {
+    [s.outterCircle]: band === 'b',
+  })
   return (
     <div>
       <p>
@@ -14,7 +18,7 @@ const BandOption = () => {
       </p>
       <div className="flex gap-x-2">
         <button
-          className={s.button}
+          className={aButtonClassName}
           onClick={() => {
             setBand?.('a')
           }}
@@ -30,7 +34,7 @@ const BandOption = () => {
           </div>
         </button>
         <button
-          className={s.button}
+          className={bButtonClassName}
           onClick={() => {
             setBand?.('b')
           }}
