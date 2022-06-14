@@ -21,7 +21,6 @@ const ProductView = () => {
 
   return (
     <>
-      {/* {JSON.stringify(product.metafields)} */}
       <Container className="max-w-none w-full" clean>
         <div className={cn(s.root, 'fit ')}>
           <ProductPicsbar className={s.main} />

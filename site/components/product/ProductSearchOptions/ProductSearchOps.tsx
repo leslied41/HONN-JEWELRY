@@ -4,15 +4,24 @@ import { useRouter } from 'next/router'
 import ColorOption from '../ColorOption'
 import DropDown from '../Dropdown'
 import { useProductContext } from '../productProvider'
+import BandOption from '../BandOption'
 
 //so the better solution is to use useContext, all the state and setState and other data needed in these components
 //should be put into useContext, and put it on the product page. That is because the state including these search options
 //and fields data need to be upload to shopify in ProductSidebar component using addToCart function.
 
 export const ProductSearchOps = () => {
-  const { product, allProducts, color, shape, setShape, setColor } =
-    useProductContext()
-
+  const {
+    product,
+    allProducts,
+    color,
+    shape,
+    band,
+    setBand,
+    setShape,
+    setColor,
+  } = useProductContext()
+  console.log(product)
   const router = useRouter()
 
   const filterProduct = () => {
@@ -22,11 +31,14 @@ export const ProductSearchOps = () => {
       const diamond_color_obj = metafields.find(
         (i: any) => i.key === 'diamond_color'
       )
+      const ring_band_obj = metafields.find((i: any) => i.key === 'ring_band')
       if (
         main_stone_obj &&
         diamond_color_obj &&
+        ring_band_obj &&
         main_stone_obj?.value === shape &&
-        diamond_color_obj?.value === color
+        diamond_color_obj?.value === color &&
+        ring_band_obj?.value === band
       ) {
         if (router.query.slug === p.slug) return
         router.replace(`/product/${p.slug}`)
@@ -35,17 +47,23 @@ export const ProductSearchOps = () => {
   }
 
   useEffect(() => {
+    //this is to set default value for every metafield options that can determine searching.
     const diamond_color_obj = product.metafields?.find(
       (i: any) => i.key === 'diamond_color'
     )
     const main_stone_obj = product.metafields?.find(
       (i: any) => i.key === 'main_stone'
     )
+    const ring_band_obj = product.metafields?.find(
+      (i: any) => i.key === 'ring_band'
+    )
     if (!diamond_color_obj) return
     if (!main_stone_obj) return
+    if (!ring_band_obj) return
     if (!color)
       setColor?.(diamond_color_obj?.value ? diamond_color_obj?.value : '')
     if (!shape) setShape?.(main_stone_obj?.value ? main_stone_obj?.value : '')
+    if (!band) setBand?.(ring_band_obj?.value ? ring_band_obj?.value : '')
   }, [])
 
   useEffectSkipInitial(() => {
@@ -60,6 +78,9 @@ export const ProductSearchOps = () => {
         </div>
         <div data-search-options="color">
           <ColorOption />
+        </div>
+        <div data-search-options="band">
+          <BandOption />
         </div>
       </div>
     </div>

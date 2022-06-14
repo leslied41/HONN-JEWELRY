@@ -13,8 +13,10 @@ type ProductContextType = {
   allProducts: Product[]
   color: string
   shape: string
+  band: string
   setShape?: (shape: string) => void
   setColor?: (color: string) => void
+  setBand?: (band: string) => void
 }
 interface Props {
   product: Product
@@ -26,6 +28,7 @@ const defaultContextValue = {
   allProducts: [] as Product[],
   color: '',
   shape: '',
+  band: '',
 }
 const ProductContext = createContext<ProductContextType>(defaultContextValue)
 //this type of defaultContextValue sholud be same as value in provider and ProductContextType.
@@ -34,10 +37,12 @@ const ProductContext = createContext<ProductContextType>(defaultContextValue)
 const initialState = {
   shape: '',
   color: '',
+  band: '',
 }
 enum ActionType {
   SHAPE = 'SHAPE',
   COLOR = 'COLOR',
+  BAND = 'BAND',
 }
 type Action = {
   type: ActionType
@@ -46,6 +51,7 @@ type Action = {
 type StateType = {
   color: string
   shape: string
+  band: string
 }
 
 const reducer = (state: StateType, action: Action) => {
@@ -55,6 +61,9 @@ const reducer = (state: StateType, action: Action) => {
 
     case ActionType.SHAPE:
       return { ...state, shape: action.payload }
+
+    case ActionType.BAND:
+      return { ...state, band: action.payload }
   }
 }
 
@@ -72,8 +81,13 @@ export const ProductProvider: FC<Props> = ({
     (color: string) => dispatch({ type: ActionType.COLOR, payload: color }),
     [dispatch]
   )
+  const setBand = useCallback(
+    (band: string) => dispatch({ type: ActionType.BAND, payload: band }),
+    [dispatch]
+  )
   const color = useMemo(() => state.color, [state.color])
   const shape = useMemo(() => state.shape, [state.shape])
+  const band = useMemo(() => state.band, [state.band])
 
   const value = useMemo(
     () => ({
@@ -81,10 +95,12 @@ export const ProductProvider: FC<Props> = ({
       allProducts,
       color,
       shape,
+      band,
       setShape,
       setColor,
+      setBand,
     }),
-    [product, allProducts, shape, color, setShape, setColor]
+    [product, allProducts, shape, color, setShape, setColor, band, setBand]
   )
   return (
     <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
