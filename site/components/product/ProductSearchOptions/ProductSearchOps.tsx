@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useEffectSkipInitial from '@lib/hooks/useEffectSkipInitial'
 import { useRouter } from 'next/router'
-import DropDown from '../Dropdown'
+import DropdownOption from '../DropdownOption'
 import { useProductContext } from '../productProvider'
 import { CirclePicOption } from '../CirclePicOption'
 
@@ -19,7 +19,6 @@ export const ProductSearchOps = () => {
     mosaic,
     setBand,
     setShape,
-    setColor,
     setMosaic,
   } = useProductContext()
   console.log(product)
@@ -71,7 +70,7 @@ export const ProductSearchOps = () => {
     <div>
       <div data-search-options>
         <div data-search-options="shape">
-          <DropDown />
+          <DropdownOption />
         </div>
         <div data-search-options="mosaic">
           <CirclePicOption variant="A" />

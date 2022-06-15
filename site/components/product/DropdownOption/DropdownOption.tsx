@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import s from './Dropdown.module.css'
 import { useProductContext } from '../productProvider'
 
-const Dropdown = () => {
+const DropdownOption = () => {
   const { setShape, shape } = useProductContext()
   return (
     <div>
@@ -22,4 +22,4 @@ const Dropdown = () => {
   )
 }
 
-export default memo(Dropdown)
+export default memo(DropdownOption)
