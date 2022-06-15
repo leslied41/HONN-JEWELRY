@@ -31,19 +31,15 @@ export const ProductSearchOps = () => {
     allProducts.forEach((p: any) => {
       const { metafields } = p
       const main_stone_obj = metafields.find((i: any) => i.key === 'main_stone')
-      const diamond_color_obj = metafields.find(
-        (i: any) => i.key === 'diamond_color'
-      )
+
       const ring_band_obj = metafields.find((i: any) => i.key === 'ring_band')
       const mosaic_obj = metafields.find((i: any) => i.key === 'mosaic')
 
       if (
         main_stone_obj &&
-        diamond_color_obj &&
         ring_band_obj &&
         mosaic_obj &&
         main_stone_obj?.value === shape &&
-        diamond_color_obj?.value === color &&
         ring_band_obj?.value === band &&
         mosaic_obj?.value === mosaic
       ) {
@@ -55,9 +51,7 @@ export const ProductSearchOps = () => {
 
   useEffect(() => {
     //this is to set default value for every metafield options that can determine searching.
-    const diamond_color_obj = product.metafields?.find(
-      (i: any) => i.key === 'diamond_color'
-    )
+
     const main_stone_obj = product.metafields?.find(
       (i: any) => i.key === 'main_stone'
     )
@@ -66,8 +60,6 @@ export const ProductSearchOps = () => {
     )
     const mosaic_obj = product.metafields?.find((i: any) => i.key === 'mosaic')
 
-    if (!color)
-      setColor?.(diamond_color_obj?.value ? diamond_color_obj?.value : '')
     if (!shape) setShape?.(main_stone_obj?.value ? main_stone_obj?.value : '')
     if (!band) setBand?.(ring_band_obj?.value ? ring_band_obj?.value : '')
     if (!mosaic) setMosaic?.(mosaic_obj?.value ? mosaic_obj?.value : '')
@@ -82,9 +74,6 @@ export const ProductSearchOps = () => {
       <div data-search-options>
         <div data-search-options="shape">
           <DropDown />
-        </div>
-        <div data-search-options="color">
-          <ColorOption />
         </div>
         <div data-search-options="band">
           <BandOption />

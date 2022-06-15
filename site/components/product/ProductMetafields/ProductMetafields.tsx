@@ -1,14 +1,20 @@
 import React from 'react'
 import Carat from '../Carat'
-import SquareGroupOption from '../SquareGroupOption'
+import ColorOption from '../ColorOption'
+import { Variant, SquareGroupOption } from '../SquareGroupOption'
 
 interface Props {}
 
 const ProductMetafelds = (props: Props) => {
   return (
     <div>
+      <ColorOption />
       <Carat />
-      <SquareGroupOption />
+      <SquareGroupOption variant={Variant.A} />
+      <SquareGroupOption variant={Variant.B} />
+      <SquareGroupOption variant={Variant.C} />
+      <SquareGroupOption variant={Variant.D} />
+      <SquareGroupOption variant={Variant.E} />
     </div>
   )
 }

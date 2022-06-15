@@ -53,7 +53,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
   }
 
   useEffect(() => {
-    //at first render, there are on elRefs as elRefs are generated in another useEffect
+    //at first render, there were no elRefs as elRefs are generated in another useEffect
     //at the same time in first render. when elrefs are created, setElrefs is called, so
     //the second render will be triggered. and at this second render, this useeffec will work
     //at second time due to the dependency elrefs changed from empty to normal. And after this time,

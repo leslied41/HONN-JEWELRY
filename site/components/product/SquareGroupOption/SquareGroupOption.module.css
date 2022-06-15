@@ -1,0 +1,6 @@
+.button {
+  @apply px-4 py-2 border-[0.5px] border-gold mr-2 mb-2;
+}
+.focus {
+  @apply border-b-4 border-brown;
+}

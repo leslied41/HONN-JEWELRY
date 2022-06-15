@@ -1,1 +1,1 @@
-export { default } from './SquareGroupOption'
+export { SquareGroupOption, Variant } from './SquareGroupOption'

@@ -15,10 +15,18 @@ type ProductContextType = {
   shape: string
   band: string
   mosaic: string
+  stoneColorLevel: string
+  stoneClarity: string
+  stoneCut: string
+  textStyle: string
   setShape?: (shape: string) => void
   setColor?: (color: string) => void
   setBand?: (band: string) => void
-  setMosaic?: (band: string) => void
+  setMosaic?: (mosaic: string) => void
+  setStoneColorLevel?: (stoneColorLevel: string) => void
+  setStoneClarity?: (stoneClarity: string) => void
+  setStoneCut?: (stoneCut: string) => void
+  setTextStyle?: (textStyle: string) => void
 }
 interface Props {
   product: Product
@@ -32,6 +40,10 @@ const defaultContextValue = {
   shape: '',
   band: '',
   mosaic: '',
+  stoneColorLevel: '',
+  stoneClarity: '',
+  stoneCut: '',
+  textStyle: '',
 }
 const ProductContext = createContext<ProductContextType>(defaultContextValue)
 //this type of defaultContextValue sholud be same as value in provider and ProductContextType.
@@ -42,12 +54,20 @@ const initialState = {
   color: '',
   band: '',
   mosaic: '',
+  stoneColorLevel: '1',
+  stoneClarity: '',
+  stoneCut: '',
+  textStyle: '',
 }
 enum ActionType {
   SHAPE = 'SHAPE',
   COLOR = 'COLOR',
   BAND = 'BAND',
   MOSAIC = 'MOSAIC',
+  STONECOLORLEVEL = 'STONECOLORLEVEL',
+  STONECLARITY = 'STONECLARITY',
+  STONECUT = 'STONECUT',
+  TEXTSTYLE = 'TEXTSTYLE',
 }
 type Action = {
   type: ActionType
@@ -58,21 +78,30 @@ type StateType = {
   shape: string
   band: string
   mosaic: string
+  stoneColorLevel: string
+  stoneClarity: string
+  stoneCut: string
+  textStyle: string
 }
 
 const reducer = (state: StateType, action: Action) => {
   switch (action.type) {
     case ActionType.COLOR:
       return { ...state, color: action.payload }
-
     case ActionType.SHAPE:
       return { ...state, shape: action.payload }
-
     case ActionType.BAND:
       return { ...state, band: action.payload }
-
     case ActionType.MOSAIC:
       return { ...state, mosaic: action.payload }
+    case ActionType.STONECOLORLEVEL:
+      return { ...state, stoneColorLevel: action.payload }
+    case ActionType.STONECLARITY:
+      return { ...state, stoneClarity: action.payload }
+    case ActionType.STONECUT:
+      return { ...state, stoneCut: action.payload }
+    case ActionType.TEXTSTYLE:
+      return { ...state, textStyle: action.payload }
   }
 }
 
@@ -98,10 +127,37 @@ export const ProductProvider: FC<Props> = ({
     (mosaic: string) => dispatch({ type: ActionType.MOSAIC, payload: mosaic }),
     [dispatch]
   )
+  const setStoneColorLevel = useCallback(
+    (stoneColorLevel: string) =>
+      dispatch({ type: ActionType.STONECOLORLEVEL, payload: stoneColorLevel }),
+    [dispatch]
+  )
+  const setStoneClarity = useCallback(
+    (stoneClarity: string) =>
+      dispatch({ type: ActionType.STONECLARITY, payload: stoneClarity }),
+    [dispatch]
+  )
+  const setStoneCut = useCallback(
+    (stoneCut: string) =>
+      dispatch({ type: ActionType.STONECUT, payload: stoneCut }),
+    [dispatch]
+  )
+  const setTextStyle = useCallback(
+    (textStyle: string) =>
+      dispatch({ type: ActionType.TEXTSTYLE, payload: textStyle }),
+    [dispatch]
+  )
   const color = useMemo(() => state.color, [state.color])
   const shape = useMemo(() => state.shape, [state.shape])
   const band = useMemo(() => state.band, [state.band])
   const mosaic = useMemo(() => state.mosaic, [state.mosaic])
+  const stoneColorLevel = useMemo(
+    () => state.stoneColorLevel,
+    [state.stoneColorLevel]
+  )
+  const stoneClarity = useMemo(() => state.stoneClarity, [state.stoneClarity])
+  const stoneCut = useMemo(() => state.stoneCut, [state.stoneCut])
+  const textStyle = useMemo(() => state.textStyle, [state.textStyle])
 
   const value = useMemo(
     () => ({
@@ -111,10 +167,18 @@ export const ProductProvider: FC<Props> = ({
       shape,
       band,
       mosaic,
+      stoneColorLevel,
+      stoneClarity,
+      stoneCut,
+      textStyle,
       setShape,
       setColor,
       setBand,
       setMosaic,
+      setStoneColorLevel,
+      setStoneClarity,
+      setStoneCut,
+      setTextStyle,
     }),
     [
       product,
@@ -122,11 +186,19 @@ export const ProductProvider: FC<Props> = ({
       shape,
       color,
       mosaic,
+      band,
+      stoneColorLevel,
+      stoneClarity,
+      stoneCut,
+      textStyle,
       setShape,
       setColor,
-      band,
       setBand,
       setMosaic,
+      setStoneColorLevel,
+      setStoneClarity,
+      setStoneCut,
+      setTextStyle,
     ]
   )
   return (

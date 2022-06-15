@@ -1,33 +1,93 @@
-import React, { useState } from 'react'
+import React, { FC, useEffect } from 'react'
+import {
+  dataA,
+  dataB,
+  dataC,
+  dataD,
+  dataE,
+  titleA,
+  titleB,
+  titleC,
+  titleD,
+  titleE,
+} from './data'
+import { useProductContext } from '../productProvider'
+import cn from 'clsx'
+import s from './SquareGroupOption.module.css'
 
-interface Props {}
+interface Props {
+  variant: Variant
+}
+export enum Variant {
+  A = 'CLARITY',
+  B = 'COLORLEVEL',
+  C = 'STONECUT',
+  D = 'TEXTSYLE',
+  E = 'EXPLORE',
+}
 
-const testData = [
-  { id: 1, name: 'D' },
-  { id: 2, name: 'E' },
-  { id: 3, name: 'F' },
-  { id: 4, name: 'G' },
-  { id: 5, name: 'LESLIE' },
-  { id: 6, name: 'LOVE' },
-  { id: 7, name: 'GOD' },
-  { id: 8, name: 'EVER' },
-]
+export const SquareGroupOption: FC<Props> = ({ variant }) => {
+  const {
+    stoneColorLevel,
+    stoneClarity,
+    stoneCut,
+    textStyle,
+    setStoneColorLevel,
+    setStoneClarity,
+    setStoneCut,
+    setTextStyle,
+  } = useProductContext()
 
-const SquareGroupOption = (props: Props) => {
-  const [value, setValue] = useState<string>('')
+  let data: any
+  let title: string | undefined
+  let value: string | undefined
+  let func: any
+  switch (variant) {
+    case Variant.A:
+      data = dataA
+      title = titleA
+      value = stoneColorLevel
+      func = setStoneColorLevel
+      break
+    case Variant.B:
+      data = dataB
+      title = titleB
+      value = stoneClarity
+      func = setStoneClarity
+      break
+    case Variant.C:
+      data = dataC
+      title = titleC
+      value = stoneCut
+      func = setStoneCut
+      break
+    case Variant.D:
+      data = dataD
+      title = titleD
+      value = textStyle
+      func = setTextStyle
+      break
+    case Variant.E:
+      data = dataE
+      title = titleE
+      break
+    default:
+      break
+  }
+
   return (
     <div>
-      <p>Main stone clarity</p>
+      <p>{title}</p>
       <div className="flex flex-wrap">
-        {testData.map((i) => {
+        {data?.map((i: any) => {
           const { id, name } = i
           return (
             <button
               key={id}
-              className="px-4 py-2 border-[0.5px] border-gold mr-2 mb-2 focus:border-b-4 focus:border-brown"
+              className={cn(s.button, { [s.focus]: name === value })}
               onClick={(e) => {
                 e.preventDefault()
-                setValue(name)
+                func?.(name)
               }}
             >
               {name}
@@ -38,4 +98,3 @@ const SquareGroupOption = (props: Props) => {
     </div>
   )
 }
-export default SquareGroupOption
