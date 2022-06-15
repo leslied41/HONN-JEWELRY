@@ -41,7 +41,9 @@ const Navbar: FC<NavbarProps> = ({ links }) => (
             ))} */}
           </nav>
         </div>
-        <div>HONN</div>
+        <div>
+          <img src="/navTitle.svg" alt="title" />
+        </div>
         {/* flex:1; means flex: 1 1 0; flex-grow:1;flex-shrink:1; flex-basis:0; flex-basis means that the initial width
             of this item. If it is 0, there will be no initial width. And its width will depend on its content.  */}
         {/* {process.env.COMMERCE_SEARCH_ENABLED && (
