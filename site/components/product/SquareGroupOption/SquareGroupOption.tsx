@@ -17,6 +17,7 @@ import s from './SquareGroupOption.module.css'
 
 interface Props {
   variant: Variant
+  layout?: 'A' | 'default'
 }
 export enum Variant {
   A = 'CLARITY',
@@ -26,7 +27,10 @@ export enum Variant {
   E = 'EXPLORE',
 }
 
-export const SquareGroupOption: FC<Props> = ({ variant }) => {
+export const SquareGroupOption: FC<Props> = ({
+  variant,
+  layout = 'default',
+}) => {
   const {
     stoneColorLevel,
     stoneClarity,
@@ -76,9 +80,21 @@ export const SquareGroupOption: FC<Props> = ({ variant }) => {
   }
 
   return (
-    <div>
-      <p>{title}</p>
-      <div className="flex flex-wrap">
+    <div
+      className={cn('grid', {
+        ['grid-cols-4 gap-x-4']: layout === 'default',
+        ['grid-cols-1']: layout === 'A',
+      })}
+    >
+      <div className="col-span-1">
+        <p>{title}</p>
+      </div>
+      <div
+        className={cn(' flex flex-wrap', {
+          ['col-span-3 ']: layout === 'default',
+          ['col-span-1 ']: layout === 'A',
+        })}
+      >
         {data?.map((i: any) => {
           const { id, name } = i
           return (

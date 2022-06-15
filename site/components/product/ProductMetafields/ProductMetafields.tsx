@@ -14,7 +14,7 @@ const ProductMetafelds = (props: Props) => {
       <SquareGroupOption variant={Variant.B} />
       <SquareGroupOption variant={Variant.C} />
       <SquareGroupOption variant={Variant.D} />
-      <SquareGroupOption variant={Variant.E} />
+      <SquareGroupOption variant={Variant.E} layout="A" />
     </div>
   )
 }

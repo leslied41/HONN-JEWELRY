@@ -37,8 +37,8 @@ export const dataE = [
   { id: 3, name: 'Wedding' },
   { id: 4, name: 'Gemstone' },
 ]
-export const titleA = 'Main stone color level'
-export const titleB = 'Main stone clarity'
-export const titleC = 'Main stone cut'
-export const titleD = 'Text style'
-export const titleE = 'Explore more'
+export const titleA = 'Main stone color level:'
+export const titleB = 'Main stone clarity:'
+export const titleC = 'Main stone cut:'
+export const titleD = 'Text style:'
+export const titleE = 'Want To Explore More?'
