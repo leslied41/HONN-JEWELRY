@@ -17,7 +17,7 @@ interface ProductSidebarProps {
 }
 
 const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
-  const { product, allProducts, color, shape } = useProductContext()
+  const { product, allProducts, metalColor, shape } = useProductContext()
 
   const addItem = useAddItem()
   const { openSidebar } = useUI()
@@ -41,7 +41,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
         variantId: String(variant ? variant.id : product.variants[0]?.id),
         //so now metafields passed here will be passed to checkout.
         customAttributes: [
-          { key: 'color', value: color },
+          { key: 'metal color', value: metalColor },
           { key: 'shape', value: shape },
         ],
       })
@@ -55,13 +55,6 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
 
   return (
     <div className={className}>
-      {/* this is to choose color or other options for a product using options */}
-      {/* so now the problem is when chossing metadata how to make options chosen automatically, so
-      first I need to compare options to metadata, if options cannot be found in metadata, then then option color should
-      be dark implying this cannot be chosen. 通过options array，和metadata array的对比，如果medata array的item不在options array中
-      则设该item css为dark. 然后对于有的item，则设为亮的。同时在该item中选择metadata时同时也选择options。则可以解决该问题。
-      还应注意问题是，search product时候，当在ring页面时应该只能search同类产品，不能search耳环，项链之类。 */}
-
       <div data-name-price>
         <p>{product.name}</p>
         <p>

@@ -1,3 +1,9 @@
 .dropDown {
-  @apply w-full h-10 py-[7.5px] px-[10px] text-13 bg-inherit border-[0.5px] border-darkGray border-opacity-30 text-basic bg-[url('/dropdownArrow.svg')] bg-no-repeat bg-origin-content bg-right bg-[length:10px_5px] appearance-none;
+  @apply flex justify-between  items-center w-full h-10 py-[7.5px] px-[10px] text-13 bg-inherit border-[0.5px] border-darkGray border-opacity-30 text-basic;
+}
+.optionsGroup {
+  @apply absolute top-1 w-full bg-white overflow-hidden rounded;
+}
+.optionItem {
+  @apply w-full p-4 list-none cursor-pointer box-border flex gap-x-4 hover:bg-slate-100;
 }

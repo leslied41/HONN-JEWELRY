@@ -1,12 +1,12 @@
-import cn from 'clsx'
 import React, {
   forwardRef,
   ButtonHTMLAttributes,
   JSXElementConstructor,
   useRef,
 } from 'react'
-import mergeRefs from 'react-merge-refs'
 import s from './Button.module.css'
+import cn from 'clsx'
+import mergeRefs from 'react-merge-refs'
 import { LoadingDots } from '@components/ui'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

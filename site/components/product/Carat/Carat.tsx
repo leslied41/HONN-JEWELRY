@@ -69,7 +69,7 @@ const Carat = (props: Props) => {
     }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getWidth = () => {
       const width = lineRef.current!.offsetWidth
       setLineWidth((lineWidth) => (width ? width : lineWidth))

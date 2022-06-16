@@ -20,6 +20,8 @@ type ProductContextType = {
   stoneCut: string
   textStyle: string
   littleDiamondColor: string
+  size: string
+  setSize?: (size: string) => void
   setShape?: (shape: string) => void
   setMetalColor?: (metalColor: string) => void
   setBand?: (band: string) => void
@@ -47,6 +49,7 @@ const defaultContextValue = {
   stoneCut: '',
   textStyle: '',
   littleDiamondColor: '',
+  size: '',
 }
 const ProductContext = createContext<ProductContextType>(defaultContextValue)
 //this type of defaultContextValue sholud be same as value in provider and ProductContextType.
@@ -62,6 +65,7 @@ const initialState = {
   stoneCut: '',
   textStyle: '',
   littleDiamondColor: '',
+  size: '',
 }
 enum ActionType {
   SHAPE = 'SHAPE',
@@ -73,6 +77,7 @@ enum ActionType {
   STONECUT = 'STONECUT',
   TEXTSTYLE = 'TEXTSTYLE',
   LITTLEDIAMONDCOLOR = 'LITTLEDIAMONDCOLOR',
+  SIZE = 'SIZE',
 }
 type Action = {
   type: ActionType
@@ -88,6 +93,7 @@ type StateType = {
   stoneCut: string
   textStyle: string
   littleDiamondColor: string
+  size: string
 }
 
 const reducer = (state: StateType, action: Action) => {
@@ -110,6 +116,8 @@ const reducer = (state: StateType, action: Action) => {
       return { ...state, textStyle: action.payload }
     case ActionType.LITTLEDIAMONDCOLOR:
       return { ...state, littleDiamondColor: action.payload }
+    case ActionType.SIZE:
+      return { ...state, size: action.payload }
   }
 }
 
@@ -164,6 +172,10 @@ export const ProductProvider: FC<Props> = ({
       }),
     [dispatch]
   )
+  const setSize = useCallback(
+    (size: string) => dispatch({ type: ActionType.SIZE, payload: size }),
+    [dispatch]
+  )
   const metalColor = useMemo(() => state.metalColor, [state.metalColor])
   const shape = useMemo(() => state.shape, [state.shape])
   const band = useMemo(() => state.band, [state.band])
@@ -179,6 +191,7 @@ export const ProductProvider: FC<Props> = ({
     () => state.littleDiamondColor,
     [state.littleDiamondColor]
   )
+  const size = useMemo(() => state.size, [state.size])
 
   const value = useMemo(
     () => ({
@@ -193,6 +206,7 @@ export const ProductProvider: FC<Props> = ({
       stoneCut,
       textStyle,
       littleDiamondColor,
+      size,
       setShape,
       setMetalColor,
       setBand,
@@ -202,6 +216,7 @@ export const ProductProvider: FC<Props> = ({
       setStoneCut,
       setTextStyle,
       setLittleDiamondColor,
+      setSize,
     }),
     [
       product,
@@ -215,6 +230,7 @@ export const ProductProvider: FC<Props> = ({
       stoneCut,
       textStyle,
       littleDiamondColor,
+      size,
       setShape,
       setMetalColor,
       setBand,
@@ -224,6 +240,7 @@ export const ProductProvider: FC<Props> = ({
       setStoneCut,
       setTextStyle,
       setLittleDiamondColor,
+      setSize,
     ]
   )
   return (
