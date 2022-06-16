@@ -8,12 +8,13 @@ interface Props {}
 const ProductMetafelds = (props: Props) => {
   return (
     <div>
-      <ColorOption />
+      <ColorOption variant="A" />
       <Carat />
       <SquareGroupOption variant={Variant.A} />
       <SquareGroupOption variant={Variant.B} />
       <SquareGroupOption variant={Variant.C} />
       <SquareGroupOption variant={Variant.D} />
+      <ColorOption variant="B" />
       <SquareGroupOption variant={Variant.E} layout="A" />
     </div>
   )

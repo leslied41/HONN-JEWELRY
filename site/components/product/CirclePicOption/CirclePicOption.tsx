@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
+import Image from 'next/image'
+import cn from 'clsx'
 import s from './CirclePicOption.module.css'
 import { useProductContext } from '../productProvider'
-import cn from 'clsx'
-import Image from 'next/image'
 import { dataA, dataB, dataType, titleA, titleB } from './data'
 
 interface Props {

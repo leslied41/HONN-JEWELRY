@@ -11,7 +11,7 @@ import type { Product } from '@commerce/types/product'
 type ProductContextType = {
   product: Product
   allProducts: Product[]
-  color: string
+  metalColor: string
   shape: string
   band: string
   mosaic: string
@@ -19,14 +19,16 @@ type ProductContextType = {
   stoneClarity: string
   stoneCut: string
   textStyle: string
+  littleDiamondColor: string
   setShape?: (shape: string) => void
-  setColor?: (color: string) => void
+  setMetalColor?: (metalColor: string) => void
   setBand?: (band: string) => void
   setMosaic?: (mosaic: string) => void
   setStoneColorLevel?: (stoneColorLevel: string) => void
   setStoneClarity?: (stoneClarity: string) => void
   setStoneCut?: (stoneCut: string) => void
   setTextStyle?: (textStyle: string) => void
+  setLittleDiamondColor?: (littleDiamondColor: string) => void
 }
 interface Props {
   product: Product
@@ -36,7 +38,7 @@ interface Props {
 const defaultContextValue = {
   product: {} as Product,
   allProducts: [] as Product[],
-  color: '',
+  metalColor: '',
   shape: '',
   band: '',
   mosaic: '',
@@ -44,6 +46,7 @@ const defaultContextValue = {
   stoneClarity: '',
   stoneCut: '',
   textStyle: '',
+  littleDiamondColor: '',
 }
 const ProductContext = createContext<ProductContextType>(defaultContextValue)
 //this type of defaultContextValue sholud be same as value in provider and ProductContextType.
@@ -51,30 +54,32 @@ const ProductContext = createContext<ProductContextType>(defaultContextValue)
 //useReducer
 const initialState = {
   shape: '',
-  color: '',
+  metalColor: '',
   band: '',
   mosaic: '',
   stoneColorLevel: '1',
   stoneClarity: '',
   stoneCut: '',
   textStyle: '',
+  littleDiamondColor: '',
 }
 enum ActionType {
   SHAPE = 'SHAPE',
-  COLOR = 'COLOR',
+  METALCOLOR = 'METALCOLOR',
   BAND = 'BAND',
   MOSAIC = 'MOSAIC',
   STONECOLORLEVEL = 'STONECOLORLEVEL',
   STONECLARITY = 'STONECLARITY',
   STONECUT = 'STONECUT',
   TEXTSTYLE = 'TEXTSTYLE',
+  LITTLEDIAMONDCOLOR = 'LITTLEDIAMONDCOLOR',
 }
 type Action = {
   type: ActionType
   payload?: any
 }
 type StateType = {
-  color: string
+  metalColor: string
   shape: string
   band: string
   mosaic: string
@@ -82,12 +87,13 @@ type StateType = {
   stoneClarity: string
   stoneCut: string
   textStyle: string
+  littleDiamondColor: string
 }
 
 const reducer = (state: StateType, action: Action) => {
   switch (action.type) {
-    case ActionType.COLOR:
-      return { ...state, color: action.payload }
+    case ActionType.METALCOLOR:
+      return { ...state, metalColor: action.payload }
     case ActionType.SHAPE:
       return { ...state, shape: action.payload }
     case ActionType.BAND:
@@ -102,6 +108,8 @@ const reducer = (state: StateType, action: Action) => {
       return { ...state, stoneCut: action.payload }
     case ActionType.TEXTSTYLE:
       return { ...state, textStyle: action.payload }
+    case ActionType.LITTLEDIAMONDCOLOR:
+      return { ...state, littleDiamondColor: action.payload }
   }
 }
 
@@ -115,8 +123,9 @@ export const ProductProvider: FC<Props> = ({
     (shape: string) => dispatch({ type: ActionType.SHAPE, payload: shape }),
     [dispatch]
   )
-  const setColor = useCallback(
-    (color: string) => dispatch({ type: ActionType.COLOR, payload: color }),
+  const setMetalColor = useCallback(
+    (metalColor: string) =>
+      dispatch({ type: ActionType.METALCOLOR, payload: metalColor }),
     [dispatch]
   )
   const setBand = useCallback(
@@ -147,7 +156,15 @@ export const ProductProvider: FC<Props> = ({
       dispatch({ type: ActionType.TEXTSTYLE, payload: textStyle }),
     [dispatch]
   )
-  const color = useMemo(() => state.color, [state.color])
+  const setLittleDiamondColor = useCallback(
+    (littleDiamondColor: string) =>
+      dispatch({
+        type: ActionType.LITTLEDIAMONDCOLOR,
+        payload: littleDiamondColor,
+      }),
+    [dispatch]
+  )
+  const metalColor = useMemo(() => state.metalColor, [state.metalColor])
   const shape = useMemo(() => state.shape, [state.shape])
   const band = useMemo(() => state.band, [state.band])
   const mosaic = useMemo(() => state.mosaic, [state.mosaic])
@@ -158,12 +175,16 @@ export const ProductProvider: FC<Props> = ({
   const stoneClarity = useMemo(() => state.stoneClarity, [state.stoneClarity])
   const stoneCut = useMemo(() => state.stoneCut, [state.stoneCut])
   const textStyle = useMemo(() => state.textStyle, [state.textStyle])
+  const littleDiamondColor = useMemo(
+    () => state.littleDiamondColor,
+    [state.littleDiamondColor]
+  )
 
   const value = useMemo(
     () => ({
       product,
       allProducts,
-      color,
+      metalColor,
       shape,
       band,
       mosaic,
@@ -171,34 +192,38 @@ export const ProductProvider: FC<Props> = ({
       stoneClarity,
       stoneCut,
       textStyle,
+      littleDiamondColor,
       setShape,
-      setColor,
+      setMetalColor,
       setBand,
       setMosaic,
       setStoneColorLevel,
       setStoneClarity,
       setStoneCut,
       setTextStyle,
+      setLittleDiamondColor,
     }),
     [
       product,
       allProducts,
       shape,
-      color,
+      metalColor,
       mosaic,
       band,
       stoneColorLevel,
       stoneClarity,
       stoneCut,
       textStyle,
+      littleDiamondColor,
       setShape,
-      setColor,
+      setMetalColor,
       setBand,
       setMosaic,
       setStoneColorLevel,
       setStoneClarity,
       setStoneCut,
       setTextStyle,
+      setLittleDiamondColor,
     ]
   )
   return (

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import useEffectSkipInitial from '@lib/hooks/useEffectSkipInitial'
 import { useRouter } from 'next/router'
 import DropdownOption from '../DropdownOption'
 import { useProductContext } from '../productProvider'
 import { CirclePicOption } from '../CirclePicOption'
+import useEffectSkipInitial from '@lib/hooks/useEffectSkipInitial'
 
 //so the better solution is to use useContext, all the state and setState and other data needed in these components
 //should be put into useContext, and put it on the product page. That is because the state including these search options
@@ -13,7 +13,6 @@ export const ProductSearchOps = () => {
   const {
     product,
     allProducts,
-    color,
     shape,
     band,
     mosaic,
@@ -64,7 +63,7 @@ export const ProductSearchOps = () => {
 
   useEffectSkipInitial(() => {
     filterProduct()
-  }, [color, shape])
+  }, [band, shape, mosaic])
 
   return (
     <div>
