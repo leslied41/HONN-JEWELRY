@@ -1,4 +1,4 @@
-import React, { FC, ButtonHTMLAttributes, forwardRef, useRef } from 'react'
+import React, { FC, ButtonHTMLAttributes } from 'react'
 import s from './Button.module.css'
 import { LoadingDots } from '@components/ui'
 import cn from 'clsx'

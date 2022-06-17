@@ -22,6 +22,7 @@ type ProductContextType = {
   littleDiamondColor: string
   size: string
   weight: string
+  engraved: string
   setSize?: (size: string) => void
   setShape?: (shape: string) => void
   setMetalColor?: (metalColor: string) => void
@@ -33,6 +34,7 @@ type ProductContextType = {
   setTextStyle?: (textStyle: string) => void
   setLittleDiamondColor?: (littleDiamondColor: string) => void
   setWeight?: (weight: string) => void
+  setEngraved?: (weight: string) => void
 }
 interface Props {
   product: Product
@@ -53,6 +55,7 @@ const defaultContextValue = {
   littleDiamondColor: '',
   size: '',
   weight: '',
+  engraved: '',
 }
 const ProductContext = createContext<ProductContextType>(defaultContextValue)
 //this type of defaultContextValue sholud be same as value in provider and ProductContextType.
@@ -70,6 +73,7 @@ const initialState = {
   littleDiamondColor: '',
   size: '',
   weight: '',
+  engraved: '',
 }
 enum ActionType {
   SHAPE = 'SHAPE',
@@ -83,6 +87,7 @@ enum ActionType {
   LITTLEDIAMONDCOLOR = 'LITTLEDIAMONDCOLOR',
   SIZE = 'SIZE',
   WEIGHT = 'WEIGHT',
+  ENGRAVED = 'ENGRAVED',
 }
 type Action = {
   type: ActionType
@@ -100,6 +105,7 @@ type StateType = {
   littleDiamondColor: string
   size: string
   weight: string
+  engraved: string
 }
 
 const reducer = (state: StateType, action: Action) => {
@@ -126,6 +132,8 @@ const reducer = (state: StateType, action: Action) => {
       return { ...state, size: action.payload }
     case ActionType.WEIGHT:
       return { ...state, weight: action.payload }
+    case ActionType.ENGRAVED:
+      return { ...state, engraved: action.payload }
   }
 }
 
@@ -188,6 +196,11 @@ export const ProductProvider: FC<Props> = ({
     (weight: string) => dispatch({ type: ActionType.WEIGHT, payload: weight }),
     [dispatch]
   )
+  const setEngraved = useCallback(
+    (engraved: string) =>
+      dispatch({ type: ActionType.ENGRAVED, payload: engraved }),
+    [dispatch]
+  )
   const metalColor = useMemo(() => state.metalColor, [state.metalColor])
   const shape = useMemo(() => state.shape, [state.shape])
   const band = useMemo(() => state.band, [state.band])
@@ -205,6 +218,7 @@ export const ProductProvider: FC<Props> = ({
   )
   const size = useMemo(() => state.size, [state.size])
   const weight = useMemo(() => state.weight, [state.weight])
+  const engraved = useMemo(() => state.engraved, [state.engraved])
 
   const value = useMemo(
     () => ({
@@ -221,6 +235,7 @@ export const ProductProvider: FC<Props> = ({
       littleDiamondColor,
       size,
       weight,
+      engraved,
       setShape,
       setMetalColor,
       setBand,
@@ -232,6 +247,7 @@ export const ProductProvider: FC<Props> = ({
       setLittleDiamondColor,
       setSize,
       setWeight,
+      setEngraved,
     }),
     [
       product,
@@ -247,6 +263,7 @@ export const ProductProvider: FC<Props> = ({
       littleDiamondColor,
       size,
       weight,
+      engraved,
       setShape,
       setMetalColor,
       setBand,
@@ -258,6 +275,7 @@ export const ProductProvider: FC<Props> = ({
       setLittleDiamondColor,
       setSize,
       setWeight,
+      setEngraved,
     ]
   )
   return (

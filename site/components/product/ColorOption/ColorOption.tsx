@@ -6,8 +6,9 @@ import cn from 'clsx'
 
 interface Props {
   variant: 'A' | 'B'
+  className?: string
 }
-const ColorOption: FC<Props> = ({ variant }) => {
+const ColorOption: FC<Props> = ({ variant, className }) => {
   const {
     setMetalColor,
     metalColor,
@@ -36,7 +37,7 @@ const ColorOption: FC<Props> = ({ variant }) => {
       break
   }
   return (
-    <div>
+    <div className={className}>
       <div>
         <p>
           {title!} | <span>{colorValue!}</span>

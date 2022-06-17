@@ -6,9 +6,10 @@ import cn from 'clsx'
 
 interface Props {
   variant: string
+  className?: string
 }
 
-const DropdownOption: FC<Props> = ({ variant }) => {
+const DropdownOption: FC<Props> = ({ variant, className }) => {
   const { setShape, shape, setSize, size } = useProductContext()
   const [collapsed, setCollapsed] = useState<boolean>(false)
   let data: selectorDataType
@@ -44,7 +45,7 @@ const DropdownOption: FC<Props> = ({ variant }) => {
   }, [])
 
   return (
-    <div data-selector className="w-full">
+    <div data-selector className={cn(className, 'w-full')}>
       <p>{title!}</p>
       <div
         id="data-select-field"

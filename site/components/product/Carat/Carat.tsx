@@ -1,4 +1,5 @@
 import React, {
+  FC,
   useState,
   useRef,
   useEffect,
@@ -14,7 +15,11 @@ var debounce = require('lodash.debounce')
 const canUseDOM = typeof window !== 'undefined'
 const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect
 
-const Carat = () => {
+interface Props {
+  className?: string
+}
+
+const Carat: FC<Props> = ({ className }) => {
   const [mouseDown, setMouseDown] = useState<boolean>(false)
   const [startPoint, setStartPoint] = useState({ x: 0 })
   const [lineWidth, setLineWidth] = useState(0)
@@ -27,6 +32,12 @@ const Carat = () => {
 
   const { setWeight } = useProductContext()
 
+  const debounceFn = useCallback(
+    debounce(() => {
+      setWeight?.(caratWeightRef.current.toString())
+    }, 1000),
+    []
+  )
   const calculateWeight = (dis: number) => {
     const weightScope = 3.9 - 0.5
     const chosenWeight = (weightScope / lineWidth) * dis
@@ -52,9 +63,7 @@ const Carat = () => {
     roundRef.current!.style.transform = `translate(${moveDistanceRef.current.x}px,-50%)`
     thickLineRef.current!.style.width = `${moveDistanceRef.current.x + 16}px`
     caratWeightRef.current = calculateWeight(moveDistanceRef.current.x + 8)
-    debounce(() => {
-      setWeight?.(caratWeightRef.current.toString())
-    }, 3000)()
+    debounceFn()
   }
 
   const handleJump = (e: React.MouseEvent) => {
@@ -97,7 +106,7 @@ const Carat = () => {
   }, [node])
 
   return (
-    <div>
+    <div className={className}>
       <p>
         CARAT | <span>{caratWeightRef.current}ct</span>
       </p>

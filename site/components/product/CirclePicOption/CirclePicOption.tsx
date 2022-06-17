@@ -7,9 +7,10 @@ import { dataA, dataB, dataType, titleA, titleB } from './data'
 
 interface Props {
   variant: 'A' | 'B'
+  className?: string
 }
 
-export const CirclePicOption: FC<Props> = ({ variant }) => {
+export const CirclePicOption: FC<Props> = ({ variant, className }) => {
   const { setBand, band, setMosaic, mosaic } = useProductContext()
   let data: dataType
   let func: any
@@ -34,7 +35,7 @@ export const CirclePicOption: FC<Props> = ({ variant }) => {
   }
 
   return (
-    <div>
+    <div className={className}>
       <div>
         <p>
           {title!} <span>{value!}</span>

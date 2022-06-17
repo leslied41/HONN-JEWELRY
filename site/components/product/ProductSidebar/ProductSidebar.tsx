@@ -1,9 +1,8 @@
+import { FC, useEffect, useState } from 'react'
 import s from './ProductSidebar.module.css'
 import { useAddItem } from '@framework/cart'
-import { FC, useEffect, useState, useReducer, useCallback } from 'react'
 import { ProductOptions } from '@components/product'
-import { Button, Text, Rating, Collapse, useUI } from '@components/ui'
-import Buttons from '@components/ui/Buttons'
+import { useUI, HtmlText, Buttons } from '@components/ui'
 import {
   getProductVariant,
   selectDefaultOptionFromProduct,
@@ -18,7 +17,21 @@ interface ProductSidebarProps {
 }
 
 const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
-  const { product, allProducts, metalColor, shape } = useProductContext()
+  const {
+    product,
+    metalColor,
+    shape,
+    band,
+    mosaic,
+    stoneColorLevel,
+    stoneClarity,
+    stoneCut,
+    textStyle,
+    littleDiamondColor,
+    size,
+    weight,
+    engraved,
+  } = useProductContext()
 
   const addItem = useAddItem()
   const { openSidebar } = useUI()
@@ -42,8 +55,18 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
         variantId: String(variant ? variant.id : product.variants[0]?.id),
         //so now metafields passed here will be passed to checkout.
         customAttributes: [
-          { key: 'metal color', value: metalColor },
-          { key: 'shape', value: shape },
+          { key: 'Main Stone Shape', value: shape },
+          { key: 'Ring Band', value: band },
+          { key: 'Mosaic', value: mosaic },
+          { key: 'Metal Color', value: metalColor },
+          { key: 'Text Print', value: engraved },
+          { key: 'Little Diamond Color', value: littleDiamondColor },
+          { key: 'Ring Size', value: size },
+          { key: 'Main Stone Color Level', value: stoneColorLevel },
+          { key: 'Main Stone Clarity', value: stoneClarity },
+          { key: 'Main Stone Cut', value: stoneCut },
+          { key: 'Carat', value: weight },
+          { key: 'Text Style', value: textStyle },
         ],
       })
       openSidebar()
@@ -70,20 +93,8 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
         setSelectedOptions={setSelectedOptions}
       />
 
-      <div>
+      <div className="mt-7">
         {process.env.COMMERCE_CART_ENABLED && (
-          // <Button
-          //   aria-label="Add to Cart"
-          //   type="button"
-          //   className={s.button}
-          //   onClick={addToCart}
-          //   loading={loading}
-          //   disabled={variant?.availableForSale === false}
-          // >
-          //   {variant?.availableForSale === false
-          //     ? 'Not Available'
-          //     : 'Add To Cart'}
-          // </Button>
           <Buttons
             className={s.button}
             variant="toRequest"
@@ -99,21 +110,35 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
           </Buttons>
         )}
       </div>
-      <Text
-        className="pb-4 break-words w-full max-w-xl"
-        html={product.descriptionHtml || product.description}
-      />
-      <div className="mt-6 sticky top-40">
-        <Collapse title="Care">
-          This is a limited edition production run. Printing starts when the
-          drop ends.
-        </Collapse>
-        <Collapse title="Details">
-          This is a limited edition production run. Printing starts when the
-          drop ends. Reminder: Bad Boys For Life. Shipping may take 10+ days due
-          to COVID-19.
-        </Collapse>
+      <div>
+        <div data-delivery-estimated className="mt-5">
+          <div className="flex gap-x-2">
+            <img src="/estimated.svg" alt="delivery-estimated-icon" />
+            <p>Estimated: 3–5 business days</p>
+          </div>
+          <div className="flex gap-x-2">
+            <img
+              src="/estimated.svg"
+              alt="delivery-estimated-icon"
+              className="opacity-0"
+            />
+            <a href="">Free shipping policy</a>
+          </div>
+        </div>
+        <div data-warranty className="flex gap-x-2">
+          <img src="/warranty.svg" alt="warranty-icon" />
+          <p>5 years warranty</p>
+        </div>
+        <div data-booking className="flex gap-x-2">
+          <img src="/booking.svg" alt="booking-icon" />
+          <p>Book an appointemnt</p>
+        </div>
       </div>
+
+      <HtmlText
+        html={product.descriptionHtml || product.description}
+        className="w-full break-words mt-2 sticky top-32 "
+      />
     </div>
   )
 }

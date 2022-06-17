@@ -69,15 +69,9 @@ export const ProductSearchOps = () => {
   return (
     <div>
       <div data-search-options>
-        <div data-search-options="shape">
-          <DropdownOption variant="A" />
-        </div>
-        <div data-search-options="mosaic">
-          <CirclePicOption variant="A" />
-        </div>
-        <div data-search-options="band">
-          <CirclePicOption variant="B" />
-        </div>
+        <DropdownOption variant="A" />
+        <CirclePicOption variant="A" className="mt-6" />
+        <CirclePicOption variant="B" className="mt-6" />
       </div>
     </div>
   )

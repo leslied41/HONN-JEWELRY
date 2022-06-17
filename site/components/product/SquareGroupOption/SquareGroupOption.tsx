@@ -18,6 +18,7 @@ import s from './SquareGroupOption.module.css'
 interface Props {
   variant: Variant
   layout?: 'A' | 'default'
+  className?: string
 }
 export enum Variant {
   A = 'CLARITY',
@@ -30,6 +31,7 @@ export enum Variant {
 export const SquareGroupOption: FC<Props> = ({
   variant,
   layout = 'default',
+  className,
 }) => {
   const {
     stoneColorLevel,
@@ -81,7 +83,7 @@ export const SquareGroupOption: FC<Props> = ({
 
   return (
     <div
-      className={cn('grid', {
+      className={cn(className, 'grid', {
         ['grid-cols-4 gap-x-4']: layout === 'default',
         ['grid-cols-1']: layout === 'A',
       })}
