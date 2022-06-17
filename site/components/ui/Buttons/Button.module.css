@@ -1,0 +1,29 @@
+.root {
+  @apply bg-accent-9 text-accent-0 cursor-pointer inline-flex
+    px-16 py-4 leading-6 transition ease-in-out duration-150
+    shadow-sm text-center justify-center uppercase
+    border border-transparent items-center text-m font-semibold
+    tracking-wide;
+  max-height: 48px;
+}
+.root:hover {
+  @apply border-accent-9 bg-accent-6;
+}
+
+.root:focus {
+  @apply shadow-outline-normal outline-none;
+}
+.toRequest {
+  @apply bg-gold text-darkGray;
+}
+.loading {
+  @apply bg-accent-1 text-accent-3 border-accent-2 cursor-not-allowed;
+}
+.disabled,
+.disabled:hover {
+  @apply text-accent-4 border-accent-2 bg-accent-1 cursor-not-allowed;
+  filter: grayscale(1);
+  -webkit-transform: translateZ(0);
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+}

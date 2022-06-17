@@ -3,6 +3,7 @@ import { useAddItem } from '@framework/cart'
 import { FC, useEffect, useState, useReducer, useCallback } from 'react'
 import { ProductOptions } from '@components/product'
 import { Button, Text, Rating, Collapse, useUI } from '@components/ui'
+import Buttons from '@components/ui/Buttons'
 import {
   getProductVariant,
   selectDefaultOptionFromProduct,
@@ -71,18 +72,31 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
 
       <div>
         {process.env.COMMERCE_CART_ENABLED && (
-          <Button
-            aria-label="Add to Cart"
-            type="button"
+          // <Button
+          //   aria-label="Add to Cart"
+          //   type="button"
+          //   className={s.button}
+          //   onClick={addToCart}
+          //   loading={loading}
+          //   disabled={variant?.availableForSale === false}
+          // >
+          //   {variant?.availableForSale === false
+          //     ? 'Not Available'
+          //     : 'Add To Cart'}
+          // </Button>
+          <Buttons
             className={s.button}
+            variant="toRequest"
             onClick={addToCart}
             loading={loading}
             disabled={variant?.availableForSale === false}
+            aria-label="Add to Request"
+            type="button"
           >
             {variant?.availableForSale === false
               ? 'Not Available'
-              : 'Add To Cart'}
-          </Button>
+              : 'ADD TO REQUEST'}
+          </Buttons>
         )}
       </div>
       <Text
