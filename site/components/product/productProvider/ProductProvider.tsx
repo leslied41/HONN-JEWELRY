@@ -21,6 +21,7 @@ type ProductContextType = {
   textStyle: string
   littleDiamondColor: string
   size: string
+  weight: string
   setSize?: (size: string) => void
   setShape?: (shape: string) => void
   setMetalColor?: (metalColor: string) => void
@@ -31,6 +32,7 @@ type ProductContextType = {
   setStoneCut?: (stoneCut: string) => void
   setTextStyle?: (textStyle: string) => void
   setLittleDiamondColor?: (littleDiamondColor: string) => void
+  setWeight?: (weight: string) => void
 }
 interface Props {
   product: Product
@@ -50,6 +52,7 @@ const defaultContextValue = {
   textStyle: '',
   littleDiamondColor: '',
   size: '',
+  weight: '',
 }
 const ProductContext = createContext<ProductContextType>(defaultContextValue)
 //this type of defaultContextValue sholud be same as value in provider and ProductContextType.
@@ -66,6 +69,7 @@ const initialState = {
   textStyle: '',
   littleDiamondColor: '',
   size: '',
+  weight: '',
 }
 enum ActionType {
   SHAPE = 'SHAPE',
@@ -78,6 +82,7 @@ enum ActionType {
   TEXTSTYLE = 'TEXTSTYLE',
   LITTLEDIAMONDCOLOR = 'LITTLEDIAMONDCOLOR',
   SIZE = 'SIZE',
+  WEIGHT = 'WEIGHT',
 }
 type Action = {
   type: ActionType
@@ -94,6 +99,7 @@ type StateType = {
   textStyle: string
   littleDiamondColor: string
   size: string
+  weight: string
 }
 
 const reducer = (state: StateType, action: Action) => {
@@ -118,6 +124,8 @@ const reducer = (state: StateType, action: Action) => {
       return { ...state, littleDiamondColor: action.payload }
     case ActionType.SIZE:
       return { ...state, size: action.payload }
+    case ActionType.WEIGHT:
+      return { ...state, weight: action.payload }
   }
 }
 
@@ -176,6 +184,10 @@ export const ProductProvider: FC<Props> = ({
     (size: string) => dispatch({ type: ActionType.SIZE, payload: size }),
     [dispatch]
   )
+  const setWeight = useCallback(
+    (weight: string) => dispatch({ type: ActionType.WEIGHT, payload: weight }),
+    [dispatch]
+  )
   const metalColor = useMemo(() => state.metalColor, [state.metalColor])
   const shape = useMemo(() => state.shape, [state.shape])
   const band = useMemo(() => state.band, [state.band])
@@ -192,6 +204,7 @@ export const ProductProvider: FC<Props> = ({
     [state.littleDiamondColor]
   )
   const size = useMemo(() => state.size, [state.size])
+  const weight = useMemo(() => state.weight, [state.weight])
 
   const value = useMemo(
     () => ({
@@ -207,6 +220,7 @@ export const ProductProvider: FC<Props> = ({
       textStyle,
       littleDiamondColor,
       size,
+      weight,
       setShape,
       setMetalColor,
       setBand,
@@ -217,6 +231,7 @@ export const ProductProvider: FC<Props> = ({
       setTextStyle,
       setLittleDiamondColor,
       setSize,
+      setWeight,
     }),
     [
       product,
@@ -231,6 +246,7 @@ export const ProductProvider: FC<Props> = ({
       textStyle,
       littleDiamondColor,
       size,
+      weight,
       setShape,
       setMetalColor,
       setBand,
@@ -241,6 +257,7 @@ export const ProductProvider: FC<Props> = ({
       setTextStyle,
       setLittleDiamondColor,
       setSize,
+      setWeight,
     ]
   )
   return (

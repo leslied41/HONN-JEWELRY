@@ -1,21 +1,31 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from 'react'
 import cn from 'clsx'
 import s from './Carat.module.css'
+import { useProductContext } from '../productProvider'
 var throttle = require('lodash.throttle')
+var debounce = require('lodash.debounce')
 
-interface Props {}
+const canUseDOM = typeof window !== 'undefined'
+const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect
 
-const Carat = (props: Props) => {
+const Carat = () => {
   const [mouseDown, setMouseDown] = useState<boolean>(false)
-  const roundRef = useRef<HTMLDivElement>(null)
   const [startPoint, setStartPoint] = useState({ x: 0 })
-  const moveDistanceRef = useRef({ x: 0 })
-  const lineRef = useRef<HTMLDivElement>(null)
   const [lineWidth, setLineWidth] = useState(0)
-  const thickLineRef = useRef<HTMLDivElement>(null)
   const [startMoving, setStartMoving] = useState(false)
-  const [update, setUpdate] = useState(false)
+  const [node, setNode] = useState<any>(null)
+  const roundRef = useRef<HTMLDivElement>(null)
+  const moveDistanceRef = useRef({ x: 0 })
+  const thickLineRef = useRef<HTMLDivElement>(null)
   const caratWeightRef = useRef(0.5)
+
+  const { setWeight } = useProductContext()
 
   const calculateWeight = (dis: number) => {
     const weightScope = 3.9 - 0.5
@@ -29,7 +39,6 @@ const Carat = (props: Props) => {
     setStartPoint({ x: x - moveDistanceRef.current.x })
     setMouseDown(true)
   }
-
   const mouseMove = (e: React.MouseEvent) => {
     const x = e.clientX
     if (!mouseDown) return
@@ -43,19 +52,22 @@ const Carat = (props: Props) => {
     roundRef.current!.style.transform = `translate(${moveDistanceRef.current.x}px,-50%)`
     thickLineRef.current!.style.width = `${moveDistanceRef.current.x + 16}px`
     caratWeightRef.current = calculateWeight(moveDistanceRef.current.x + 8)
+    debounce(() => {
+      setWeight?.(caratWeightRef.current.toString())
+    }, 3000)()
   }
 
   const handleJump = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement)!.closest('#line-round')) return
     const x = e.clientX
-    const leftEnd = lineRef.current!.getBoundingClientRect().x
+    const leftEnd = node.getBoundingClientRect().x
     moveDistanceRef.current = {
       x: x - leftEnd,
     }
     roundRef.current!.style.transform = `translate(${moveDistanceRef.current.x}px,-50%)`
     thickLineRef.current!.style.width = `${moveDistanceRef.current.x + 16}px`
     caratWeightRef.current = calculateWeight(moveDistanceRef.current.x + 8)
-    setUpdate(!update)
+    setWeight?.(caratWeightRef.current.toString())
   }
 
   useEffect(() => {
@@ -68,18 +80,21 @@ const Carat = (props: Props) => {
       window.removeEventListener('mousemove', throttle(handleMove, 500))
     }
   }, [])
-
-  useLayoutEffect(() => {
+  const measureRef = useCallback((node) => {
+    if (!node) return
+    setLineWidth(node.offsetWidth)
+    setNode(node)
+  }, [])
+  useIsomorphicLayoutEffect(() => {
+    if (!node) return
     const getWidth = () => {
-      const width = lineRef.current!.offsetWidth
-      setLineWidth((lineWidth) => (width ? width : lineWidth))
+      setLineWidth(node.offsetWidth)
     }
     window.addEventListener('resize', getWidth)
-    setLineWidth(lineRef.current!.offsetWidth)
     return () => {
       window.removeEventListener('resize', getWidth)
     }
-  }, [])
+  }, [node])
 
   return (
     <div>
@@ -88,7 +103,7 @@ const Carat = (props: Props) => {
       </p>
       <div
         className="h-[1px] bg-basic cursor-pointer"
-        ref={lineRef}
+        ref={measureRef}
         onClick={handleJump}
       >
         <div
