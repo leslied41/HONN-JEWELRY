@@ -19,6 +19,33 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
     React.MutableRefObject<HTMLDivElement>[]
   >([])
 
+  const arrayFilter = (array: boolean[]) => {
+    let tag: number[] = []
+    let targetNum: number
+    array.forEach((item, index) => {
+      if (item === true) {
+        tag.push(index)
+      }
+    })
+    if (tag.length === 0) return array
+
+    if (tag.includes(0)) {
+      targetNum = 0
+    } else {
+      targetNum = tag[tag.length - 1]
+    }
+    const filteredArray = array.map((item, index) => {
+      if (index === targetNum) {
+        item = true
+      } else {
+        item = false
+      }
+      return item
+    })
+
+    return filteredArray
+  }
+
   useEffect(() => {
     // add or remove refs
     setElRefs((elRefs) =>
@@ -29,25 +56,19 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
   }, [])
 
   const options = useMemo(() => {
-    return { root: null, rooMargin: '0px', threshold: 0.6 }
+    return { root: null, rooMargin: '8px', threshold: 1 }
   }, [])
 
   const observeCallback = (entries: any) => {
     entries.forEach((entry: any, i: number) => {
       if (entry.isIntersecting) {
-        if (!isScrollingUp) {
-          newImgArray[entry.target.id - 1] = false
-          newImgArray[entry.target.id] = true
-        }
-        if (isScrollingUp) {
-          newImgArray[entry.target.id] = true
-          newImgArray[entry.target.id + 1] = false
-        }
-
-        setIsVisible([...newImgArray])
+        newImgArray[entry.target.id] = true
+        const filteredImgArray = arrayFilter(newImgArray)
+        setIsVisible([...filteredImgArray])
       } else {
         newImgArray[entry.target.id] = false
-        setIsVisible([...newImgArray])
+        const filteredImgArray = arrayFilter(newImgArray)
+        setIsVisible([...filteredImgArray])
       }
     })
   }
