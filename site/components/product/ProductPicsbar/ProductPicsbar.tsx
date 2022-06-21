@@ -31,8 +31,11 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
 
     if (tag.includes(0)) {
       targetNum = 0
+    } else if (tag.length === 1) {
+      targetNum = tag[0]
     } else {
-      targetNum = tag[tag.length - 1]
+      //targetNum = isScrollingUp ? tag[tag.length - 1] : tag[tag.length - 2]
+      targetNum = tag[tag.length - 2]
     }
     const filteredArray = array.map((item, index) => {
       if (index === targetNum) {
@@ -56,7 +59,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
   }, [])
 
   const options = useMemo(() => {
-    return { root: null, rooMargin: '8px', threshold: 1 }
+    return { root: null, rooMargin: '0px', threshold: 0.5 }
   }, [])
 
   const observeCallback = (entries: any) => {
