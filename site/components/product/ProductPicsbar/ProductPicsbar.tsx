@@ -3,14 +3,14 @@ import cn from 'clsx'
 import Image from 'next/image'
 import s from './ProductPicsbar.module.css'
 import { useScrollDirection } from 'react-use-scroll-direction'
-import { useProductContext } from '../productProvider'
+import type { Product } from '@commerce/types/product'
 
 interface ProductPicsbarProps {
   className?: string
+  product: Product
 }
 
-const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
-  const { product } = useProductContext()
+const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
   const newImgArray = product.images.map((img, i) => false)
   const [isVisible, setIsVisible] = useState<boolean[]>(newImgArray)
   const { isScrollingUp } = useScrollDirection()
@@ -28,13 +28,11 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
       }
     })
     if (tag.length === 0) return array
-
     if (tag.includes(0)) {
       targetNum = 0
     } else if (tag.length === 1) {
       targetNum = tag[0]
     } else {
-      //targetNum = isScrollingUp ? tag[tag.length - 1] : tag[tag.length - 2]
       targetNum = tag[tag.length - 2]
     }
     const filteredArray = array.map((item, index) => {
@@ -45,7 +43,6 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
       }
       return item
     })
-
     return filteredArray
   }
 
@@ -75,7 +72,6 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
       }
     })
   }
-
   useEffect(() => {
     //at first render, there were no elRefs as elRefs are generated in another useEffect
     //at the same time in first render. when elrefs are created, setElrefs is called, so
@@ -86,9 +82,6 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className }) => {
     const observer = new IntersectionObserver(observeCallback, options)
     elRefs.forEach((ref, i) => {
       if (ref.current) observer.observe(ref.current)
-      // return () => {
-      //   if (ref.current) observer.unobserve(ref.current)
-      // }
     })
     return () => {
       observer.disconnect()

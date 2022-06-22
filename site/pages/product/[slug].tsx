@@ -80,8 +80,8 @@ export default function Slug({
   return router.isFallback ? (
     <h1>Loading...</h1>
   ) : (
-    <ProductProvider product={product} allProducts={allProducts}>
-      <ProductView />
+    <ProductProvider>
+      <ProductView product={product} allProducts={allProducts} />
     </ProductProvider>
   )
 }

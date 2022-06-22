@@ -1,25 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, FC } from 'react'
 import { useRouter } from 'next/router'
 import DropdownOption from '../DropdownOption'
 import { useProductContext } from '../productProvider'
 import { CirclePicOption } from '../CirclePicOption'
 import useEffectSkipInitial from '@lib/hooks/useEffectSkipInitial'
+import type { Product } from '@commerce/types/product'
 
-//so the better solution is to use useContext, all the state and setState and other data needed in these components
-//should be put into useContext, and put it on the product page. That is because the state including these search options
-//and fields data need to be upload to shopify in ProductSidebar component using addToCart function.
-
-export const ProductSearchOps = () => {
-  const {
-    product,
-    allProducts,
-    shape,
-    band,
-    mosaic,
-    setBand,
-    setShape,
-    setMosaic,
-  } = useProductContext()
+interface Props {
+  product: Product
+  allProducts: Product[]
+}
+export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
+  const { shape, band, mosaic, setBand, setShape, setMosaic } =
+    useProductContext()
   console.log(product)
   const router = useRouter()
 

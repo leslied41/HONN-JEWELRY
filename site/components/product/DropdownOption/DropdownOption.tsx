@@ -7,91 +7,113 @@ import cn from 'clsx'
 interface Props {
   variant: string
   className?: string
+  setShape?: (shape: string) => void
+  shape?: string
+  setSize?: (size: string) => void
+  size?: string
 }
 
 const DropdownOption: FC<Props> = ({ variant, className }) => {
   const { setShape, shape, setSize, size } = useProductContext()
-  const [collapsed, setCollapsed] = useState<boolean>(false)
-  let data: selectorDataType
-  let func: any
-  let selectorValue: string
-  let title: string
-  switch (variant) {
-    case 'A':
-      data = dataA
-      func = setShape
-      selectorValue = shape
-      title = titleA
-      break
-    case 'B':
-      data = dataB
-      func = setSize
-      selectorValue = size
-      title = titleB
-      break
-
-    default:
-      break
-  }
-  useEffect(() => {
-    const cancelDropDown = (e: MouseEvent) => {
-      if ((e.target as HTMLElement)!.closest('#data-select-field')) return
-      setCollapsed(false)
-    }
-    window.addEventListener('click', cancelDropDown)
-    return () => {
-      window.removeEventListener('click', cancelDropDown)
-    }
-  }, [])
 
   return (
-    <div data-selector className={cn(className, 'w-full')}>
-      <p>{title!}</p>
-      <div
-        id="data-select-field"
-        data-select-field
-        className={s.dropDown}
-        onClick={() => {
-          setCollapsed(!collapsed)
-        }}
-      >
-        <p>{selectorValue! ? selectorValue.toUpperCase() : 'Please Select'}</p>
-        <img
-          src="/dropdownArrow.svg"
-          alt="arrow-icon"
-          className={cn({
-            ['rotate-180']: collapsed,
-            ['rotate-0']: !collapsed,
-          })}
-        />
-      </div>
-      <div className="relative z-10 w-full">
-        <ul
-          data-option-group
-          className={cn(s.optionsGroup, {
-            ['h-0']: !collapsed,
-            ['h-fit']: collapsed,
-          })}
-        >
-          {data!.map((i) => {
-            const { id, name, src } = i
-            return (
-              <li
-                key={id}
-                className={s.optionItem}
-                onClick={() => {
-                  func?.(name)
-                }}
-              >
-                {src && <img src={src} alt={name} className="w-6" />}
-                <p>{name.toUpperCase()}</p>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    </div>
+    <InnerDropdownOption
+      shape={shape}
+      size={size}
+      setShape={setShape}
+      setSize={setSize}
+      variant={variant}
+      className={className}
+    />
   )
 }
 
-export default memo(DropdownOption)
+const InnerDropdownOption: FC<Props> = memo(
+  ({ setShape, shape, setSize, size, variant, className }) => {
+    const [collapsed, setCollapsed] = useState<boolean>(false)
+    let data: selectorDataType
+    let func: any
+    let selectorValue: string | undefined
+    let title: string
+    switch (variant) {
+      case 'A':
+        data = dataA
+        func = setShape
+        selectorValue = shape
+        title = titleA
+        break
+      case 'B':
+        data = dataB
+        func = setSize
+        selectorValue = size
+        title = titleB
+        break
+
+      default:
+        break
+    }
+    useEffect(() => {
+      const cancelDropDown = (e: MouseEvent) => {
+        if ((e.target as HTMLElement)!.closest('#data-select-field')) return
+        setCollapsed(false)
+      }
+      window.addEventListener('click', cancelDropDown)
+      return () => {
+        window.removeEventListener('click', cancelDropDown)
+      }
+    }, [])
+
+    return (
+      <div data-selector className={cn(className, 'w-full')}>
+        <p>{title!}</p>
+        <div
+          id="data-select-field"
+          data-select-field
+          className={s.dropDown}
+          onClick={() => {
+            setCollapsed(!collapsed)
+          }}
+        >
+          <p>
+            {selectorValue! ? selectorValue.toUpperCase() : 'Please Select'}
+          </p>
+          <img
+            src="/dropdownArrow.svg"
+            alt="arrow-icon"
+            className={cn({
+              ['rotate-180']: collapsed,
+              ['rotate-0']: !collapsed,
+            })}
+          />
+        </div>
+        <div className="relative z-10 w-full">
+          <ul
+            data-option-group
+            className={cn(s.optionsGroup, {
+              ['h-0']: !collapsed,
+              ['h-fit']: collapsed,
+            })}
+          >
+            {data!.map((i) => {
+              const { id, name, src } = i
+              return (
+                <li
+                  key={id}
+                  className={s.optionItem}
+                  onClick={() => {
+                    func?.(name)
+                  }}
+                >
+                  {src && <img src={src} alt={name} className="w-6" />}
+                  <p>{name.toUpperCase()}</p>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+)
+
+export default DropdownOption

@@ -11,14 +11,20 @@ import {
 import ProductSearchOps from '../ProductSearchOptions'
 import ProductMetafields from '../ProductMetafields'
 import { useProductContext } from '../productProvider'
+import type { Product } from '@commerce/types/product'
 
 interface ProductSidebarProps {
   className?: string
+  product: Product
+  allProducts: Product[]
 }
 
-const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
+const ProductSidebar: FC<ProductSidebarProps> = ({
+  className,
+  product,
+  allProducts,
+}) => {
   const {
-    product,
     metalColor,
     shape,
     band,
@@ -85,7 +91,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ className }) => {
           {product.price.value} <span>{product.price.currencyCode}</span>
         </p>
       </div>
-      <ProductSearchOps />
+      <ProductSearchOps product={product} allProducts={allProducts} />
       <ProductMetafields />
       <ProductOptions
         options={product.options}

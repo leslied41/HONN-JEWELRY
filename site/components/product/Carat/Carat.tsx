@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useLayoutEffect,
   useCallback,
+  memo,
 } from 'react'
 import cn from 'clsx'
 import s from './Carat.module.css'
@@ -17,21 +18,23 @@ const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect
 
 interface Props {
   className?: string
+  setWeight?: (weight: string) => void
 }
 
 const Carat: FC<Props> = ({ className }) => {
+  const { setWeight } = useProductContext()
+  return <InnerCarat setWeight={setWeight} className={className} />
+}
+
+const InnerCarat: FC<Props> = memo(({ setWeight, className }) => {
   const [mouseDown, setMouseDown] = useState<boolean>(false)
   const [startPoint, setStartPoint] = useState({ x: 0 })
   const [lineWidth, setLineWidth] = useState(0)
-  const [startMoving, setStartMoving] = useState(false)
   const [node, setNode] = useState<any>(null)
   const roundRef = useRef<HTMLDivElement>(null)
   const moveDistanceRef = useRef({ x: 0 })
   const thickLineRef = useRef<HTMLDivElement>(null)
   const caratWeightRef = useRef(0.5)
-
-  const { setWeight } = useProductContext()
-
   const debounceFn = useCallback(
     debounce(() => {
       setWeight?.(caratWeightRef.current.toString())
@@ -53,7 +56,6 @@ const Carat: FC<Props> = ({ className }) => {
   const mouseMove = (e: React.MouseEvent) => {
     const x = e.clientX
     if (!mouseDown) return
-    setStartMoving(true)
     moveDistanceRef.current = {
       x: x - startPoint.x,
     }
@@ -134,5 +136,6 @@ const Carat: FC<Props> = ({ className }) => {
       </div>
     </div>
   )
-}
+})
+
 export default Carat

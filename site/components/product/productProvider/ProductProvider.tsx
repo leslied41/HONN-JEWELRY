@@ -6,11 +6,8 @@ import React, {
   useContext,
   useReducer,
 } from 'react'
-import type { Product } from '@commerce/types/product'
 
 type ProductContextType = {
-  product: Product
-  allProducts: Product[]
   metalColor: string
   shape: string
   band: string
@@ -37,13 +34,9 @@ type ProductContextType = {
   setEngraved?: (weight: string) => void
 }
 interface Props {
-  product: Product
-  allProducts: Product[]
   children?: any
 }
 const defaultContextValue = {
-  product: {} as Product,
-  allProducts: [] as Product[],
   metalColor: '',
   shape: '',
   band: '',
@@ -137,11 +130,7 @@ const reducer = (state: StateType, action: Action) => {
   }
 }
 
-export const ProductProvider: FC<Props> = ({
-  product,
-  allProducts,
-  children,
-}) => {
+export const ProductProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const setShape = useCallback(
     (shape: string) => dispatch({ type: ActionType.SHAPE, payload: shape }),
@@ -222,8 +211,6 @@ export const ProductProvider: FC<Props> = ({
 
   const value = useMemo(
     () => ({
-      product,
-      allProducts,
       metalColor,
       shape,
       band,
@@ -250,8 +237,6 @@ export const ProductProvider: FC<Props> = ({
       setEngraved,
     }),
     [
-      product,
-      allProducts,
       shape,
       metalColor,
       mosaic,
