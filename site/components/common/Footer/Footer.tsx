@@ -3,10 +3,6 @@ import cn from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import type { Page } from '@commerce/types/page'
-import getSlug from '@lib/get-slug'
-import { Github, Vercel } from '@components/icons'
-import { Logo, Container } from '@components/ui'
-import { I18nWidget } from '@components/common'
 import s from './Footer.module.css'
 
 interface Props {
@@ -23,29 +19,21 @@ const links = [
 ]
 
 const Footer: FC<Props> = ({}) => {
-  //pages from props is the pages created by user on shopify  and passed here to show them on footer.
-  //but for this project, we would not embed these pages in this website and we will create new pages instead.
-  //therefore, these pages would be unuseful.
-
-  //by using clsx, now you can combine classname from
-  //.module.css with global css classname.
   return (
     <footer className={s.root}>
-      <div className="grid grid-cols-12 p-10 gap-x-20 gap-y-12">
-        <div className="col-span-2">
-          <div>
-            <ul>
-              <li>
-                <Link href="/">Contact us</Link>
-              </li>
-              <li>Birger Jarlsgatan 23 111 45 Stockholm +45 555324 1</li>
-              <li>
-                <Link href="/">Book an appointment</Link>
-              </li>
-            </ul>
-          </div>
+      <div className="grid grid-cols-12 px-4 pt-10 pb-4 gap-x-4 text-nav uppercase lg:gap-x-20 md:p-10 gap-y-8 lg:gap-y-12 w-full overflow-hidden">
+        <div className="col-span-6 w-full md:col-span-2">
+          <ul>
+            <li>
+              <Link href="/">Contact us</Link>
+            </li>
+            <li>Birger Jarlsgatan 23 111 45 Stockholm+45 555324 1</li>
+            <li>
+              <Link href="/">Book an appointment</Link>
+            </li>
+          </ul>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-6 w-full md:col-span-2">
           <div>
             <ul>
               <li>
@@ -60,7 +48,7 @@ const Footer: FC<Props> = ({}) => {
             </ul>
           </div>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-12 w-full md:col-span-2">
           <div>
             <ul>
               <li>
@@ -72,26 +60,28 @@ const Footer: FC<Props> = ({}) => {
             </ul>
           </div>
         </div>
-        <div className="col-span-6">
-          <div className="flex">
+        <div className="col-span-12 w-full md:col-span-6">
+          <div className="flex w-full md:justify-end">
             <input
               type="email"
-              placeholder="Email Address"
-              className="outline-none bg-inherit placeholder-gold border-b border-brown pb-2 w-full"
+              placeholder="EMAIL ADDRESS"
+              className="outline-none bg-inherit placeholder-footer1 border-b border-brown pb-2 max-w-[470px] w-full"
             />
-            <button className="border-b border-brown pb-2"> Subscribe</button>
+            <button className="border-b border-brown uppercase text-footer1 pb-2 max-w-[60px]">
+              Subscribe
+            </button>
           </div>
         </div>
-        <div className="col-span-6">
+        <div className="col-span-6 w-full">
           <div>
             <p>
               Currency: <span>GBP £</span>
             </p>
           </div>
         </div>
-        <div className="col-span-6 justify-self-end">
+        <div className="hidden justify-self-end w-full md:col-span-6 md:block ">
           <div>
-            <ul className="flex gap-x-10">
+            <ul className="flex justify-end gap-x-10 text-tiny text-footer2 capitalize">
               <li>Returns and Exchanges </li>
               <li>Returns and Exchanges</li>
               <li>© HONN</li>

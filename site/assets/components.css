@@ -1,5 +1,11 @@
 .fit {
-  min-height: calc(100vh - 88px);
+  min-height: calc(100vh - 56px);
+}
+
+@media screen and (min-width: 640px) {
+  .fit {
+    min-height: calc(100vh - 96px);
+  }
 }
 
 /* datepicker */
@@ -16,7 +22,7 @@
   width: 80%;
 }
 .react-datepicker__header {
-  background-color:transparent;
+  background-color: transparent;
   margin: 0.4rem;
 }
 .react-datepicker__day-name,

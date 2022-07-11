@@ -16,7 +16,12 @@ module.exports = withCommerceConfig({
   },
   images: {
     //domains: ['img.rawpixel.com'],
-    domains: ['scontent.cdninstagram.com', 'scontent-lax3-2.cdninstagram.com', 'scontent-lax3-1.cdninstagram.com'],
+    domains: [
+      'scontent.cdninstagram.com',
+      'scontent-lax3-2.cdninstagram.com',
+      'scontent-lax3-1.cdninstagram.com',
+      'video.cdninstagram.com',
+    ],
   },
   rewrites() {
     return [

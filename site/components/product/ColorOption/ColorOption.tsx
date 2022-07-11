@@ -63,9 +63,9 @@ const InnerColoroption: FC<Props> = memo(
     }
     return (
       <div className={className}>
-        <div>
-          <p>
-            {title!} | <span>{colorValue!}</span>
+        <div className="mb-2">
+          <p className="uppercase text-nav">
+            {title!} | <span className="text-brown">{colorValue!}</span>
           </p>
         </div>
 
@@ -76,7 +76,7 @@ const InnerColoroption: FC<Props> = memo(
               <button
                 key={id}
                 className={cn(s.button, {
-                  ['border-2 border-basic bg-white']: value === colorValue,
+                  ['border-2 border-darkGray bg-white']: value === colorValue,
                 })}
                 onClick={() => {
                   func?.(value)

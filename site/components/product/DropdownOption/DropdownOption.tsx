@@ -64,8 +64,8 @@ const InnerDropdownOption: FC<Props> = memo(
     }, [])
 
     return (
-      <div data-selector className={cn(className, 'w-full')}>
-        <p>{title!}</p>
+      <div data-selector className={cn(className)}>
+        <p className="text-nav mb-2">{title!}</p>
         <div
           id="data-select-field"
           data-select-field
@@ -80,7 +80,7 @@ const InnerDropdownOption: FC<Props> = memo(
           <img
             src="/dropdownArrow.svg"
             alt="arrow-icon"
-            className={cn({
+            className={cn('transition-all duration-75 ease-in-out', {
               ['rotate-180']: collapsed,
               ['rotate-0']: !collapsed,
             })}
@@ -89,10 +89,14 @@ const InnerDropdownOption: FC<Props> = memo(
         <div className="relative z-10 w-full">
           <ul
             data-option-group
-            className={cn(s.optionsGroup, {
-              ['h-0']: !collapsed,
-              ['h-fit']: collapsed,
-            })}
+            className={cn(
+              s.optionsGroup,
+              'transition-all origin-top  duration-50 ease-in-out',
+              {
+                ['scale-y-0 ']: !collapsed,
+                ['scale-y-100']: collapsed,
+              }
+            )}
           >
             {data!.map((i) => {
               const { id, name, src } = i
@@ -104,7 +108,7 @@ const InnerDropdownOption: FC<Props> = memo(
                     func?.(name)
                   }}
                 >
-                  {src && <img src={src} alt={name} className="w-6" />}
+                  {src && <img src={src} alt={name} className="w-6 " />}
                   <p>{name.toUpperCase()}</p>
                 </li>
               )

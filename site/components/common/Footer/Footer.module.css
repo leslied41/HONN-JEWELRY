@@ -1,5 +1,5 @@
 .root {
-  @apply border-t border-brown bg-gray text-gold;
+  @apply border-t border-brown bg-gray text-brown w-full;
 }
 
 .link {

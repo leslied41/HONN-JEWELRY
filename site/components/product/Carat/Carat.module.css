@@ -1,3 +1,6 @@
-.roundPostion {
-  @apply items-start;
+.slider {
+  appearance: none;
+  height: 1px; /* Specified height */
+  outline: none; /* Remove outline */
+  cursor: pointer; /* Cursor on hover */
 }
