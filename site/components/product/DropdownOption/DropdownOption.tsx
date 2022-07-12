@@ -119,5 +119,5 @@ const InnerDropdownOption: FC<Props> = memo(
     )
   }
 )
-
+DropdownOption.displayName = 'DropdownOption'
 export default DropdownOption

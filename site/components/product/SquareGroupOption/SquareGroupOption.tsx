@@ -35,7 +35,6 @@ export enum Variant {
   D = 'TEXTSYLE',
   E = 'EXPLORE',
 }
-
 export const SquareGroupOption: FC<Props> = ({
   variant,
   layout = 'A',
@@ -155,3 +154,4 @@ const InnerSquareGroupOption: FC<Props> = React.memo(
     )
   }
 )
+SquareGroupOption.displayName = 'SquareGroupOption'

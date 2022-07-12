@@ -33,4 +33,5 @@ const InnerInputOption: FC<Props> = memo(({ className, setEngraved }) => {
     </div>
   )
 })
+InputOption.displayName = 'InputOption'
 export default InputOption

@@ -77,5 +77,6 @@ const InnerCarat: FC<Props> = memo(({ setWeight, weight, className }) => {
     </div>
   )
 })
+Carat.displayName = 'Carat slider'
 
 export default Carat

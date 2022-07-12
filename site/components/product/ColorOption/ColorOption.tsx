@@ -91,5 +91,5 @@ const InnerColoroption: FC<Props> = memo(
     )
   }
 )
-
+ColorOption.displayName = 'ColorOption'
 export default ColorOption
