@@ -14,7 +14,7 @@ import getAllPagesQuery from '../../utils/queries/get-all-pages-query'
 
 export default function getAllPagesOperation({
   commerce,
-}: OperationContext<>) {
+}: OperationContext<Provider>) {
   async function getAllPages<T extends GetAllPagesOperation>(opts?: {
     config?: Partial<ShopifyConfig>
     preview?: boolean
