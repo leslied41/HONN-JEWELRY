@@ -3,7 +3,7 @@ import { Layout } from '@components/common'
 import Image from 'next/image'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import ImageGallery from '@components/ui/ImageGallery'
-import Heading from '@components/home/heading'
+import Hero from '@components/home/hero'
 import Intro from '@components/home/intro'
 import {
   getStartAndToken,
@@ -74,7 +74,7 @@ export default function Home({
   return (
     <>
       <div className="bg-gray pb-20 w-full">
-        <Heading />
+        <Hero />
         <Intro />
         {/* third section */}
         <div className="grid grid-cols-1 relative -top-40 mt-16 md:top-0">

@@ -62,7 +62,7 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
   return (
     <div>
       <div data-search-options>
-        <DropdownOption variant="A" className="w-[265px]" />
+        <DropdownOption variant="A" className="w-full sm:w-[265px]" />
         <CirclePicOption variant="A" className="mt-6" />
         <CirclePicOption variant="B" className="mt-6" />
       </div>

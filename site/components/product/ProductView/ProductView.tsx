@@ -9,6 +9,7 @@ import ProductPicsbar from '../ProductPicsbar'
 import ImageGallery from '@components/ui/ImageGallery'
 import type { Product } from '@commerce/types/product'
 import ProductWorks from '../productWorks'
+import { CurrentPath } from '@components/common'
 interface Props {
   product: Product
   allProducts: Product[]
@@ -25,6 +26,10 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
   return (
     <>
       <Container className="max-w-none w-full" clean>
+        <div className="h-[56px] sm:h-[75px] pl-4 sm:pl-10 flex items-center">
+          <CurrentPath product={product} />
+        </div>
+
         <div className={cn(s.root)}>
           <ProductPicsbar className={s.main} product={product} />
           <ProductSidebar

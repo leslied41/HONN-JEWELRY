@@ -116,7 +116,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           </Buttons>
         )}
       </div>
-      <div className="w-full sm:max-w-[265px]">
+      <div className="w-full sm:w-[265px]">
         <div data-delivery-estimated className="mt-5">
           <div className="flex gap-x-2">
             <img src="/estimated.svg" alt="delivery-estimated-icon" />
@@ -143,7 +143,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
 
       <HtmlText
         html={product.descriptionHtml || product.description}
-        className="max-w-[265px] break-words mt-2 sticky top-32 "
+        className="w-full sm:w-[265px] break-words mt-2 sticky top-32 "
       />
     </div>
   )

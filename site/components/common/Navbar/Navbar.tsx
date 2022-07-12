@@ -18,7 +18,7 @@ const Navbar: FC<NavbarProps> = ({ links }) => (
   <NavbarRoot>
     <Container clean className="mx-auto max-w-8xl px-4 sm:px-10  h-full">
       <div className={s.nav}>
-        <div className="flex items-center flex-1">
+        <div className="hidden md:flex items-center flex-1  ">
           <nav className={s.navMenu}>
             <Link href="/search">
               <a className={s.link}>SHOP All</a>
