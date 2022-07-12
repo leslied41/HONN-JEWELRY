@@ -92,4 +92,5 @@ const InnerColoroption: FC<Props> = memo(
   }
 )
 ColorOption.displayName = 'ColorOption'
+InnerColoroption.displayName = 'InnerColoroption'
 export default ColorOption

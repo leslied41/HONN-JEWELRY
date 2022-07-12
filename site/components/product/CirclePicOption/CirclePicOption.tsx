@@ -70,3 +70,5 @@ export const CirclePicOption: FC<Props> = ({ variant, className }) => {
     </div>
   )
 }
+
+CirclePicOption.displayName = 'CirclePicOption'

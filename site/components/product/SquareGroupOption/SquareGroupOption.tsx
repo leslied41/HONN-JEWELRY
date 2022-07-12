@@ -155,3 +155,4 @@ const InnerSquareGroupOption: FC<Props> = React.memo(
   }
 )
 SquareGroupOption.displayName = 'SquareGroupOption'
+InnerSquareGroupOption.displayName = 'InnerSquareGroupOption'
