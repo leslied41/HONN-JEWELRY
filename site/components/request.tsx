@@ -45,28 +45,28 @@ const Request = ({
     setSidebarView('CHECKOUT_VIEW')
   }
 
-  const handleClick = (data: HandleClickArgs): void => {
+  const handleClick = (quote_data: HandleClickArgs): void => {
     const sms_info = {
-      name: data.name,
-      email: data.email,
-      date: data.date,
-      comment: data.comment,
-      customer_number: `+${data.phone.toString()}`,
+      name: quote_data.name,
+      email: quote_data.email,
+      date: quote_data.date,
+      comment: quote_data.comment,
+      customer_number: `+${quote_data.phone.toString()}`,
     }
 
     const quote_info = {
       shop: 'honn-jewelry.myshopify.com',
       locale: 'sv',
       api_secret: 'b5f9bc52f3246601cdb9b4b210dcfb01',
-      line_items: [
-        { id: 6543634432046, variant_id: 39310293860398, quantity: 1 },
-      ],
+      line_items: data?.lineItems,
       additional_data: {
-        name: data.name,
-        email: data.email,
-        message: data.comment,
+        name: quote_data.name,
+        email: quote_data.email,
+        message: quote_data.comment,
       },
     }
+
+    console.log(data)
 
     let config = {
       headers: {
