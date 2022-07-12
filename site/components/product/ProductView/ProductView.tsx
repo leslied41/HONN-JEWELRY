@@ -8,7 +8,7 @@ import ProductSidebar from '../ProductSidebar'
 import ProductPicsbar from '../ProductPicsbar'
 import ImageGallery from '@components/ui/ImageGallery'
 import type { Product } from '@commerce/types/product'
-
+import ProductWorks from '../productWorks'
 interface Props {
   product: Product
   allProducts: Product[]
@@ -25,7 +25,7 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
   return (
     <>
       <Container className="max-w-none w-full" clean>
-        <div className={cn(s.root, 'fit ')}>
+        <div className={cn(s.root)}>
           <ProductPicsbar className={s.main} product={product} />
           <ProductSidebar
             key={product.id}
@@ -35,78 +35,23 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
           />
         </div>
 
-        <section className="py-12 px-10 mb-10">
-          <div className="grid grid-cols-3 gap-x-5 mb-10">
-            <div></div>
+        <section className="mb-0 pt-[76px] pb-0 sm:pb-[64px] sm:py-12  md:mb-10">
+          <div className="grid grid-cols-1 gap-x-5 mb-6 sm:mb-10">
             <div>
-              <p className="text-lg text-center">YOU MAY ALSO LIKE</p>
-            </div>
-            <div></div>
-          </div>
-          <ImageGallery products={relatedProducts} layout="B" link={true} />
-          <div className="grid grid-cols-3 mx-[142px] gap-x-5 mt-[120px]">
-            <div>
-              <div className="text-center mb-10">
-                <img
-                  src="/Group19.png"
-                  alt="group19"
-                  className="inline-block"
-                />
-              </div>
-              <p className="text-center mb-4 text-base-1">TRUE SUSTANIBILITY</p>
-              <p className="text-base text-basic">
-                Sustainably grown in America, our diamonds are the world’s first
-                diamonds produced with zero carbon footprint. Each diamond is
-                cut and polished internationally by master craftsmen in our
-                workshops.
+              <p className="col-span-1 text-h2-s text-center text-brown uppercase">
+                YOU MAY ALSO LIKE
               </p>
-              <div className="mt-4">
-                <a href="" className="border-b-2 ">
-                  READ MORE
-                </a>
-              </div>
-            </div>
-            <div>
-              <div className="text-center mb-10">
-                <img
-                  src="/Group20.png"
-                  alt="group19"
-                  className="inline-block"
-                />
-              </div>
-              <p className="text-center mb-4 text-base-1">TRUE SUSTANIBILITY</p>
-              <p className="text-base text-basic">
-                Each made to order piece is designed by our master craftsmen and
-                individually cast using recycled gold within 10 business days.
-              </p>
-              <div className="mt-4">
-                <a href="" className="border-b-2 ">
-                  READ MORE
-                </a>
-              </div>
-            </div>
-            <div>
-              <div className="text-center mb-10">
-                <img
-                  src="/Group21.png"
-                  alt="group19"
-                  className="inline-block"
-                />
-              </div>
-              <p className="text-center mb-4 text-base-1">TRUE SUSTANIBILITY</p>
-              <p className="text-base text-basic">
-                Refined to the very last detail, our designers create fine
-                jewelry that spotlight your diamond first and foremost. With a
-                desire to do things differently, we only work with the highest
-                quality materials and reimagine timeless designs.
-              </p>
-              <div className="mt-4">
-                <a href="" className="border-b-2 ">
-                  READ MORE
-                </a>
-              </div>
             </div>
           </div>
+          <ImageGallery
+            products={relatedProducts}
+            layout="B"
+            link={true}
+            divClassName="mx-4 sm:mx-10"
+            imageDivClassName={'hidden sm:block '}
+            slider
+          />
+          <ProductWorks />
         </section>
       </Container>
       <SEO

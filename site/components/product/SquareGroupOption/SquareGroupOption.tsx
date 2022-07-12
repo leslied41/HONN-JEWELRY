@@ -38,7 +38,7 @@ export enum Variant {
 
 export const SquareGroupOption: FC<Props> = ({
   variant,
-  layout = 'default',
+  layout = 'A',
   className,
 }) => {
   const {
@@ -126,8 +126,8 @@ const InnerSquareGroupOption: FC<Props> = React.memo(
           ['grid-cols-1']: layout === 'A',
         })}
       >
-        <div className="col-span-1">
-          <p>{title}</p>
+        <div className="col-span-1 mb-2">
+          <p className="text-nav uppercase">{title}</p>
         </div>
         <div
           className={cn(' flex flex-wrap', {

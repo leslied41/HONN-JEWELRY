@@ -3,6 +3,8 @@ import { Layout } from '@components/common'
 import Image from 'next/image'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import ImageGallery from '@components/ui/ImageGallery'
+import Heading from '@components/home/heading'
+import Intro from '@components/home/intro'
 import {
   getStartAndToken,
   getData,
@@ -47,6 +49,11 @@ export async function getStaticProps({
       notFound: true,
     }
   }
+  const newInsData = insData
+    ?.filter((item) => {
+      if (!item.media_url?.includes('video.')) return item
+    })
+    .slice(0, 5)
 
   return {
     props: {
@@ -54,7 +61,7 @@ export async function getStaticProps({
       categories,
       brands,
       pages,
-      insData,
+      insData: newInsData,
     },
     revalidate: 60,
   }
@@ -66,108 +73,49 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <div className="bg-gray pb-20">
-        {/* first section */}
-        <div className="grid grid-cols-1">
-          <div className="relative  h-[50rem]  w-full">
-            <img
-              src="/landing_pic3.png"
-              alt="flower pic"
-              className="absolute top-[35rem] z-10"
-            />
-            <button className="absolute bg-gold  z-10 top-5 left-10 text-primary text-xs px-10 py-4">
-              BOOK AN APPOINTMENT
-            </button>
-            <Image
-              className="object-cover z-0"
-              layout="fill"
-              src="/landing_bg1.jpg"
-            />
-          </div>
-        </div>
-        {/* second section */}
-        <div className="grid grid-cols-6  text-primary gap-x-7  ">
-          {/* row 1 */}
-          <div className="col-span-2"></div>
-          <div className="col-span-4 text-6xl mt-32 mb-12">
-            <p className="ml-8">THE</p>
-            <p>CAFTSMANSHIP</p>
-            <p className="ml-4">AND EXPERTISE SERVICES</p>
-          </div>
-          {/* row 2 */}
-          <div className="col-span-3">
-            <div className="ml-10 ">
-              <Image
-                layout="intrinsic"
-                src="/landing_pic2.png"
-                width="529px"
-                height="548px"
-                className="z-20"
-              />
-            </div>
-          </div>
-          <div className="col-span-3 text-basic">
-            <p className="mr-[5.5rem]">
-              Honn Fine Jewelry is a Stockholm based jewelry brand since 2013.
-              We have the craftsmanship and expertise to bring your inspiration
-              to life. Whether you already have a singular idea, need help
-              designing something unique, or just want help in your search for
-              the perfect piece of jewelry for that special occasion - we are
-              here to help.
-            </p>
-            <div className="mt-[13rem] relative">
-              <Image
-                layout="intrinsic"
-                src="/landing_pic1.png"
-                width="395px"
-                height="335px"
-              />
-              <img
-                src="/landing_pic4.png"
-                alt="light pic"
-                className="absolute top-40 left-28"
-              />
-            </div>
-          </div>
-          {/* row 3 */}
-          <div className="col-span-4 mb-[7.5rem]">
-            <p className="text-primary ml-[12.125rem] text-6xl">MADE </p>
-            <p className="text-primary ml-[16.375rem] text-6xl">FOR YOU</p>
-            <p className="text-basic ml-[16.375rem] mt-12  max-w-md">
-              Honn Fine Jewelry is a Stockholm based jewelry brand since 2013.
-              We have the craftsmanship and expertise to bring your inspiration
-              to life. Whether you already have a singular idea, need help
-              designing something unique, or just want help in your search for
-              the perfect piece of jewelry for that special occasion - we are
-              here to help.
-            </p>
-          </div>
-          <div className="col-span-2"></div>
-        </div>
-
+      <div className="bg-gray pb-20 w-full">
+        <Heading />
+        <Intro />
         {/* third section */}
-        <div className="grid grid-cols-1">
-          <div className="relative  h-[40rem]  w-full">
-            <div className="absolute top-28 left-10 z-10">
-              <p className="ml-10"> THE</p>
-              <p>PROJECT PRICE</p>
-              <p className="ml-10">OF JEWELRY</p>
+        <div className="grid grid-cols-1 relative -top-40 mt-16 md:top-0">
+          <div className="relative  h-[35rem]  w-full">
+            <div className="sm:hidden absolute top-16 left-4 text-h2 uppercase text-white z-10">
+              <p className="">the perfect</p>
+              <p>piece of</p>
+              <p className="">jewelry</p>
+              <p className="">the perfect</p>
+              <p>price</p>
+            </div>
+            <div className="hidden sm:block absolute top-16 left-10 text-h1 uppercase text-white z-10">
+              <p className="ml-10">the</p>
+              <p>perfect piece</p>
+              <p className="ml-10">of jewelry</p>
+              <p className="ml-10">the</p>
+              <p>perfect price</p>
             </div>
 
             <Image
-              className="object-cover z-0"
+              className="z-0 !hidden sm:!block "
               layout="fill"
+              objectFit="cover"
               src="/landing_bg2.jpg"
+              quality={100}
+            />
+            <Image
+              className="z-0 !block sm:!hidden "
+              layout="fill"
+              objectFit="cover"
+              src="/landing_bg2_mobile.png"
+              quality={100}
             />
           </div>
         </div>
 
         {/* fourth section */}
-        <div className="grid grid-cols-6    mx-10 text-primary gap-x-5 gap-y-20 mb-20  ">
+        <div className="grid grid-cols-6  mx-4 md:mx-10 text-brown gap-x-0 md:gap-x-5 gap-y-10 sm:gap-y-20  relative -top-40 md:top-0 ">
           {/*  row 1*/}
-          <div className="col-span-2 row-span-1"></div>
-          <div className="col-span-2 row-span-1 pt-32">
-            <ul className="flex gap-x-10 text-base">
+          <div className="col-span-6 justify-self-center pt-4 sm:pt-32">
+            <ul className="flex gap-x-5 sm:gap-x-10 text-btn">
               <li>
                 <button className="focus:border-b">POPULAR</button>
               </li>
@@ -179,32 +127,36 @@ export default function Home({
               </li>
             </ul>
           </div>
-          <div className="col-span-2 row-span-1"></div>
           {/*  row 2*/}
-          <div className="col-span-4 row-span-1">
-            <p className="text-6xl">MADE WITH THE FINEST MATERIALS.</p>
+          <div className="col-span-4 ">
+            <p className="text-h2 md:text-h1">
+              MADE WITH THE FINEST MATERIALS.
+            </p>
           </div>
-          <div className="col-span-2 row-span-1 justify-self-end">
+          <div className="col-span-2 justify-self-end">
             <img src="/cherry.svg" alt="cherry svg" />
           </div>
         </div>
         {/*  row 3*/}
-        <div className="mx-10">
+        <div className="relative -top-40 md:top-0">
           <ImageGallery
             products={products}
             layout="B"
-            variant="hover-bottom-line"
+            imageDivClassName={'hidden sm:block '}
+            divClassName={'mt-10 sm:mt-20'}
+            hoverBottomLine
+            slider
           />
         </div>
 
         {/* fifth section */}
-        <div className="grid grid-cols-12  text-primary  mx-10 pt-40">
-          <div className="col-span-5 justify-self-center">
-            <p className="text-6xl">HIGH</p>
-            <p className="text-6xl ml-8">JEWELLERY</p>
+        <div className="grid grid-cols-12 gap-x-0 md:gap-x-16 mx-4 md:mx-10 mt-16 md:mt-30 relative -top-40 md:top-0">
+          <div className="col-span-12 md:col-span-5 md:justify-self-center">
+            <p className="text-h2 text-brown md:text-h1">HIGH</p>
+            <p className="text-h2 text-brown md:text-h1 md:ml-8">JEWELLERY</p>
           </div>
-          <div className="col-span-7">
-            <p className="text-basic ">
+          <div className="col-span-12 md:col-span-7 mt-6 md:mt-0">
+            <p className="text-darkGray ">
               We have the craftsmanship and expe rtise to bring your inspiration
               to life. Whether you already have a singular idea, need help
               designing something unique, or just want help in your search for
@@ -212,8 +164,8 @@ export default function Home({
               here to help.
             </p>
           </div>
-          <div className="col-span-4"></div>
-          <div className="col-span-4">
+          <div className="col-span-4 mt-10"></div>
+          <div className="col-span-4 mt-10">
             <div className="w-fit relative">
               <img src="/fish_base_pic.svg" alt="fish base" />
               <img
@@ -222,18 +174,20 @@ export default function Home({
               />
             </div>
           </div>
-          <div className="col-span-4"></div>
+          <div className="col-span-4 mt-10"></div>
         </div>
 
         {/* sixth section INSTAGRAM */}
 
-        <div className="grid grid-cols-1 text-primary  mx-10 pt-60">
+        <div className="grid grid-cols-1 mx-4 md:mx-10 mt-8 md:mt-60 ">
           <div>
-            <p className="text-6xl pb-5">
+            <p className="text-h2 md:text-h1 pb-5 text-brown">
               FOLLOW US ON <span>#HONN</span>
             </p>
           </div>
-          <ImageGallery insData={insData} layout="A" />
+          <div className="hidden md:block">
+            <ImageGallery insData={insData} layout="A" />
+          </div>
         </div>
       </div>
     </>

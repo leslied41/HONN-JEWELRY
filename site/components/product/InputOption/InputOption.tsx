@@ -20,7 +20,7 @@ const InnerInputOption: FC<Props> = memo(({ className, setEngraved }) => {
   }, 500)
   return (
     <div className={className}>
-      <label htmlFor="input" className="block">
+      <label htmlFor="input" className="block text-nav uppercase mb-2">
         ENGRAVING TEXT
       </label>
       <input

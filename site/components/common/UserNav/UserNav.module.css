@@ -8,7 +8,7 @@
 
 .item {
   @apply ml-6 cursor-pointer relative transition ease-in-out
-  duration-100 flex items-center outline-none text-primary;
+  duration-100 flex items-center outline-none text-gold text-nav;
 }
 
 .item:hover {
@@ -23,7 +23,9 @@
 .item:active {
   @apply outline-none;
 }
-
+.account {
+  @apply hidden md:block;
+}
 .bagCount {
   @apply border border-accent-1 bg-secondary text-secondary absolute rounded-full right-3 top-3 flex items-center justify-center font-bold text-xs;
   padding-left: 2.5px;
@@ -37,7 +39,7 @@
 }
 
 .mobileMenu {
-  @apply flex lg:hidden ml-6 text-white;
+  @apply flex md:hidden ml-6 text-white;
 }
 
 .avatarButton:focus,

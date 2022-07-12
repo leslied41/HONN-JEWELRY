@@ -5,7 +5,7 @@ import cn from 'clsx'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
-  variant?: 'toRequest'
+  variant?: 'toRequest' | 'naked' | 'floating'
   active?: boolean
   type?: 'submit' | 'reset' | 'button'
   loading?: boolean
@@ -29,6 +29,8 @@ const Button: FC<Props> = ({
       [s.toRequest]: variant === 'toRequest',
       [s.loading]: loading,
       [s.disabled]: disabled,
+      [s.naked]: variant === 'naked',
+      [s.floating]: variant === 'floating',
     },
     className
   )

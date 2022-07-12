@@ -1,6 +1,6 @@
 .button {
-  @apply px-4 py-2 border-[0.5px] border-gold mr-2 mb-2;
+  @apply px-2 py-1 text-subtitle border-[0.5px] border-gold h-6 mr-2 mb-2 transition-all delay-75 ease-in-out;
 }
 .focus {
-  @apply border-b-4 border-brown;
+  @apply border-b-[2px] border-brown transition-all delay-75 ease-in-out;
 }

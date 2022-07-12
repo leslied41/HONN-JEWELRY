@@ -3,6 +3,7 @@ import Image from 'next/image'
 import s from './ImageGallery.module.css'
 import cn from 'clsx'
 import Link from 'next/link'
+import ImageSlider from '../ImageSlider'
 
 interface Props {
   insData?: {
@@ -14,8 +15,9 @@ interface Props {
   products?: any[]
   imageDivClassName?: string
   divClassName?: string
-  variant?: string
+  hoverBottomLine?: boolean
   link?: boolean
+  slider?: boolean
 }
 
 const ImageGallery: FC<Props> = ({
@@ -24,18 +26,19 @@ const ImageGallery: FC<Props> = ({
   products,
   imageDivClassName,
   divClassName,
-  variant,
+  hoverBottomLine,
   link,
+  slider,
 }) => {
-  const newInsData = insData?.slice(0, 5)
   const className = cn(
     {
       [s.layoutA]: layout == 'A',
       [s.layoutB]: layout == 'B',
+      [s.marginX]: slider,
     },
     divClassName
   )
-  const [divIndex, setDvIndex] = useState('')
+  const [divIndex, setDvIndex] = useState<string>('')
 
   useEffect(() => {
     const mouseOver = (e: MouseEvent) => {
@@ -53,7 +56,7 @@ const ImageGallery: FC<Props> = ({
   return (
     <>
       <div className={className} id="image-gallery-div">
-        {newInsData?.map((p) => {
+        {insData?.map((p) => {
           const { id, media_url, caption } = p
           return (
             <div key={id} className={imageDivClassName}>
@@ -68,6 +71,15 @@ const ImageGallery: FC<Props> = ({
             </div>
           )
         })}
+
+        {slider && (
+          <ImageSlider
+            products={products}
+            bottomLine={hoverBottomLine ? true : false}
+            className="block sm:hidden"
+          />
+        )}
+
         {products?.map((p, index) => {
           const { id, images, name } = p
           return (
@@ -104,8 +116,8 @@ const ImageGallery: FC<Props> = ({
           )
         })}
       </div>
-      {variant === 'hover-bottom-line' && (
-        <div className="grid grid-cols-3 mt-20 h-[2px] bg-gold gap-x-5">
+      {hoverBottomLine && (
+        <div className="hidden sm:grid grid-cols-3 mx-4 sm:mx-10 mt-[60px] h-[2px] bg-gold gap-x-5 ">
           <div className={divIndex == '0' ? 'bg-brown' : ''}></div>
           <div className={divIndex == '1' ? 'bg-brown' : ''}></div>
           <div className={divIndex == '2' ? 'bg-brown' : ''}></div>

@@ -85,9 +85,9 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
 
   return (
     <div className={className}>
-      <div data-name-price>
-        <p>{product.name}</p>
-        <p>
+      <div data-name-price className="mb-6">
+        <p className="text-brown text-h2">{product.name}</p>
+        <p className="text-brown text-body-2">
           {product.price.value} <span>{product.price.currencyCode}</span>
         </p>
       </div>
@@ -116,7 +116,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           </Buttons>
         )}
       </div>
-      <div>
+      <div className="w-full sm:max-w-[265px]">
         <div data-delivery-estimated className="mt-5">
           <div className="flex gap-x-2">
             <img src="/estimated.svg" alt="delivery-estimated-icon" />
@@ -143,7 +143,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
 
       <HtmlText
         html={product.descriptionHtml || product.description}
-        className="w-full break-words mt-2 sticky top-32 "
+        className="max-w-[265px] break-words mt-2 sticky top-32 "
       />
     </div>
   )

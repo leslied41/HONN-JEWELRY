@@ -1,9 +1,17 @@
-import React, { FC, useEffect, useState, createRef, useMemo } from 'react'
+import React, {
+  FC,
+  useEffect,
+  useState,
+  createRef,
+  useRef,
+  useMemo,
+} from 'react'
 import cn from 'clsx'
 import Image from 'next/image'
 import s from './ProductPicsbar.module.css'
-import { useScrollDirection } from 'react-use-scroll-direction'
 import type { Product } from '@commerce/types/product'
+import useTouchSwipe from '../../../lib/hooks/useTouchSwipe'
+import { Buttons } from '@components/ui'
 
 interface ProductPicsbarProps {
   className?: string
@@ -13,11 +21,14 @@ interface ProductPicsbarProps {
 const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
   const newImgArray = product.images.map((img, i) => false)
   const [isVisible, setIsVisible] = useState<boolean[]>(newImgArray)
-  const { isScrollingUp } = useScrollDirection()
-
   const [elRefs, setElRefs] = useState<
     React.MutableRefObject<HTMLDivElement>[]
   >([])
+  const imagesDivRef = useRef(null)
+  const targetId = useTouchSwipe(
+    imagesDivRef.current,
+    product.images.length - 1
+  )
 
   const arrayFilter = (array: boolean[]) => {
     let tag: number[] = []
@@ -53,7 +64,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
         .fill(null)
         .map((_, index) => elRefs[index] || createRef())
     )
-  }, [])
+  }, [product.images.length])
 
   const options = useMemo(() => {
     return { root: null, rooMargin: '0px', threshold: 0.5 }
@@ -90,7 +101,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
 
   return (
     <div className={cn(className, 'grid grid-cols-7 ')}>
-      <div className="col-span-2 px-10 ">
+      <div className="hidden md:block col-span-2 pl-[16px] ] lg:px-10 ">
         <div className="sticky top-[88px]">
           {product.images.map((image, i) => (
             <a href={`#${i}`} key={i}>
@@ -114,11 +125,16 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
           ))}
         </div>
       </div>
-      <div className="col-span-5">
+      <div
+        className="col-span-7 md:col-span-5 h-fit relative"
+        ref={imagesDivRef}
+      >
         {product.images.map((image, i) => (
           <div
             key={image.url}
-            className="pb-5"
+            className={cn(' sm:pb-5 hidden sm:block', {
+              ['!block']: i === targetId,
+            })}
             id={i.toString()}
             ref={elRefs[i]}
           >
@@ -134,6 +150,12 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
             />
           </div>
         ))}
+        <p className="absolute bottom-4 left-4 text-subtitle text-darkGray sm:hidden">
+          {targetId + 1}/{product.images.length}
+        </p>
+        <Buttons className="absolute top-2 left-2" variant="floating">
+          made to order
+        </Buttons>
       </div>
     </div>
   )

@@ -54,7 +54,7 @@
 }
 
 .button {
-  width: 100%;
+  max-width: 265px;
 }
 
 .wishlistButton {

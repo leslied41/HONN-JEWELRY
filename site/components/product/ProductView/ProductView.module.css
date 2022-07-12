@@ -1,15 +1,14 @@
 .root {
-  @apply relative grid items-start gap-1 grid-cols-1 mt-10;
+  @apply relative grid items-start gap-1 grid-cols-1 mt-[56px];
   min-height: auto;
 }
 
 .main {
   @apply relative px-0 pb-0 box-border   col-span-1;
-  min-height: 500px;
 }
 
 .sidebar {
-  @apply flex flex-col col-span-1 mx-auto max-w-8xl pl-20 pr-40 py-6 w-full h-full;
+  @apply flex flex-col col-span-1 mx-auto max-w-8xl px-4 pt-[25px] sm:pt-0 md:px-0  w-full h-full;
 }
 
 .sliderContainer {
@@ -40,20 +39,33 @@
   @apply grid grid-cols-2 py-2 gap-2 md:grid-cols-3 md:gap-5;
 }
 
-@screen lg {
+@screen sm {
   .root {
-    @apply grid-cols-12;
+    @apply grid-cols-12 gap-x-[25px] px-4 mt-[72px];
   }
 
   .main {
-    @apply mx-0 col-span-7;
+    @apply mx-0 col-span-6;
   }
 
   .sidebar {
-    @apply col-span-5 py-6;
+    @apply col-span-6;
   }
 
   .imageContainer {
     max-height: 600px;
+  }
+}
+@screen md {
+  .main {
+    @apply mx-0 col-span-7;
+  }
+  .sidebar {
+    @apply col-span-5;
+  }
+}
+@screen lg {
+  .root {
+    @apply gap-x-[75px];
   }
 }

@@ -36,9 +36,9 @@ export const CirclePicOption: FC<Props> = ({ variant, className }) => {
 
   return (
     <div className={className}>
-      <div>
-        <p>
-          {title!} <span>{value!}</span>
+      <div className="mb-2">
+        <p className="uppercase text-nav">
+          {title!} <span className="text-brown">{value!}</span>
         </p>
       </div>
       <div className="flex gap-x-2">

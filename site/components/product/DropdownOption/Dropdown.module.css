@@ -1,5 +1,5 @@
 .dropDown {
-  @apply flex justify-between  items-center w-full h-10 py-[7.5px] px-[10px] text-13 bg-inherit border-[0.5px] border-darkGray border-opacity-30 text-basic;
+  @apply flex justify-between  items-center w-full h-10 py-[7.5px] px-[10px] text-body-2 bg-inherit border-[0.5px] border-gold border-opacity-30 text-darkGray cursor-pointer;
 }
 .optionsGroup {
   @apply absolute top-1 w-full bg-white overflow-hidden rounded;

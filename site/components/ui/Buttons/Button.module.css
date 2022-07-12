@@ -1,8 +1,8 @@
 .root {
-  @apply bg-accent-9 text-accent-0 cursor-pointer inline-flex
-    px-16 py-4 leading-6 transition ease-in-out duration-150
+  @apply bg-accent-9  cursor-pointer inline-flex
+    px-16 py-4  transition ease-in-out duration-150
     shadow-sm text-center justify-center uppercase
-    border border-transparent items-center text-m font-semibold
+    border border-transparent items-center text-body-2 
     tracking-wide;
   max-height: 48px;
 }
@@ -15,6 +15,17 @@
 }
 .toRequest {
   @apply bg-gold text-darkGray;
+}
+.naked {
+  @apply bg-transparent  border-none shadow-none outline-none py-0 px-0;
+}
+
+.naked:hover,
+.naked:focus {
+  @apply bg-transparent border-none;
+}
+.floating {
+  @apply p-2 bg-gray rounded-md text-darkGray text-nav;
 }
 .loading {
   @apply bg-accent-1 text-accent-3 border-accent-2 cursor-not-allowed;

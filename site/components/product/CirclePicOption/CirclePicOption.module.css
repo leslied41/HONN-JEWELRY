@@ -1,9 +1,12 @@
 .button {
-  @apply flex justify-center items-center w-8 h-8 rounded-2xl;
+  @apply flex justify-center items-center w-6 h-6 rounded-2xl transition-all duration-75 ease-in-out;
+}
+.button:hover {
+  transform: scale(1.1);
 }
 .innerCircle {
-  @apply relative w-6 h-6 rounded-xl overflow-hidden;
+  @apply relative w-4 h-4 rounded-xl overflow-hidden;
 }
 .outterCircle {
-  @apply border-[0.5px] border-black;
+  @apply border-2 border-darkGray;
 }
