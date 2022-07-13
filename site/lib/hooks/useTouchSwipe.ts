@@ -20,13 +20,13 @@ const useTouchSwipe = (element: any, numbers: number) => {
       moveDis.current.y = currentPosition.current.y - startingPosition.current.y
 
       if (Math.abs(moveDis.current.x) < Math.abs(moveDis.current.y)) return
-      if (moveDis.current.x > 100) {
+      if (moveDis.current.x > 50) {
         setTargetId((targetId) => {
           if (targetId === numbers) return 0
           return targetId + 1
         })
       }
-      if (moveDis.current.x < -100) {
+      if (moveDis.current.x < -50) {
         setTargetId((targetId) => {
           if (targetId === 0) return numbers
           return targetId - 1

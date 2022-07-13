@@ -7,8 +7,13 @@ import useTouchSwipe from '../../../lib/hooks/useTouchSwipe'
 interface Props {}
 
 const ProductWorks = (props: Props) => {
+  const [renderOnce, setRenderOnce] = useState(false)
   const worksRef = useRef<HTMLDivElement>(null)
   const targetId = useTouchSwipe(worksRef.current, 2)
+
+  useEffect(() => {
+    setRenderOnce(true)
+  }, [])
 
   return (
     <div className={s.parent} ref={worksRef}>
@@ -49,7 +54,7 @@ const ProductWorks = (props: Props) => {
           </div>
         )
       })}
-      <div className="col-span-1  md:hidden flex justify-center items-center mt-6 ">
+      <div className="absolute md:static bottom-[30px] left-1/2 -translate-x-1/2 md:translate-x-0 col-span-1  md:hidden flex justify-center items-center mt-6 ">
         <div className="flex justify-center items-center gap-x-2">
           {data.map((item) => (
             <div
