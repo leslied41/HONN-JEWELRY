@@ -12,6 +12,7 @@ import s from './ProductPicsbar.module.css'
 import type { Product } from '@commerce/types/product'
 import useTouchSwipe from '../../../lib/hooks/useTouchSwipe'
 import { Buttons } from '@components/ui'
+import { Slider } from '@components/common'
 
 interface ProductPicsbarProps {
   className?: string
@@ -112,7 +113,6 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
                   [s.thumbnail_border]: isVisible[i] === true,
                 })}
               >
-                {/* <img src={image.url!} alt={image.alt || 'Product Image'} /> */}
                 <Image
                   src={image.url!}
                   alt={image.alt || 'Product Image'}
@@ -126,14 +126,18 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
           ))}
         </div>
       </div>
+      <Slider
+        product={product}
+        className="sm:hidden col-span-7 overflow-hidden relative "
+      />
       <div
-        className="col-span-7 md:col-span-5 h-fit relative"
+        className="hidden sm:block col-span-7  md:col-span-5 h-fit relative"
         ref={imagesDivRef}
       >
         {product.images.map((image, i) => (
           <div
             key={image.url}
-            className={cn(' sm:pb-5 hidden sm:block', {
+            className={cn('sm:pb-5 hidden sm:block', {
               ['!block']: i === targetId,
             })}
             id={i.toString()}
@@ -151,9 +155,6 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
             />
           </div>
         ))}
-        <p className="absolute bottom-4 left-4 text-subtitle text-darkGray sm:hidden">
-          {targetId + 1}/{product.images.length}
-        </p>
         <Buttons className="absolute top-2 left-2" variant="floating">
           made to order
         </Buttons>
