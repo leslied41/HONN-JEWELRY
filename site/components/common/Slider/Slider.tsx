@@ -34,51 +34,7 @@ const Slider: FC<Props> = ({
   const animationId = useRef<number>()
   const dragging = useRef(false)
   const [updateIndex, setUpdateIndex] = useState(false)
-
-  //   const [dimensions, setDimensions] = useState<
-  //     | {
-  //         width: number
-  //         height: number
-  //       }
-  //     | undefined
-  //   >()
-
-  //   const getElementDimensions = (
-  //     ref: React.MutableRefObject<HTMLDivElement | null>
-  //   ) => {
-  //     if (!ref || !ref.current) return
-  //     const width = ref.current.clientWidth
-  //     const height = ref.current.clientHeight
-  //     return { width, height }
-  //   }
-  const setPositionByIndex = useCallback(() => {
-    currentTranslate.current = currentIndex.current * -window.innerWidth
-    prevTranslate.current = currentTranslate.current
-    setSliderposition()
-  }, [])
-  //   useLayoutEffect(() => {
-  //     setDimensions(getElementDimensions(imagesDivRef))
-  //     setPositionByIndex(getElementDimensions(imagesDivRef)!.width)
-  //   }, [])
-
-  //   useEffect(() => {
-  //     // set width if window resizes
-  //     const handleResize = () => {
-  //       transitionOff()
-  //       const { width, height } = getElementDimensions(imagesDivRef)!
-  //       setDimensions({ width, height })
-  //       setPositionByIndex(width)
-  //     }
-  //     window.addEventListener('resize', handleResize)
-  //     return () => {
-  //       window.removeEventListener('resize', handleResize)
-  //     }
-  //   }, [])
-
-  const setSliderposition = () => {
-    if (!imagesDivRef.current || !imagesDivRef) return
-    imagesDivRef.current.style.transform = `translateX(${currentTranslate.current}px)`
-  }
+  const [width, setWidth] = useState<number>()
 
   const transitionOn = () => {
     if (!imagesDivRef.current || !imagesDivRef) return
@@ -88,6 +44,44 @@ const Slider: FC<Props> = ({
   const transitionOff = () => {
     if (!imagesDivRef.current || !imagesDivRef) return
     imagesDivRef.current.style.transition = 'none'
+  }
+
+  const getWidth = (ref: React.MutableRefObject<HTMLDivElement | null>) => {
+    if (!ref || !ref.current) return
+    const width = ref.current.clientWidth
+    return width
+  }
+
+  const setPositionByIndex = (w: number) => {
+    if (!w) return
+    currentTranslate.current = currentIndex.current * -w
+    prevTranslate.current = currentTranslate.current
+    setSliderposition()
+  }
+
+  useLayoutEffect(() => {
+    const w = getWidth(imagesDivRef)
+    setWidth(w)
+    transitionOff()
+    setPositionByIndex(w!)
+  }, [])
+
+  useEffect(() => {
+    const handleResize = () => {
+      const w = getWidth(imagesDivRef)
+      setWidth(w)
+      transitionOff()
+      setPositionByIndex(w!)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const setSliderposition = () => {
+    if (!imagesDivRef.current || !imagesDivRef) return
+    imagesDivRef.current.style.transform = `translateX(${currentTranslate.current}px)`
   }
 
   const animation = useCallback(() => {
@@ -122,7 +116,7 @@ const Slider: FC<Props> = ({
     if (movedBy > 100 && currentIndex.current > 0) {
       currentIndex.current -= 1
     }
-    setPositionByIndex()
+    setPositionByIndex(width!)
     setUpdateIndex(!updateIndex)
   }
 
