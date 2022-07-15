@@ -10,13 +10,15 @@ import ImageGallery from '@components/ui/ImageGallery'
 import type { Product } from '@commerce/types/product'
 import ProductWorks from '../productWorks'
 import { CurrentPath } from '@components/common'
+import { Slider } from '@components/common'
+
 interface Props {
   product: Product
   allProducts: Product[]
 }
 
 const ProductView: FC<Props> = ({ product, allProducts }) => {
-  const relatedProducts = allProducts.slice(0, 3)
+  const relatedProducts = allProducts.slice(0, 6)
   const { price } = usePrice({
     amount: product.price.value,
     baseAmount: product.price.retailPrice,
@@ -40,7 +42,7 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
           />
         </div>
 
-        <section className="mb-0 pt-[76px] pb-0 sm:pb-[64px] sm:py-12  md:mb-10">
+        <section className="mb-0 pt-[76px] pb-0 sm:pb-[64px] px-4 sm:px-10 sm:py-12  md:mb-10">
           <div className="grid grid-cols-1 gap-x-5 mb-6 sm:mb-10">
             <div>
               <p className="col-span-1 text-h2-s text-center text-brown uppercase">
@@ -48,14 +50,21 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
               </p>
             </div>
           </div>
-          <ImageGallery
+          {/* <ImageGallery
             products={relatedProducts}
             layout="B"
             link={true}
             divClassName="mx-4 sm:mx-10"
             imageDivClassName={'hidden sm:block '}
-            slider
+          /> */}
+          <Slider
+            products={relatedProducts}
+            className="w-full"
+            controlBtn
+            bottomLine
+            productInfo
           />
+
           <ProductWorks />
         </section>
       </Container>

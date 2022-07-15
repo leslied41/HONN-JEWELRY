@@ -24,7 +24,7 @@ const ImageSlider: FC<Props> = ({ products, className, bottomLine }) => {
         return (
           <div
             key={index}
-            className={cn('hidden rel ative mx-4', {
+            className={cn('hidden relative mx-4', {
               [s.block]: index === targetIndex,
             })}
           >

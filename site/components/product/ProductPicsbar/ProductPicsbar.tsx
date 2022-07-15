@@ -10,7 +10,6 @@ import cn from 'clsx'
 import Image from 'next/image'
 import s from './ProductPicsbar.module.css'
 import type { Product } from '@commerce/types/product'
-import useTouchSwipe from '../../../lib/hooks/useTouchSwipe'
 import { Buttons } from '@components/ui'
 import { Slider } from '@components/common'
 
@@ -25,11 +24,6 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
   const [elRefs, setElRefs] = useState<
     React.MutableRefObject<HTMLDivElement>[]
   >([])
-  const imagesDivRef = useRef(null)
-  const targetId = useTouchSwipe(
-    imagesDivRef.current,
-    product.images.length - 1
-  )
 
   const arrayFilter = (array: boolean[]) => {
     let tag: number[] = []
@@ -128,18 +122,15 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
       </div>
       <Slider
         product={product}
-        className="sm:hidden col-span-7 overflow-hidden relative "
+        addToOrder
+        mark="text"
+        className="sm:hidden col-span-7 w-full"
       />
-      <div
-        className="hidden sm:block col-span-7  md:col-span-5 h-fit relative"
-        ref={imagesDivRef}
-      >
+      <div className="hidden sm:block col-span-7  md:col-span-5 h-fit relative">
         {product.images.map((image, i) => (
           <div
             key={image.url}
-            className={cn('sm:pb-5 hidden sm:block', {
-              ['!block']: i === targetId,
-            })}
+            className={cn('sm:pb-5')}
             id={i.toString()}
             ref={elRefs[i]}
           >

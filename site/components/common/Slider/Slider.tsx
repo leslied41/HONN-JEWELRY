@@ -7,24 +7,38 @@ import React, {
   useCallback,
   memo,
 } from 'react'
+React.useLayoutEffect = React.useEffect
 import s from './Slider.module.css'
 import type { Product } from '@commerce/types/product'
 import cn from 'clsx'
 import Image from 'next/image'
 import { Buttons } from '@components/ui'
+import Link from 'next/link'
 
 interface Props {
   product?: Product
+  products?: Product[]
   className?: string
   transition?: number
-  variant?: string
+  mark?: 'text' | 'circles'
+  addToOrder?: boolean
+  controlBtn?: boolean
+  bottomLine?: boolean
+  productInfo?: boolean
+  stripe?: boolean
 }
 
 const Slider: FC<Props> = ({
+  products,
   product,
   className,
   transition = 0.3,
-  variant,
+  addToOrder,
+  mark,
+  controlBtn,
+  bottomLine,
+  productInfo,
+  stripe,
 }) => {
   const imagesDivRef = useRef<HTMLDivElement | null>(null)
   const startingPosition = useRef<number>()
@@ -34,7 +48,9 @@ const Slider: FC<Props> = ({
   const animationId = useRef<number>()
   const dragging = useRef(false)
   const [updateIndex, setUpdateIndex] = useState(false)
-  const [width, setWidth] = useState<number>()
+  const width = useRef<number>()
+  const viewportWidth = useRef<number>()
+  console.log(products)
 
   const transitionOn = () => {
     if (!imagesDivRef.current || !imagesDivRef) return
@@ -48,30 +64,64 @@ const Slider: FC<Props> = ({
 
   const getWidth = (ref: React.MutableRefObject<HTMLDivElement | null>) => {
     if (!ref || !ref.current) return
-    const width = ref.current.clientWidth
-    return width
+    width.current = ref.current.clientWidth
+    return width.current
   }
 
-  const setPositionByIndex = (w: number) => {
-    if (!w) return
-    currentTranslate.current = currentIndex.current * -w
-    prevTranslate.current = currentTranslate.current
+  const getViewportWidth = () => {
+    if (typeof window === 'undefined') return
+    viewportWidth.current = window.innerWidth
+    return viewportWidth.current
+  }
+
+  const setInitialPositionByIndex = (w: number, vw: number) => {
+    if (!w || !vw) return
+    if (vw < 640) {
+      currentTranslate.current = currentIndex.current * -w
+      prevTranslate.current = currentTranslate.current
+    }
+    if (vw >= 640 && vw < 768) {
+      currentTranslate.current = (currentIndex.current * -w) / 2
+      prevTranslate.current = currentTranslate.current
+    }
+    if (vw >= 768) {
+      currentTranslate.current = (currentIndex.current * -w) / 3
+      prevTranslate.current = currentTranslate.current
+    }
+
+    setSliderposition()
+  }
+  const setPositionByIndex = (w: number, vw: number) => {
+    if (!w || !vw) return
+    if (vw < 640) {
+      currentTranslate.current = currentIndex.current * -w
+      prevTranslate.current = currentTranslate.current
+    }
+    if (vw >= 640 && vw < 768) {
+      currentTranslate.current = currentIndex.current * -(w / 2 + 10)
+      prevTranslate.current = currentTranslate.current
+    }
+    if (vw >= 768) {
+      currentTranslate.current = currentIndex.current * -(w / 3 + 20 / 3)
+      prevTranslate.current = currentTranslate.current
+    }
+
     setSliderposition()
   }
 
   useLayoutEffect(() => {
     const w = getWidth(imagesDivRef)
-    setWidth(w)
+    const vw = getViewportWidth()
     transitionOff()
-    setPositionByIndex(w!)
+    setInitialPositionByIndex(w!, vw!)
   }, [])
 
   useEffect(() => {
     const handleResize = () => {
       const w = getWidth(imagesDivRef)
-      setWidth(w)
+      const vw = getViewportWidth()
       transitionOff()
-      setPositionByIndex(w!)
+      setInitialPositionByIndex(w!, vw!)
     }
     window.addEventListener('resize', handleResize)
     return () => {
@@ -91,6 +141,8 @@ const Slider: FC<Props> = ({
   }, [])
 
   const handleTouchStart = (i: number) => {
+    const vw = getViewportWidth()
+    if (vw! >= 640) return
     return (e: React.TouchEvent) => {
       transitionOn()
       dragging.current = true
@@ -100,6 +152,8 @@ const Slider: FC<Props> = ({
     }
   }
   const handleTouchMove = (e: React.TouchEvent) => {
+    const vw = getViewportWidth()
+    if (vw! >= 640) return
     if (!dragging.current) return
     const currentPosition = e.touches[0].clientX
     currentTranslate.current =
@@ -107,49 +161,187 @@ const Slider: FC<Props> = ({
   }
 
   const handleTouchEnd = () => {
+    const vw = getViewportWidth()
+    if (vw! >= 640) return
     dragging.current = false
     cancelAnimationFrame(animationId.current!)
     const movedBy = currentTranslate.current - prevTranslate.current
-    if (movedBy < -100 && currentIndex.current !== product!.images.length - 1) {
+    const maxNum =
+      (product && product.images.length - 1) ||
+      (products && products.length - 1) ||
+      1
+    if (movedBy < -100 && currentIndex.current !== maxNum) {
       currentIndex.current += 1
     }
     if (movedBy > 100 && currentIndex.current > 0) {
       currentIndex.current -= 1
     }
-    setPositionByIndex(width!)
+    const w = getWidth(imagesDivRef)
+
+    setPositionByIndex(w!, vw!)
+    setUpdateIndex(!updateIndex)
+  }
+
+  const handleClick = () => {
+    transitionOn()
+    const maxNum =
+      (product && product.images.length - 1) ||
+      (products && products.length - 1) ||
+      1
+    if (currentIndex.current === maxNum) currentIndex.current = 0
+    else currentIndex.current += 1
+    const w = getWidth(imagesDivRef)
+    const vw = getViewportWidth()
+    setPositionByIndex(w!, vw!)
     setUpdateIndex(!updateIndex)
   }
 
   return (
-    <div className={cn(className)}>
-      <div className="flex  h-fit w-full" ref={imagesDivRef}>
-        {product?.images.map((image, i) => (
-          <div
-            key={image.url}
-            className="w-full h-full flex-shrink-0"
-            onTouchStart={handleTouchStart(i)}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+    <div className={cn('relative', className)}>
+      <div className={cn('overflow-hidden w-full')}>
+        <div className="flex w-full sm:gap-x-5  h-fit" ref={imagesDivRef}>
+          {product?.images.map((image, i) => (
+            <div
+              key={image.url}
+              className="w-full h-full flex-shrink-0"
+              onTouchStart={handleTouchStart(i)}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <Image
+                src={image.url!}
+                alt={image.alt || 'Product Image'}
+                layout="responsive"
+                width="100%"
+                height="100%"
+                priority={i === 0}
+                quality="65"
+                objectFit="cover"
+              />
+            </div>
+          ))}
+          {products?.map((p, i) => {
+            const { images, name, price } = p
+            return (
+              <div
+                key={i}
+                className={cn(
+                  'w-full sm:w-[calc((100%-20px)/2)] md:w-[calc((100%-40px)/3)] h-full flex-shrink-0 relative'
+                )}
+                onTouchStart={handleTouchStart(i)}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                <Link href={`/product/${p.slug}`}>
+                  <a aria-label={name}>
+                    <Image
+                      src={images[0].url}
+                      alt={images[0].alt || 'Product Image'}
+                      layout="responsive"
+                      width="100%"
+                      height="100%"
+                      priority={i === 0}
+                      quality="65"
+                      objectFit="cover"
+                    />
+                  </a>
+                </Link>
+                {productInfo && (
+                  <div className="flex flex-col justify-center items-center absolute bottom-14 left-1/2 -translate-x-1/2">
+                    <p className="text-body-2 text-brown">{name}</p>
+                    <p className="mt-4 text-body-2 text-brown">
+                      {price.currencyCode} <span>{price.value}</span>
+                    </p>
+                  </div>
+                )}
+              </div>
+            )
+          })}
+          {/* {stripe &&
+          products?.map((p, i) => {
+            const { images, name, price } = p
+
+            return (
+              <div
+                key={images[0].url}
+                className="w-full h-full flex-shrink-0 px-4 relative"
+                onTouchStart={handleTouchStart(i)}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                <Link href={`/product/${p.slug}`}>
+                  <a aria-label={name}>
+                    <Image
+                      src={images[0].url}
+                      alt={images[0].alt || 'Product Image'}
+                      layout="responsive"
+                      width="100%"
+                      height="100%"
+                      priority={i === 0}
+                      quality="65"
+                      objectFit="cover"
+                    />
+                  </a>
+                </Link>
+                {productInfo && (
+                  <div className="flex flex-col justify-center items-center absolute bottom-14 left-1/2 -translate-x-1/2">
+                    <p className="text-body-2 text-brown">{name}</p>
+                    <p className="mt-4 text-body-2 text-brown">
+                      {price.currencyCode} <span>{price.value}</span>
+                    </p>
+                  </div>
+                )}
+              </div>
+            )
+          })} */}
+        </div>
+        {mark === 'text' && (
+          <p className="absolute bottom-4 left-4 text-subtitle text-darkGray sm:hidden">
+            {currentIndex.current + 1}/{product!.images.length}
+          </p>
+        )}
+        {addToOrder && (
+          <Buttons className="absolute top-2 left-2 " variant="floating">
+            made to order
+          </Buttons>
+        )}
+        {controlBtn && (
+          <button
+            className="absolute flex justify-center items-center h-16 w-16 bg-brown top-1/2  -right-4 sm:-right-10 -translate-y-1/2"
+            onClick={handleClick}
           >
-            <Image
-              src={image.url!}
-              alt={image.alt || 'Product Image'}
-              layout="responsive"
-              width="100%"
-              height="100%"
-              priority={i === 0}
-              quality="65"
-              objectFit="cover"
-            />
+            <img src="/righticon.svg" alt="right icon" />
+          </button>
+        )}
+        {bottomLine && (
+          <div className="grid grid-cols-3 mx-4 mt-10 h-[2px] bg-gold gap-x-5 ">
+            <div
+              className={cn(
+                'transition-all duration-75 ease-linear w-0 bg-brown',
+                {
+                  ['!w-full']: currentIndex.current === 0,
+                }
+              )}
+            ></div>
+            <div
+              className={cn(
+                'transition-all duration-75 ease-linear w-0 bg-brown',
+                {
+                  ['!w-full']: currentIndex.current === 1,
+                }
+              )}
+            ></div>
+            <div
+              className={cn(
+                'transition-all duration-75 ease-linear w-0 bg-brown',
+                {
+                  ['!w-full']: currentIndex.current === 2,
+                }
+              )}
+            ></div>
           </div>
-        ))}
+        )}
       </div>
-      <p className="absolute bottom-4 left-4 text-subtitle text-darkGray sm:hidden">
-        {currentIndex.current + 1}/{product!.images.length}
-      </p>
-      <Buttons className="absolute top-2 left-2" variant="floating">
-        made to order
-      </Buttons>
     </div>
   )
 }

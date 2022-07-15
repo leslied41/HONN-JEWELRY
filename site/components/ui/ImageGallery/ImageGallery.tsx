@@ -4,6 +4,7 @@ import s from './ImageGallery.module.css'
 import cn from 'clsx'
 import Link from 'next/link'
 import ImageSlider from '../ImageSlider'
+import { Slider } from '@components/common'
 
 interface Props {
   insData?: {
@@ -56,6 +57,7 @@ const ImageGallery: FC<Props> = ({
   return (
     <>
       <div className={className} id="image-gallery-div">
+        {/* instagram */}
         {insData?.map((p) => {
           const { id, media_url, caption } = p
           return (
@@ -72,13 +74,13 @@ const ImageGallery: FC<Props> = ({
           )
         })}
 
-        {slider && (
+        {/* {slider && (
           <ImageSlider
             products={products}
             bottomLine={hoverBottomLine ? true : false}
             className="block sm:hidden"
           />
-        )}
+        )} */}
 
         {products?.map((p, index) => {
           const { id, images, name } = p
