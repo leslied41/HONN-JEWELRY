@@ -32,7 +32,9 @@ const Navbar: FC<NavbarProps> = ({ links }) => (
           </nav>
         </div>
         <div>
-          <img src="/navTitle.svg" alt="title" />
+          <Link href="/">
+            <img src="/navTitle.svg" alt="title" className="cursor-pointer" />
+          </Link>
         </div>
         <div className="flex items-center justify-end flex-1 space-x-8">
           <UserNav />

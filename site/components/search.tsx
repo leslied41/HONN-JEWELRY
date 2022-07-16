@@ -8,6 +8,7 @@ import { Layout } from '@components/common'
 import { ProductCard } from '@components/product'
 import type { Product } from '@commerce/types/product'
 import { Container, Skeleton } from '@components/ui'
+import { CurrentPath } from '@components/common'
 
 import useSearch from '@framework/product/use-search'
 
@@ -64,7 +65,8 @@ export default function Search({ categories, brands }: SearchPropsType) {
   }
 
   return (
-    <Container>
+    <Container className="px-10" clean>
+      <CurrentPath className="h-[56px] sm:h-[75px] pl-4  flex items-center" />
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-3 mb-20">
         <div className="col-span-8 lg:col-span-2 order-1 lg:order-none">
           {/* Categories */}

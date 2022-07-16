@@ -3,8 +3,6 @@ import Image from 'next/image'
 import s from './ImageGallery.module.css'
 import cn from 'clsx'
 import Link from 'next/link'
-import ImageSlider from '../ImageSlider'
-import { Slider } from '@components/common'
 
 interface Props {
   insData?: {
@@ -16,9 +14,7 @@ interface Props {
   products?: any[]
   imageDivClassName?: string
   divClassName?: string
-  hoverBottomLine?: boolean
   link?: boolean
-  slider?: boolean
 }
 
 const ImageGallery: FC<Props> = ({
@@ -27,15 +23,12 @@ const ImageGallery: FC<Props> = ({
   products,
   imageDivClassName,
   divClassName,
-  hoverBottomLine,
   link,
-  slider,
 }) => {
   const className = cn(
     {
       [s.layoutA]: layout == 'A',
       [s.layoutB]: layout == 'B',
-      [s.marginX]: slider,
     },
     divClassName
   )
@@ -74,14 +67,6 @@ const ImageGallery: FC<Props> = ({
           )
         })}
 
-        {/* {slider && (
-          <ImageSlider
-            products={products}
-            bottomLine={hoverBottomLine ? true : false}
-            className="block sm:hidden"
-          />
-        )} */}
-
         {products?.map((p, index) => {
           const { id, images, name } = p
           return (
@@ -118,13 +103,6 @@ const ImageGallery: FC<Props> = ({
           )
         })}
       </div>
-      {hoverBottomLine && (
-        <div className="hidden sm:grid grid-cols-3 mx-4 sm:mx-10 mt-[60px] h-[2px] bg-gold gap-x-5 ">
-          <div className={divIndex == '0' ? 'bg-brown' : ''}></div>
-          <div className={divIndex == '1' ? 'bg-brown' : ''}></div>
-          <div className={divIndex == '2' ? 'bg-brown' : ''}></div>
-        </div>
-      )}
     </>
   )
 }

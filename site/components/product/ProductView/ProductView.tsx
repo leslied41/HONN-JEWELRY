@@ -6,7 +6,6 @@ import { Container, Text } from '@components/ui'
 import { SEO } from '@components/common'
 import ProductSidebar from '../ProductSidebar'
 import ProductPicsbar from '../ProductPicsbar'
-import ImageGallery from '@components/ui/ImageGallery'
 import type { Product } from '@commerce/types/product'
 import ProductWorks from '../productWorks'
 import { CurrentPath } from '@components/common'
@@ -18,7 +17,7 @@ interface Props {
 }
 
 const ProductView: FC<Props> = ({ product, allProducts }) => {
-  const relatedProducts = allProducts.slice(0, 6)
+  const relatedProducts = allProducts.slice(0, 7)
   const { price } = usePrice({
     amount: product.price.value,
     baseAmount: product.price.retailPrice,
@@ -28,10 +27,10 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
   return (
     <>
       <Container className="max-w-none w-full" clean>
-        <div className="h-[56px] sm:h-[75px] pl-4 sm:pl-10 flex items-center">
-          <CurrentPath product={product} />
-        </div>
-
+        <CurrentPath
+          product={product}
+          className="h-[56px] sm:h-[75px] pl-4 sm:pl-10 flex items-center"
+        />
         <div className={cn(s.root)}>
           <ProductPicsbar className={s.main} product={product} />
           <ProductSidebar

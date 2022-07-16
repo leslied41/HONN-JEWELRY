@@ -20,27 +20,33 @@ const CurrentPath: FC<Props> = ({ className, product }) => {
 
   return (
     <div className={cn(className)}>
-      {pathArray.map((i, index) => {
-        const shifted = agentPathArray.shift()
-        if (!shifted) return
-        linkArray.push(shifted)
-        linkString = linkArray.join('/')
-
-        return (
-          <Link href={linkString} key={index}>
-            <span className="uppercase text-nav text-darkGray cursor-pointer">
-              {' '}
-              {i} /
-            </span>
-          </Link>
-        )
-      })}
-      {product && (
-        <span className="uppercase text-nav text-darkGray opacity-50">
-          {' '}
-          {product.name}
-        </span>
-      )}
+      <p>
+        <Link href="/">
+          <span className="uppercase text-nav text-darkGray cursor-pointer">
+            Home /
+          </span>
+        </Link>
+        {pathArray.map((i, index) => {
+          const shifted = agentPathArray.shift()
+          if (!shifted) return
+          linkArray.push(shifted)
+          linkString = linkArray.join('/')
+          return (
+            <Link href={linkString} key={index}>
+              <span className="uppercase text-nav text-darkGray cursor-pointer">
+                {' '}
+                {i} /
+              </span>
+            </Link>
+          )
+        })}
+        {product && (
+          <span className="uppercase text-nav text-darkGray opacity-50">
+            {' '}
+            {product.name}
+          </span>
+        )}
+      </p>
     </div>
   )
 }

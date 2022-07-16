@@ -5,6 +5,7 @@ import React, {
   useLayoutEffect,
   useState,
   useCallback,
+  useMemo,
   memo,
 } from 'react'
 React.useLayoutEffect = React.useEffect
@@ -14,6 +15,7 @@ import cn from 'clsx'
 import Image from 'next/image'
 import { Buttons } from '@components/ui'
 import Link from 'next/link'
+import BottomLine from './bottomLine'
 
 interface Props {
   product?: Product
@@ -25,7 +27,6 @@ interface Props {
   controlBtn?: boolean
   bottomLine?: boolean
   productInfo?: boolean
-  stripe?: boolean
 }
 
 const Slider: FC<Props> = ({
@@ -38,7 +39,6 @@ const Slider: FC<Props> = ({
   controlBtn,
   bottomLine,
   productInfo,
-  stripe,
 }) => {
   const imagesDivRef = useRef<HTMLDivElement | null>(null)
   const startingPosition = useRef<number>()
@@ -49,8 +49,13 @@ const Slider: FC<Props> = ({
   const dragging = useRef(false)
   const [updateIndex, setUpdateIndex] = useState(false)
   const width = useRef<number>()
-  const viewportWidth = useRef<number>()
-  console.log(products)
+  const [vw, setVw] = useState<number>()
+  const vwRef = useRef<number>()
+
+  const numberOfImages = useMemo(
+    () => product?.images.length || products?.length || 1,
+    [products, product]
+  )
 
   const transitionOn = () => {
     if (!imagesDivRef.current || !imagesDivRef) return
@@ -70,8 +75,13 @@ const Slider: FC<Props> = ({
 
   const getViewportWidth = () => {
     if (typeof window === 'undefined') return
-    viewportWidth.current = window.innerWidth
-    return viewportWidth.current
+    setVw(window.innerWidth)
+  }
+  const getVwRefWidth = () => {
+    if (!vwRef) return
+    if (typeof window === 'undefined') return
+    vwRef.current = window.innerWidth
+    return vwRef.current
   }
 
   const setInitialPositionByIndex = (w: number, vw: number) => {
@@ -98,12 +108,18 @@ const Slider: FC<Props> = ({
       prevTranslate.current = currentTranslate.current
     }
     if (vw >= 640 && vw < 768) {
-      currentTranslate.current = currentIndex.current * -(w / 2 + 10)
+      // currentTranslate.current = currentIndex.current * -(w / 2 + 10)
+      // prevTranslate.current = currentTranslate.current
+      //the above two lines code is to move image one by one.
+      currentTranslate.current = currentIndex.current * -(w + 20)
       prevTranslate.current = currentTranslate.current
     }
     if (vw >= 768) {
-      currentTranslate.current = currentIndex.current * -(w / 3 + 20 / 3)
+      currentTranslate.current = currentIndex.current * -(w + 20)
       prevTranslate.current = currentTranslate.current
+      // currentTranslate.current = currentIndex.current * -(w / 3 + 20 / 3)
+      // prevTranslate.current = currentTranslate.current
+      //the above two lines code is to move image one by one.
     }
 
     setSliderposition()
@@ -111,17 +127,19 @@ const Slider: FC<Props> = ({
 
   useLayoutEffect(() => {
     const w = getWidth(imagesDivRef)
-    const vw = getViewportWidth()
+    getViewportWidth()
+    const vwRefWidth = getVwRefWidth()
     transitionOff()
-    setInitialPositionByIndex(w!, vw!)
+    setInitialPositionByIndex(w!, vwRefWidth!)
   }, [])
 
   useEffect(() => {
     const handleResize = () => {
       const w = getWidth(imagesDivRef)
-      const vw = getViewportWidth()
+      getViewportWidth()
+      const vwRefWidth = getVwRefWidth()
       transitionOff()
-      setInitialPositionByIndex(w!, vw!)
+      setInitialPositionByIndex(w!, vwRefWidth!)
     }
     window.addEventListener('resize', handleResize)
     return () => {
@@ -141,18 +159,37 @@ const Slider: FC<Props> = ({
   }, [])
 
   const handleTouchStart = (i: number) => {
-    const vw = getViewportWidth()
     if (vw! >= 640) return
     return (e: React.TouchEvent) => {
       transitionOn()
       dragging.current = true
       startingPosition.current = e.touches[0].clientX
-      currentIndex.current = i
+      // currentIndex.current = i
       animationId.current = requestAnimationFrame(animation)
     }
   }
+
+  const maxNum = useMemo(() => {
+    let number_max
+    if (vw! < 640) {
+      number_max =
+        (product && product.images.length - 1) ||
+        (products && products.length - 1)
+    }
+    if (vw! >= 640 && vw! < 768) {
+      number_max =
+        (product && Math.ceil(product.images.length / 2) - 1) ||
+        (products && Math.ceil(products.length / 2) - 1)
+    }
+    if (vw! >= 768) {
+      number_max =
+        (product && Math.ceil(product.images.length / 3) - 1) ||
+        (products && Math.ceil(products.length / 3) - 1)
+    }
+    return number_max
+  }, [vw, product, products])
+
   const handleTouchMove = (e: React.TouchEvent) => {
-    const vw = getViewportWidth()
     if (vw! >= 640) return
     if (!dragging.current) return
     const currentPosition = e.touches[0].clientX
@@ -161,15 +198,11 @@ const Slider: FC<Props> = ({
   }
 
   const handleTouchEnd = () => {
-    const vw = getViewportWidth()
     if (vw! >= 640) return
     dragging.current = false
     cancelAnimationFrame(animationId.current!)
     const movedBy = currentTranslate.current - prevTranslate.current
-    const maxNum =
-      (product && product.images.length - 1) ||
-      (products && products.length - 1) ||
-      1
+
     if (movedBy < -100 && currentIndex.current !== maxNum) {
       currentIndex.current += 1
     }
@@ -182,16 +215,13 @@ const Slider: FC<Props> = ({
     setUpdateIndex(!updateIndex)
   }
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    if (maxNum === 0) return
+    e.stopPropagation()
     transitionOn()
-    const maxNum =
-      (product && product.images.length - 1) ||
-      (products && products.length - 1) ||
-      1
     if (currentIndex.current === maxNum) currentIndex.current = 0
     else currentIndex.current += 1
     const w = getWidth(imagesDivRef)
-    const vw = getViewportWidth()
     setPositionByIndex(w!, vw!)
     setUpdateIndex(!updateIndex)
   }
@@ -257,43 +287,6 @@ const Slider: FC<Props> = ({
               </div>
             )
           })}
-          {/* {stripe &&
-          products?.map((p, i) => {
-            const { images, name, price } = p
-
-            return (
-              <div
-                key={images[0].url}
-                className="w-full h-full flex-shrink-0 px-4 relative"
-                onTouchStart={handleTouchStart(i)}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                <Link href={`/product/${p.slug}`}>
-                  <a aria-label={name}>
-                    <Image
-                      src={images[0].url}
-                      alt={images[0].alt || 'Product Image'}
-                      layout="responsive"
-                      width="100%"
-                      height="100%"
-                      priority={i === 0}
-                      quality="65"
-                      objectFit="cover"
-                    />
-                  </a>
-                </Link>
-                {productInfo && (
-                  <div className="flex flex-col justify-center items-center absolute bottom-14 left-1/2 -translate-x-1/2">
-                    <p className="text-body-2 text-brown">{name}</p>
-                    <p className="mt-4 text-body-2 text-brown">
-                      {price.currencyCode} <span>{price.value}</span>
-                    </p>
-                  </div>
-                )}
-              </div>
-            )
-          })} */}
         </div>
         {mark === 'text' && (
           <p className="absolute bottom-4 left-4 text-subtitle text-darkGray sm:hidden">
@@ -314,32 +307,7 @@ const Slider: FC<Props> = ({
           </button>
         )}
         {bottomLine && (
-          <div className="grid grid-cols-3 mx-4 mt-10 h-[2px] bg-gold gap-x-5 ">
-            <div
-              className={cn(
-                'transition-all duration-75 ease-linear w-0 bg-brown',
-                {
-                  ['!w-full']: currentIndex.current === 0,
-                }
-              )}
-            ></div>
-            <div
-              className={cn(
-                'transition-all duration-75 ease-linear w-0 bg-brown',
-                {
-                  ['!w-full']: currentIndex.current === 1,
-                }
-              )}
-            ></div>
-            <div
-              className={cn(
-                'transition-all duration-75 ease-linear w-0 bg-brown',
-                {
-                  ['!w-full']: currentIndex.current === 2,
-                }
-              )}
-            ></div>
-          </div>
+          <BottomLine numberOfMoves={maxNum!} index={currentIndex.current} />
         )}
       </div>
     </div>

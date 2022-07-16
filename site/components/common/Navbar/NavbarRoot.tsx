@@ -9,7 +9,7 @@ const NavbarRoot: FC = ({ children }) => {
   const router = useRouter()
   const className = cn(s.root, {
     [s.bgColorA]: router.pathname === '/',
-    [s.bgColorB]: router.pathname === '/product/[slug]',
+
     'shadow-magical': hasScrolled,
   })
   useEffect(() => {

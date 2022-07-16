@@ -5,11 +5,13 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import ImageGallery from '@components/ui/ImageGallery'
 import Hero from '@components/home/hero'
 import Intro from '@components/home/intro'
+import { Container } from '@components/ui'
 import {
   getStartAndToken,
   getData,
   update,
 } from '../lib/utilities/ins-accesskey-funcs'
+import { Slider } from '@components/common'
 
 type InsData = {
   media_url?: string
@@ -73,7 +75,7 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <div className="bg-gray pb-20 w-full">
+      <Container className="pb-20 w-full" clean>
         <Hero />
         <Intro />
         {/* third section */}
@@ -138,14 +140,13 @@ export default function Home({
           </div>
         </div>
         {/*  row 3*/}
-        <div className="relative -top-40 md:top-0">
-          <ImageGallery
+        <div className="relative -top-40 md:top-0 px-4 sm:px-10">
+          <Slider
             products={products}
-            layout="B"
-            imageDivClassName={'hidden sm:block '}
-            divClassName={'mt-10 sm:mt-20'}
-            hoverBottomLine
-            slider
+            className="w-full"
+            controlBtn
+            bottomLine
+            productInfo
           />
         </div>
 
@@ -189,7 +190,7 @@ export default function Home({
             <ImageGallery insData={insData} layout="A" />
           </div>
         </div>
-      </div>
+      </Container>
     </>
   )
 }
