@@ -29,24 +29,25 @@ const ImageGallery: FC<Props> = ({
     {
       [s.layoutA]: layout == 'A',
       [s.layoutB]: layout == 'B',
+      [s.layoutC]: layout == 'C',
     },
     divClassName
   )
   const [divIndex, setDvIndex] = useState<string>('')
 
-  useEffect(() => {
-    const mouseOver = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest('#image-gallery-div')) return
-      setDvIndex('')
-    }
-    window.addEventListener('mouseover', mouseOver)
-    return () => {
-      window.removeEventListener('mouseover', mouseOver)
-    }
-  }, [])
-  const handleMouseOver = (e: React.MouseEvent) => {
-    setDvIndex(e.currentTarget.id)
-  }
+  // useEffect(() => {
+  //   const mouseOver = (e: MouseEvent) => {
+  //     if ((e.target as HTMLElement).closest('#image-gallery-div')) return
+  //     setDvIndex('')
+  //   }
+  //   window.addEventListener('mouseover', mouseOver)
+  //   return () => {
+  //     window.removeEventListener('mouseover', mouseOver)
+  //   }
+  // }, [])
+  // const handleMouseOver = (e: React.MouseEvent) => {
+  //   setDvIndex(e.currentTarget.id)
+  // }
   return (
     <>
       <div className={className} id="image-gallery-div">
@@ -72,9 +73,8 @@ const ImageGallery: FC<Props> = ({
           return (
             <div
               key={id}
-              id={index.toString()}
               className={imageDivClassName}
-              onMouseOver={handleMouseOver}
+              // onMouseOver={handleMouseOver}
             >
               {link ? (
                 <Link href={`/product/${p.slug}`}>

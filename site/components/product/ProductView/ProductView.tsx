@@ -29,7 +29,7 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
       <Container className="max-w-none w-full" clean>
         <CurrentPath
           product={product}
-          className="h-[56px] sm:h-[75px] pl-4 sm:pl-10 flex items-center"
+          className="h-[56px] sm:h-[75px] pl-4 sm:pl-10"
         />
         <div className={cn(s.root)}>
           <ProductPicsbar className={s.main} product={product} />

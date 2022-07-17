@@ -20,7 +20,7 @@ const CurrentPath: FC<Props> = ({ className, product }) => {
 
   return (
     <div className={cn(className)}>
-      <p>
+      <p className="pt-4">
         <Link href="/">
           <span className="uppercase text-nav text-darkGray cursor-pointer">
             Home /

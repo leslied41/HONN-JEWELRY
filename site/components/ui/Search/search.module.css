@@ -1,0 +1,5 @@
+.imagegallery {
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-top: solid 0.5px rgba(57, 57, 57, 0.3);
+}
