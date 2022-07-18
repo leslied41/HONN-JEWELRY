@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { Buttons } from '@components/ui'
 import Link from 'next/link'
 import BottomLine from './bottomLine'
+var debounce = require('lodash.debounce')
 
 interface Props {
   product?: Product
@@ -51,6 +52,7 @@ const Slider: FC<Props> = ({
   const width = useRef<number>()
   const [vw, setVw] = useState<number>()
   const vwRef = useRef<number>()
+  const [breakPointChanging, setBreakPointChanging] = useState<string>('')
 
   const numberOfImages = useMemo(
     () => product?.images.length || products?.length || 1,
@@ -124,6 +126,18 @@ const Slider: FC<Props> = ({
 
     setSliderposition()
   }
+  const checkBreakPointsChanging = useCallback((w: number | undefined) => {
+    if (!w) return
+    if (w >= 768) {
+      setBreakPointChanging('md')
+    }
+    if (w < 768 && w >= 640) {
+      setBreakPointChanging('sm')
+    }
+    if (w < 640) {
+      setBreakPointChanging('mobile')
+    }
+  }, [])
 
   useLayoutEffect(() => {
     const w = getWidth(imagesDivRef)
@@ -131,8 +145,8 @@ const Slider: FC<Props> = ({
     const vwRefWidth = getVwRefWidth()
     transitionOff()
     setInitialPositionByIndex(w!, vwRefWidth!)
+    checkBreakPointsChanging(vwRefWidth)
   }, [])
-
   useEffect(() => {
     const handleResize = () => {
       const w = getWidth(imagesDivRef)
@@ -140,12 +154,19 @@ const Slider: FC<Props> = ({
       const vwRefWidth = getVwRefWidth()
       transitionOff()
       setInitialPositionByIndex(w!, vwRefWidth!)
+      checkBreakPointsChanging(vwRefWidth)
     }
-    window.addEventListener('resize', handleResize)
+    const debounceFn = debounce(handleResize, 200)
+    window.addEventListener('resize', debounceFn)
     return () => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', debounceFn)
     }
   }, [])
+
+  useEffect(() => {
+    //when resize, currentindex will be 0
+    currentIndex.current = 0
+  }, [breakPointChanging])
 
   const setSliderposition = () => {
     if (!imagesDivRef.current || !imagesDivRef) return
@@ -170,24 +191,34 @@ const Slider: FC<Props> = ({
   }
 
   const maxNum = useMemo(() => {
-    let number_max
+    let number_max = 0
     if (vw! < 640) {
       number_max =
         (product && product.images.length - 1) ||
-        (products && products.length - 1)
+        (products && products.length - 1) ||
+        0
     }
     if (vw! >= 640 && vw! < 768) {
       number_max =
         (product && Math.ceil(product.images.length / 2) - 1) ||
-        (products && Math.ceil(products.length / 2) - 1)
+        (products && Math.ceil(products.length / 2) - 1) ||
+        0
     }
     if (vw! >= 768) {
       number_max =
         (product && Math.ceil(product.images.length / 3) - 1) ||
-        (products && Math.ceil(products.length / 3) - 1)
+        (products && Math.ceil(products.length / 3) - 1) ||
+        0
     }
+    if (number_max < 0) number_max = 0
     return number_max
   }, [vw, product, products])
+
+  const numberOfLines = useMemo(() => maxNum! + 1, [maxNum])
+  const passednumberOfImages = useMemo(
+    () => product?.images.length || products?.length || 0,
+    [products, product]
+  )
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (vw! >= 640) return
@@ -300,14 +331,25 @@ const Slider: FC<Props> = ({
         )}
         {controlBtn && (
           <button
-            className="absolute flex justify-center items-center h-16 w-16 bg-brown top-1/2  -right-4 sm:-right-10 -translate-y-1/2"
+            className={cn(
+              'absolute flex justify-center items-center h-16 w-16 bg-brown top-1/2  -right-4 sm:-right-10 -translate-y-1/2',
+              {
+                ['md:hidden']: numberOfImages <= 3,
+                ['sm:hidden']: numberOfImages <= 2,
+                ['hidden']: numberOfImages <= 1,
+              }
+            )}
             onClick={handleClick}
           >
             <img src="/righticon.svg" alt="right icon" />
           </button>
         )}
         {bottomLine && (
-          <BottomLine numberOfMoves={maxNum!} index={currentIndex.current} />
+          <BottomLine
+            numberOfLines={numberOfLines!}
+            passednumberOfImages={passednumberOfImages}
+            index={currentIndex.current}
+          />
         )}
       </div>
     </div>
