@@ -1,7 +1,14 @@
-import React, { FC, ButtonHTMLAttributes } from 'react'
+import React, {
+  FC,
+  ButtonHTMLAttributes,
+  forwardRef,
+  useRef,
+  JSXElementConstructor,
+} from 'react'
 import s from './Button.module.css'
 import { LoadingDots } from '@components/ui'
 import cn from 'clsx'
+import mergeRefs from 'react-merge-refs'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
@@ -10,19 +17,27 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   type?: 'submit' | 'reset' | 'button'
   loading?: boolean
   disabled?: boolean
+  href?: string
+  Component?: string | JSXElementConstructor<any>
+  width?: number | string
 }
 
-const Button: FC<Props> = ({
-  className,
-  variant,
-  active,
-  loading = false,
-  disabled = false,
-  children,
-  type,
-  ...props
-  //in order to make onClick in here, all the props including onclick handler have to be passed here.
-}) => {
+const Button: FC<Props> = forwardRef((props, buttonRef) => {
+  const {
+    className,
+    variant,
+    active,
+    loading = false,
+    disabled = false,
+    children,
+    type,
+    width,
+    Component = 'button',
+    ...rest
+    //in order to make onClick in here, all the props including onclick handler have to be passed here.
+  } = props
+  const ref = useRef<typeof Component>(null)
+
   const rootClassName = cn(
     s.root,
     {
@@ -35,13 +50,15 @@ const Button: FC<Props> = ({
     className
   )
   return (
-    <button
+    <Component
+      ref={mergeRefs([ref, buttonRef])}
       className={rootClassName}
       type={type}
       aria-pressed={active}
       data-variant={variant}
       disabled={disabled}
-      {...props}
+      style={{ width: `${width}` }}
+      {...rest}
     >
       {children}
       {loading && (
@@ -49,8 +66,8 @@ const Button: FC<Props> = ({
           <LoadingDots />
         </i>
       )}
-    </button>
+    </Component>
   )
-}
+})
 
 export default Button

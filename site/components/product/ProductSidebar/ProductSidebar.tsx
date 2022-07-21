@@ -12,7 +12,9 @@ import ProductSearchOps from '../ProductSearchOptions'
 import ProductMetafields from '../ProductMetafields'
 import { useProductContext } from '../productProvider'
 import type { Product } from '@commerce/types/product'
-
+import Estimated from '@components/icon/Estimated'
+import Warranty from '@components/icon/Warranty'
+import Booking from '@components/icon/Booking'
 interface ProductSidebarProps {
   className?: string
   product: Product
@@ -118,25 +120,21 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       </div>
       <div className="w-full sm:w-[265px]">
         <div data-delivery-estimated className="mt-5">
-          <div className="flex gap-x-2">
-            <img src="/estimated.svg" alt="delivery-estimated-icon" />
+          <div className="flex gap-x-2 items-center">
+            <Estimated />
             <p>Estimated: 3–5 business days</p>
           </div>
-          <div className="flex gap-x-2">
-            <img
-              src="/estimated.svg"
-              alt="delivery-estimated-icon"
-              className="opacity-0"
-            />
+          <div className="flex gap-x-2 items-center">
+            <Estimated className="opacity-0" />
             <a href="">Free shipping policy</a>
           </div>
         </div>
-        <div data-warranty className="flex gap-x-2">
-          <img src="/warranty.svg" alt="warranty-icon" />
+        <div data-warranty className="flex gap-x-2 items-center">
+          <Warranty />
           <p>5 years warranty</p>
         </div>
-        <div data-booking className="flex gap-x-2">
-          <img src="/booking.svg" alt="booking-icon" />
+        <div data-booking className="flex gap-x-2 items-center">
+          <Booking />
           <p>Book an appointemnt</p>
         </div>
       </div>

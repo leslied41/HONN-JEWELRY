@@ -1,6 +1,5 @@
 .actions {
-  @apply flex p-1 border-accent-2 border items-center justify-center
-  w-12 text-accent-7;
+  @apply flex items-center justify-center text-gray;
   transition-property: border-color, background, color, transform, box-shadow;
 
   transition-duration: 0.15s;
@@ -8,7 +7,7 @@
   user-select: none;
 }
 
-.actions:hover {
+/* .actions:hover {
   @apply border bg-accent-1 border-accent-3 text-accent-9;
   transition: border-color;
   z-index: 10;
@@ -20,8 +19,20 @@
 
 .actions:disabled {
   @apply cursor-not-allowed;
-}
+} */
 
 .input {
-  @apply bg-transparent px-4 w-full h-full focus:outline-none select-none pointer-events-auto;
+  @apply bg-transparent w-full h-full focus:outline-none select-none pointer-events-auto text-center;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.input[type='number'] {
+  -moz-appearance: textfield;
 }

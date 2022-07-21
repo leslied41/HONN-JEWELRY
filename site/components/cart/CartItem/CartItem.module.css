@@ -8,7 +8,7 @@
 
 .quantity {
   appearance: textfield;
-  @apply w-8 border-accent-2 border mx-3 rounded text-center text-sm text-black;
+  @apply w-8 border-accent-2 border mx-3 rounded text-center text-nav text-black;
 }
 
 .quantity::-webkit-outer-spin-button,
@@ -18,15 +18,15 @@
 
 .productImage {
   position: absolute;
-  transform: scale(1.9);
   width: 100%;
   height: 100%;
-  left: 30% !important;
-  top: 30% !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1;
 }
 
 .productName {
-  @apply font-medium cursor-pointer pb-1;
-  margin-top: -4px;
+  @apply text-nav cursor-pointer;
 }

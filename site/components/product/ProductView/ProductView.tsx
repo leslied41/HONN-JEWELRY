@@ -49,13 +49,7 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
               </p>
             </div>
           </div>
-          {/* <ImageGallery
-            products={relatedProducts}
-            layout="B"
-            link={true}
-            divClassName="mx-4 sm:mx-10"
-            imageDivClassName={'hidden sm:block '}
-          /> */}
+
           <Slider
             products={relatedProducts}
             className="w-full"

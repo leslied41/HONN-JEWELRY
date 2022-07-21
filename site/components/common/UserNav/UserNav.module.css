@@ -3,16 +3,16 @@
 }
 
 .list {
-  @apply flex flex-row items-center justify-items-end h-full;
+  @apply flex flex-row items-center justify-items-end h-full gap-x-10;
 }
 
 .item {
-  @apply ml-6 cursor-pointer relative transition ease-in-out
-  duration-100 flex items-center outline-none text-gold text-nav;
+  @apply cursor-pointer relative transition ease-in-out
+  duration-100 flex items-center outline-none text-nav;
 }
 
 .item:hover {
-  @apply text-accent-6 transition scale-110 duration-100;
+  @apply transition scale-110 duration-100;
 }
 
 .item:first-child {
@@ -27,7 +27,7 @@
   @apply hidden md:block;
 }
 .bagCount {
-  @apply border border-accent-1 bg-secondary text-secondary absolute rounded-full right-3 top-3 flex items-center justify-center font-bold text-xs;
+  @apply bg-white text-brown absolute rounded-full left-[calc(100%+2px)] -top-[2px] flex items-center justify-center font-bold text-nav;
   padding-left: 2.5px;
   padding-right: 2.5px;
   min-width: 1.25rem;
@@ -39,7 +39,7 @@
 }
 
 .mobileMenu {
-  @apply flex md:hidden ml-6 text-white;
+  @apply flex md:hidden  text-white;
 }
 
 .avatarButton:focus,

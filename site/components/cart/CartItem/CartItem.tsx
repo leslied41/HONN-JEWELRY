@@ -83,15 +83,16 @@ const CartItem = ({
       })}
       {...rest}
     >
-      <div className="flex flex-row space-x-4 py-4">
-        <div className="w-16 h-16 bg-violet relative overflow-hidden cursor-pointer z-0">
+      <div className="flex gap-x-4">
+        <div className="w-[92px] h-[128px] bg-brown relative overflow-hidden cursor-pointer z-0 flex-shrink-0">
           <Link href={`/product/${item.path}`}>
             <a>
               <Image
                 onClick={() => closeSidebarIfPresent()}
                 className={s.productImage}
-                width={150}
-                height={150}
+                width={92}
+                height={128}
+                objectFit="cover"
                 src={item.variant.image?.url || placeholderImg}
                 alt={item.variant.image?.altText || 'Product Image'}
                 unoptimized
@@ -99,23 +100,42 @@ const CartItem = ({
             </a>
           </Link>
         </div>
-        <div className="flex-1 flex flex-col text-base">
-          <Link href={`/product/${item.path}`}>
-            <a>
-              <span
-                className={s.productName}
-                onClick={() => closeSidebarIfPresent()}
-              >
-                {item.name}
-              </span>
-            </a>
-          </Link>
-          {options && options.length > 0 && (
+        <div className="flex-1 flex flex-col text-nav justify-between">
+          <div className="self-start flex flex-col gap-y-2">
+            <Link href={`/product/${item.path}`}>
+              <a>
+                <span
+                  className={s.productName}
+                  onClick={() => closeSidebarIfPresent()}
+                >
+                  {item.name}
+                </span>
+              </a>
+            </Link>
+            {variant === 'default' && (
+              // so the quantity is from usecart, the frontend not from shopify.
+              <Quantity
+                value={quantity}
+                handleRemove={handleRemove}
+                handleChange={handleChange}
+                increase={() => increaseQuantity(1)}
+                decrease={() => increaseQuantity(-1)}
+              />
+            )}
+            {variant === 'display' && (
+              <div className="text-nav tracking-wider">{quantity}x</div>
+            )}
+          </div>
+
+          <div className="flex flex-col justify-between space-y-2 text-nav self-end ">
+            <span>{price}</span>
+          </div>
+          {/* {options && options.length > 0 && (
             <div className="flex items-center pb-1">
               {options.map((option: ItemOption, i: number) => (
                 <div
                   key={`${item.id}-${option.name}`}
-                  className="text-sm font-semibold text-accent-7 inline-flex items-center justify-center"
+                  className="text-nav font-semibold text-accent-7 inline-flex items-center justify-center"
                 >
                   {option.name}
                   {option.name === 'Color' ? (
@@ -134,25 +154,9 @@ const CartItem = ({
                 </div>
               ))}
             </div>
-          )}
-          {variant === 'display' && (
-            <div className="text-sm tracking-wider">{quantity}x</div>
-          )}
-        </div>
-        <div className="flex flex-col justify-between space-y-2 text-sm">
-          <span>{price}</span>
+          )} */}
         </div>
       </div>
-      {variant === 'default' && (
-        // so the quantity is from usecart, the frontend not from shopify.
-        <Quantity
-          value={quantity}
-          handleRemove={handleRemove}
-          handleChange={handleChange}
-          increase={() => increaseQuantity(1)}
-          decrease={() => increaseQuantity(-1)}
-        />
-      )}
     </li>
   )
 }

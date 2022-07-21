@@ -8,6 +8,7 @@ import {
   getDesignerPath,
   useSearchMeta,
 } from '@lib/search'
+import ArrowDown from '@components/icon/ArrowDown'
 
 const SORT = {
   'trending-desc': 'Trending',
@@ -52,9 +53,7 @@ const Sort: FC<Props> = ({ handleClick, className }) => {
         id="sort-btn-dropdown"
       >
         <span className="text-brown text-nav uppercase">sort by</span>
-        <img
-          src="/downwards.svg"
-          alt="downwards icon"
+        <ArrowDown
           className={cn('ml-[6px] transition-all', {
             ['rotate-180']: open === true,
           })}

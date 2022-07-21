@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { Buttons } from '@components/ui'
 import Link from 'next/link'
 import BottomLine from './bottomLine'
+import ArrowRight from '@components/icon/ArrowRight'
 var debounce = require('lodash.debounce')
 
 interface Props {
@@ -341,7 +342,7 @@ const Slider: FC<Props> = ({
             )}
             onClick={handleClick}
           >
-            <img src="/righticon.svg" alt="right icon" />
+            <ArrowRight />
           </button>
         )}
         {bottomLine && (

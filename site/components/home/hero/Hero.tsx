@@ -17,6 +17,8 @@ const Heading: FC<Props> = ({ className }) => {
           className="object-cover z-0"
           layout="fill"
           src="/landing_bg1.jpg"
+          quality={100}
+          priority
         />
       </div>
     </div>

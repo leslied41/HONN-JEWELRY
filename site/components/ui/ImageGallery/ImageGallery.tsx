@@ -35,19 +35,6 @@ const ImageGallery: FC<Props> = ({
   )
   const [divIndex, setDvIndex] = useState<string>('')
 
-  // useEffect(() => {
-  //   const mouseOver = (e: MouseEvent) => {
-  //     if ((e.target as HTMLElement).closest('#image-gallery-div')) return
-  //     setDvIndex('')
-  //   }
-  //   window.addEventListener('mouseover', mouseOver)
-  //   return () => {
-  //     window.removeEventListener('mouseover', mouseOver)
-  //   }
-  // }, [])
-  // const handleMouseOver = (e: React.MouseEvent) => {
-  //   setDvIndex(e.currentTarget.id)
-  // }
   return (
     <>
       <div className={className} id="image-gallery-div">

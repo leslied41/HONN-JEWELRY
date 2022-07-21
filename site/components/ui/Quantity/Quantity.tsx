@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
 import s from './Quantity.module.css'
-import { Cross, Plus, Minus } from '@components/icons'
+import Minus from '@components/icon/Minus'
+import Plus from '@components/icon/Plus'
+
 import cn from 'clsx'
 export interface QuantityProps {
   value: number
@@ -19,42 +21,47 @@ const Quantity: FC<QuantityProps> = ({
   handleRemove,
   max = 6,
 }) => {
+  const handleDecrease = () => {
+    if (value === 1) return handleRemove
+    return decrease
+  }
   return (
-    <div className="flex flex-row h-9">
-      <button className={s.actions} onClick={handleRemove}>
+    <div className="flex flex-row items-center gap-x-[17px]">
+      {/* <button className={s.actions} onClick={handleRemove}>
         <Cross width={20} height={20} />
-      </button>
-      <label className="w-full border-accent-2 border ml-2">
-        <input
-          className={s.input}
-          onChange={(e) =>
-            Number(e.target.value) < max + 1 ? handleChange(e) : () => {}
-          }
-          value={value}
-          type="number"
-          max={max}
-          min="0"
-          readOnly
-        />
-      </label>
-      <button
-        type="button"
-        onClick={decrease}
-        className={s.actions}
-        style={{ marginLeft: '-1px' }}
-        disabled={value <= 1}
-      >
-        <Minus width={18} height={18} />
-      </button>
-      <button
-        type="button"
-        onClick={increase}
-        className={cn(s.actions)}
-        style={{ marginLeft: '-1px' }}
-        disabled={value < 1 || value >= max}
-      >
-        <Plus width={18} height={18} />
-      </button>
+      </button> */}
+      <p>Quantity</p>
+      <div className="flex justify-start items-center gap-x-[5px]">
+        <button
+          type="button"
+          onClick={handleDecrease()}
+          className={s.actions}
+          disabled={value <= 0}
+        >
+          <Minus width={6} height={18} />
+        </button>
+        <label>
+          <input
+            className={s.input}
+            onChange={(e) =>
+              Number(e.target.value) < max + 1 ? handleChange(e) : () => {}
+            }
+            value={value}
+            type="number"
+            max={max}
+            min="0"
+            // readOnly
+          />
+        </label>
+        <button
+          type="button"
+          onClick={increase}
+          className={cn(s.actions)}
+          disabled={value < 1 || value >= max}
+        >
+          <Plus width={8} height={8} />
+        </button>
+      </div>
     </div>
   )
 }

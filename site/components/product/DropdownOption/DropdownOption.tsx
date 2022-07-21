@@ -3,6 +3,7 @@ import s from './Dropdown.module.css'
 import { useProductContext } from '../productProvider'
 import { dataA, dataB, titleA, titleB, selectorDataType } from './data'
 import cn from 'clsx'
+import DropdownArrow from '@components/icon/DropdownArrow'
 
 interface Props {
   variant: string
@@ -77,9 +78,7 @@ const InnerDropdownOption: FC<Props> = memo(
           <p>
             {selectorValue! ? selectorValue.toUpperCase() : 'Please Select'}
           </p>
-          <img
-            src="/dropdownArrow.svg"
-            alt="arrow-icon"
+          <DropdownArrow
             className={cn('transition-all duration-75 ease-in-out', {
               ['rotate-180']: collapsed,
               ['rotate-0']: !collapsed,
