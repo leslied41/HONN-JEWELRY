@@ -3,6 +3,8 @@ import s from './ProductSidebar.module.css'
 import { useAddItem } from '@framework/cart'
 import { ProductOptions } from '@components/product'
 import { useUI, HtmlText, Buttons } from '@components/ui'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import {
   getProductVariant,
   selectDefaultOptionFromProduct,
@@ -45,6 +47,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   const { openSidebar } = useUI()
   const [loading, setLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
+  const router = useRouter()
 
   useEffect(() => {
     selectDefaultOptionFromProduct(product, setSelectedOptions)
@@ -135,7 +138,12 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
         </div>
         <div data-booking className="flex gap-x-2 items-center">
           <Booking />
-          <p>Book an appointemnt</p>
+          <a
+            onClick={() => router.push('/request-for-quote')}
+            className="cursor-pointer"
+          >
+            <p>Book an appointemnt</p>
+          </a>
         </div>
       </div>
 

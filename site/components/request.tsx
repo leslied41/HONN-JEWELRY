@@ -115,6 +115,7 @@ const Request = ({
                   key={item.id}
                   item={item}
                   currencyCode={data?.currency.code!}
+                  position="request"
                 />
               ))}
             </ul>

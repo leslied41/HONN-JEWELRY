@@ -22,19 +22,21 @@ const placeholderImg = '/product-img-placeholder.svg'
 const CartItem = ({
   item,
   variant = 'default',
+  position,
   currencyCode,
   ...rest
 }: {
   variant?: 'default' | 'display'
   item: LineItem
   currencyCode: string
+  position?: string
 }) => {
   const { closeSidebarIfPresent } = useUI()
   const [removing, setRemoving] = useState(false)
   const [quantity, setQuantity] = useState<number>(item.quantity)
   const removeItem = useRemoveItem()
   const updateItem = useUpdateItem({ item })
-
+  console.log(item.customAttributes)
   const { price } = usePrice({
     amount: item.variant.price * item.quantity,
     baseAmount: item.variant.listPrice * item.quantity,
@@ -120,10 +122,25 @@ const CartItem = ({
                 handleChange={handleChange}
                 increase={() => increaseQuantity(1)}
                 decrease={() => increaseQuantity(-1)}
+                svgColor={position === 'request' ? '#8D5535' : ''}
               />
             )}
             {variant === 'display' && (
-              <div className="text-nav tracking-wider">{quantity}x</div>
+              <div className="text-nav tracking-wider">
+                Quantity: {quantity}
+              </div>
+            )}
+            {(position = 'requset') && (
+              <ul>
+                {item.customAttributes?.map((field, i) => {
+                  if (field.value)
+                    return (
+                      <li key={i}>
+                        {field.key}:{field.value}
+                      </li>
+                    )
+                })}
+              </ul>
             )}
           </div>
 
