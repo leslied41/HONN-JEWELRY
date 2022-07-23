@@ -43,13 +43,10 @@ const ImageGallery: FC<Props> = ({
           const { id, media_url, caption } = p
           return (
             <div key={id} className={imageDivClassName}>
-              <Image
+              <img
                 src={media_url ? media_url : ''}
                 alt={caption}
-                layout="responsive"
-                width="100%"
-                height="100%"
-                objectFit="cover"
+                className="w-full h-full object-cover"
               />
             </div>
           )
