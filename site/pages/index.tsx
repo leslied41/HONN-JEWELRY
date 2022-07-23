@@ -17,6 +17,7 @@ type InsData = {
   media_url?: string
   id: string
   caption?: string
+  media_type: string
 }[]
 
 export async function getStaticProps({
@@ -53,7 +54,7 @@ export async function getStaticProps({
   }
   const newInsData = insData
     ?.filter((item) => {
-      if (!item.media_url?.includes('video.')) return item
+      if (item.media_type !== 'VIDEO') return item
     })
     .slice(0, 5)
 
@@ -73,6 +74,7 @@ export default function Home({
   products,
   insData,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  console.log(insData)
   return (
     <>
       <Container className="pb-20 w-full" clean>
