@@ -95,11 +95,11 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       </div>
       <ProductSearchOps product={product} allProducts={allProducts} />
       <ProductMetafields />
-      <ProductOptions
+      {/* <ProductOptions
         options={product.options}
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
-      />
+      /> */}
 
       <div className="mt-7">
         {process.env.COMMERCE_CART_ENABLED && (

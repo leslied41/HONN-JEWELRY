@@ -9,7 +9,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     console.log('user booking request')
     const { name, email, comment, date, customer_number } = req.body
     const content = `Customer Name: ${name}, Email: ${email} is making an appointment on ${date}. Comment: ${comment} `
-
     return client.messages
       .create({
         body: content,
@@ -17,6 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         to: customer_number,
       })
       .then((message: any) => res.send(`you have send this sms ${message.sid}`))
+      .catch((err: any) => console.log(err))
   }
 }
 

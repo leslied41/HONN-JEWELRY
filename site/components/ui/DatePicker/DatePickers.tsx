@@ -1,163 +1,103 @@
-import React, { FC, useState, useEffect, useRef } from 'react'
+import React, { FC, useState, useEffect, useMemo } from 'react'
 import DatePicker from 'react-datepicker'
-import { AiOutlineLeft } from 'react-icons/ai'
-import { AiOutlineRight } from 'react-icons/ai'
 import s from './DatePickers.module.css'
-import clsx from 'clsx'
+import cn from 'clsx'
 
 interface DatePickerProps {
-  time: string
   setTime: React.Dispatch<React.SetStateAction<string>>
   startDate: Date | null
   setStartDate: React.Dispatch<React.SetStateAction<Date | null>>
   available_time: string[] | undefined
+  className?: string
+  time: string
 }
 export const DatePickers: FC<DatePickerProps> = ({
-  // time,
   setTime,
   startDate,
   setStartDate,
-  available_time,
+  available_time = [],
+  className,
+  time,
 }) => {
-  // const [timeOfEachDay, setTimeOfEachDay] = useState<string[]>([])
-  const timesRef = useRef<HTMLDivElement>(null)
+  const [availabeTime, setAvailabeTime] = useState<Date[] | undefined>()
 
-  // const btnsGroupClassName = clsx(s.times_container, {
-  //   [s.center]: timeOfEachDay?.length === 3,
-  // })
-
-  // const isWeekday = (date: Date) => {
-  //   const day = date.getDay()
-  //   return day !== 0 && day !== 6 && day !== 2 && day !== 4
-  // }
-
-  // const converTimeFormat = (time: string) => {
-  //   let hour_string = time.split(':')[0]
-  //   let hour = Number(hour_string)
-  //   let minutes = time.split(':')[1]
-  //   let amOrPm
-  //   if (hour > 12) {
-  //     hour = hour - 12
-  //     amOrPm = 'PM'
-  //   } else if (hour == 12) {
-  //     amOrPm = 'PM'
-  //   } else {
-  //     amOrPm = 'AM'
-  //   }
-  //   time = `${hour}:${minutes} ${amOrPm}`
-  //   return time
-  // }
-  // useEffect(() => {
-  // let day = startDate!.getDay()
-  // switch (day) {
-  //   case 1:
-  //     setTimeOfEachDay(['13:00', '14:00', '16:00'])
-  //     break
-  //   case 3:
-  //     setTimeOfEachDay(['10:00', '12:00', '14:00', '16:00', '17:00'])
-  //     break
-  //   case 5:
-  //     setTimeOfEachDay(['13:00', '14:00', '16:00'])
-  //     break
-  //   default:
-  //     setTimeOfEachDay([])
-  // }
-  // }, [startDate])
-
-  // const handleMove = (dir: string) => {
-  //   if (timeOfEachDay.length <= 5) return
-
-  //   if (dir === 'left') {
-  //     if (timesRef.current === null) return
-  //     timesRef.current.style.transform = `translateX(0px)`
-  //   }
-  //   if (dir === 'right') {
-  //     if (timesRef.current === null) return
-  //     timesRef.current.style.transform = `translateX(-55px)`
-  //   }
-  // }
-
-  const showAvailabeTime = (time: string | number | Date) => {
-    const selectedDate = new Date(time)
-    const currentDate = new Date()
-    let convertedTime: number[] = []
-    const timeString = available_time ? available_time.toString() : ''
-    if (available_time) {
-      JSON.parse(timeString).forEach((time: string | number | Date) => {
-        let date = new Date(time)
-        convertedTime.push(date.getTime())
-      })
-    }
-    return (
-      convertedTime.includes(selectedDate.getTime()) &&
-      currentDate.getTime() < selectedDate.getTime()
-    )
+  const getAvailabeTime = (date: Date | null, availabeDate: Date[]) => {
+    if (!availabeDate || availabeDate.length === 0 || !date) return
+    const targetDay = availabeDate.filter((d) => {
+      if (
+        d.getDate() === date.getDate() &&
+        d.getMonth() === date.getMonth() &&
+        d.getFullYear() === date.getFullYear()
+      )
+        return d
+    })
+    return targetDay
   }
 
-  const availabeDate = () => {
-    let convertedDate: Date[] = []
-    const timeString = available_time ? available_time.toString() : ''
-    if (available_time) {
-      JSON.parse(timeString).forEach((time: string | number | Date) => {
-        let date = new Date(time)
-        convertedDate.push(date)
-      })
-    }
+  const availabeDate = (available_time: string[]): Date[] | [] => {
+    const convertedDate: Date[] = []
+    if (!available_time) return []
+    JSON.parse(available_time as unknown as string).forEach((d: string) => {
+      if (new Date(d).getTime() <= new Date().getTime()) return
+      let date = new Date(d)
+      convertedDate.push(date)
+    })
     return convertedDate
   }
+  const availabeDates = useMemo(() => {
+    return availabeDate(available_time)
+  }, [available_time])
 
+  useEffect(() => {
+    if (!available_time) return
+    const availabeTimes = getAvailabeTime(startDate, availabeDates)
+    setAvailabeTime(availabeTimes)
+  }, [])
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setTime((e.target as HTMLButtonElement).value)
+  }
   return (
     <>
-      <div>
+      <div className={className}>
         <DatePicker
-          // filterDate={isWeekday}
-          filterTime={showAvailabeTime}
-          includeDates={availabeDate()}
+          includeDates={availabeDates}
           selected={startDate}
           onChange={(date) => {
             setStartDate(date)
-            // setTime('')
-            // if (timesRef.current === null) return
-            // timesRef.current.style.transform = `translateX(0px)`
+            if (!available_time) return
+            const availabeTimes = getAvailabeTime(date, availabeDates)
+            setAvailabeTime(availabeTimes)
           }}
-          // minTime={new Date(0, 0, 0, 10, 30)} // 7:30am
-          // maxTime={new Date(0, 0, 0, 16, 30)} // 4:30pm
-          timeIntervals={30}
-          showTimeSelect
           inline
         />
       </div>
-      {/* <div className={s.outter}>
-        { timeOfEachDay.length >= 5 &&(
-          <AiOutlineLeft
-            className={s.control}
-            onClick={() => handleMove('left')}
-          />
-        )}
-        <div className={btnsGroupClassName}>
-          <div className={s.times} ref={timesRef}>
-            {timeOfEachDay &&
-              timeOfEachDay.map((t, index) => {
-                return (
-                  <button
-                    key={index}
-                    type="button"
-                    className={s.time}
-                    onClick={() => setTime(t)}
-                  >
-                    <span className={(t === time) ? s.selected : ''}>{t}</span>
-                  </button>
-                )
-              })}
-          </div>
+      <div className="mt-6">
+        <h2 className="text-body-1 text-brown">Time</h2>
+        <div className="flex w-full flex-wrap mt-2">
+          {availabeTime?.map((t, i) => {
+            return (
+              <button
+                onClick={handleClick}
+                key={i}
+                value={t.toString()}
+                className={cn(
+                  'h-[50px] max-w-[122px] px-[33px] py-[14px] text-body-2 text-brown focus:text-white border-r border-gray bg-white focus:bg-brown flex justify-center items-center',
+                  {
+                    [s.focusBtn]: time == t.toString(),
+                  }
+                )}
+              >
+                {t.toLocaleString('en-US', {
+                  hour: 'numeric',
+                  //minute: 'numeric',
+                  hour12: true,
+                })}
+              </button>
+            )
+          })}
         </div>
-        { timeOfEachDay.length >= 5 &&(
-          <AiOutlineRight
-            className={s.control}
-            onClick={() => handleMove('right')}
-          />
-        )}
-      </div> */}
+      </div>
     </>
   )
 }

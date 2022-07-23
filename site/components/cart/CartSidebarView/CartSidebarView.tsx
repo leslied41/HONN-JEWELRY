@@ -13,7 +13,6 @@ import SidebarLayout from '@components/common/SidebarLayout'
 const CartSidebarView: FC = () => {
   const { closeSidebar, setSidebarView } = useUI()
   const { data, isLoading, isEmpty } = useCart()
-  console.log(data)
   //this is to print the cart info including customerId, currecny , lineItems...
   //so the logic is that everytime you click addtocart, it will check if there is an existing lineitem,
   //if no, a new one would be created. If exists, the updated info would be add into this lineitem. if you choose
@@ -49,9 +48,6 @@ const CartSidebarView: FC = () => {
     >
       {isLoading || isEmpty ? (
         <div className="flex-1  flex flex-col justify-between items-center">
-          {/* <span className="border border-dashed border-primary rounded-full flex items-center justify-center w-16 h-16 p-12 bg-secondary text-secondary">
-            <Bag className="absolute" />
-          </span> */}
           <div className="h-full flex flex-col justify-center">
             <h2 className="text-gray text-nav uppercase  tracking-wide text-center">
               Your cart is empty
