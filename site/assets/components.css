@@ -161,3 +161,22 @@ li.react-datepicker__time-list-item--disabled {
   right: 20%;
   top: 14px;
 }
+
+/* homepage */
+.tab-button-home {
+  position: relative;
+  color: var(--brown);
+}
+.tab-button-home::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--brown);
+  transition: width 0.15s ease-in-out;
+}
+.tab-button-home:focus::after {
+  width: 100%;
+}

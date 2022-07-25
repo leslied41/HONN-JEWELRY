@@ -120,6 +120,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
         </div>
       </div>
       <Slider
+        variant="product"
         product={product}
         addToOrder
         mark="text"

@@ -102,7 +102,8 @@ export const AppointForm: FC<AppointFormProps> = ({
         <input
           type="submit"
           value="Submit"
-          className="cursor-pointer h-12 w-80 bg-brown text-gray text-body-2 uppercase"
+          className="cursor-pointer h-12 w-80 bg-brown text-gray text-body-2 uppercase transition ease-in-out duration-150
+          shadow-sm hover:border-accent-9 hover:bg-accent-6 focus:shadow-outline-normal focus:outline-none"
         />
         {noTime && <p>Please choose a time slot</p>}
       </form>

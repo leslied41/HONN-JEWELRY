@@ -17,6 +17,8 @@ import { Buttons } from '@components/ui'
 import Link from 'next/link'
 import BottomLine from './bottomLine'
 import ArrowRight from '@components/icon/ArrowRight'
+import rangeMap from '@lib/range-map'
+import { Skeleton } from '@components/ui'
 var debounce = require('lodash.debounce')
 
 interface Props {
@@ -29,6 +31,7 @@ interface Props {
   controlBtn?: boolean
   bottomLine?: boolean
   productInfo?: boolean
+  variant: 'product' | 'products'
 }
 
 const Slider: FC<Props> = ({
@@ -41,6 +44,7 @@ const Slider: FC<Props> = ({
   controlBtn,
   bottomLine,
   productInfo,
+  variant,
 }) => {
   const imagesDivRef = useRef<HTMLDivElement | null>(null)
   const startingPosition = useRef<number>()
@@ -262,63 +266,79 @@ const Slider: FC<Props> = ({
     <div className={cn('relative', className)}>
       <div className={cn('overflow-hidden w-full')}>
         <div className="flex w-full sm:gap-x-5  h-fit" ref={imagesDivRef}>
-          {product?.images.map((image, i) => (
-            <div
-              key={image.url}
-              className="w-full h-full flex-shrink-0"
-              onTouchStart={handleTouchStart(i)}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              <Image
-                src={image.url!}
-                alt={image.alt || 'Product Image'}
-                layout="responsive"
-                width="100%"
-                height="100%"
-                priority={i === 0}
-                quality="65"
-                objectFit="cover"
-              />
-            </div>
-          ))}
-          {products?.map((p, i) => {
-            const { images, name, price } = p
-            return (
-              <div
-                key={i}
-                className={cn(
-                  'w-full sm:w-[calc((100%-20px)/2)] md:w-[calc((100%-40px)/3)] h-full flex-shrink-0 relative'
-                )}
-                onTouchStart={handleTouchStart(i)}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                <Link href={`/product/${p.slug}`}>
-                  <a aria-label={name}>
-                    <Image
-                      src={images[0].url}
-                      alt={images[0].alt || 'Product Image'}
-                      layout="responsive"
-                      width="100%"
-                      height="100%"
-                      priority={i === 0}
-                      quality="65"
-                      objectFit="cover"
-                    />
-                  </a>
-                </Link>
-                {productInfo && (
-                  <div className="flex flex-col justify-center items-center absolute bottom-14 left-1/2 -translate-x-1/2">
-                    <p className="text-body-2 text-brown">{name}</p>
-                    <p className="mt-4 text-body-2 text-brown">
-                      {price.currencyCode} <span>{price.value}</span>
-                    </p>
-                  </div>
-                )}
-              </div>
-            )
-          })}
+          {variant === 'product' &&
+            (product ? (
+              product.images.map((image, i) => (
+                <div
+                  key={image.url}
+                  className="w-full h-full flex-shrink-0"
+                  onTouchStart={handleTouchStart(i)}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  <Image
+                    src={image.url!}
+                    alt={image.alt || 'Product Image'}
+                    layout="responsive"
+                    width="100%"
+                    height="100%"
+                    priority={i === 0}
+                    quality="65"
+                    objectFit="cover"
+                  />
+                </div>
+              ))
+            ) : (
+              <Skeleton className="w-full h-full flex-shrink-0" height={250} />
+            ))}
+          {variant === 'products' &&
+            (products
+              ? products.map((p, i) => {
+                  const { images, name, price } = p
+                  return (
+                    <div
+                      key={i}
+                      className={cn(
+                        'w-full sm:w-[calc((100%-20px)/2)] md:w-[calc((100%-40px)/3)] h-full flex-shrink-0 relative'
+                      )}
+                      onTouchStart={handleTouchStart(i)}
+                      onTouchMove={handleTouchMove}
+                      onTouchEnd={handleTouchEnd}
+                    >
+                      <Link href={`/product/${p.slug}`}>
+                        <a aria-label={name}>
+                          <Image
+                            src={images[0].url}
+                            alt={images[0].alt || 'Product Image'}
+                            layout="responsive"
+                            width="100%"
+                            height="100%"
+                            priority={i === 0}
+                            quality="65"
+                            objectFit="cover"
+                          />
+                        </a>
+                      </Link>
+                      {productInfo && (
+                        <div className="flex flex-col justify-center items-center absolute bottom-14 left-1/2 -translate-x-1/2">
+                          <p className="text-body-2 text-brown">{name}</p>
+                          <p className="mt-4 text-body-2 text-brown">
+                            {price.currencyCode} <span>{price.value}</span>
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })
+              : rangeMap(3, (i) => (
+                  <Skeleton
+                    key={i}
+                    className={cn(
+                      'w-full sm:w-[calc((100%-20px)/2)] md:w-[calc((100%-40px)/3)] h-full flex-shrink-0'
+                    )}
+                    height={250}
+                  />
+                )))}
         </div>
         {mark === 'text' && (
           <p className="absolute bottom-4 left-4 text-subtitle text-darkGray sm:hidden">

@@ -51,6 +51,7 @@ const ProductView: FC<Props> = ({ product, allProducts }) => {
           </div>
 
           <Slider
+            variant="products"
             products={relatedProducts}
             className="w-full"
             controlBtn

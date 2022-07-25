@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 const axios = require('axios').default
-import { Button, Text, Container } from '@components/ui'
+import { Text, Container } from '@components/ui'
+import Button from '@components/ui/Buttons'
 import AppointForm from '../components/common/apponitment'
 import { DatePickers } from '../components/ui/DatePicker'
 import useCart from '@framework/cart/use-cart'
@@ -100,11 +101,19 @@ const Request = ({
       <div className="col-span-12 md:col-span-3 px-10 flex flex-col">
         {isLoading || isEmpty ? (
           <div className="  flex  flex-col justify-between items-center mb-6">
-            <div className="h-full flex flex-col justify-center items-center">
+            <div className="h-full flex flex-col justify-center items-center mb-6">
               <h2 className="text-brown text-nav uppercase  tracking-wide text-center">
                 Your list is empty
               </h2>
             </div>
+            <Button
+              href="/search"
+              width="100%"
+              Component="a"
+              className="h-12 bg-brown text-white text-nav"
+            >
+              shop now
+            </Button>
           </div>
         ) : (
           <div className="md:px-0 sm:px-6  text-brown text-nav">

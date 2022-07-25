@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import s from './CurrentPath.module.css'
 import cn from 'clsx'
 import { useRouter } from 'next/router'
 import type { Product } from '@commerce/types/product'
@@ -33,10 +32,14 @@ const CurrentPath: FC<Props> = ({ className, product }) => {
           linkString = linkArray.join('/')
           return (
             <Link href={linkString} key={index}>
-              <span className="uppercase text-nav text-darkGray cursor-pointer">
-                {' '}
-                {i} /
-              </span>
+              {i === 'product' ? ( //filter out product, as there is no this page.
+                <></>
+              ) : (
+                <span className="uppercase text-nav text-darkGray cursor-pointer">
+                  {' '}
+                  {i === 'search' ? 'shop all' : i} /
+                </span>
+              )}
             </Link>
           )
         })}
@@ -51,6 +54,3 @@ const CurrentPath: FC<Props> = ({ className, product }) => {
   )
 }
 export default CurrentPath
-function i(i: any) {
-  throw new Error('Function not implemented.')
-}
