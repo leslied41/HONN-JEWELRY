@@ -36,7 +36,6 @@ const CartItem = ({
   const [quantity, setQuantity] = useState<number>(item.quantity)
   const removeItem = useRemoveItem()
   const updateItem = useUpdateItem({ item })
-  console.log(item.customAttributes)
   const { price } = usePrice({
     amount: item.variant.price * item.quantity,
     baseAmount: item.variant.listPrice * item.quantity,

@@ -26,14 +26,17 @@ const Request = ({
   const [startDate, setStartDate] = useState<Date | null>(new Date())
 
   const { data, isLoading, isEmpty } = useCart()
-
   const { price: total } = usePrice(
     data && {
       amount: Number(data.totalPrice),
       currencyCode: data.currency.code,
     }
   )
-
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
   const post = (url: string, data: any) => {
     return axios
       .post(url, data)
@@ -55,17 +58,35 @@ const Request = ({
       customer_number: `+${quote_data.phone.toString()}`,
     }
 
+    const getId = (str: string) => {
+      const arr = window.atob(str).split('/')
+      const Id = arr[arr.length - 1]
+      return Number(Id)
+    }
+
     const quote_info = {
       shop: process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN,
       locale: 'sv',
       api_secret: process.env.NEXT_PUBLIC_QUOTA_API_SECRET,
-      line_items: data?.lineItems,
+      line_items: [
+        {
+          id: getId(
+            data?.lineItems[0].customAttributes?.find(
+              (i) => i.key === 'product id'
+            )?.value!
+          ),
+          variant_id: getId(data?.lineItems[0].productId!),
+          quantity: data?.lineItems[0].quantity,
+        },
+      ],
+
       additional_data: {
         name: quote_data.name,
         email: quote_data.email,
-        message: quote_data.comment,
+        message: quote_data.comment ? quote_data.comment : 'no message',
       },
     }
+
     post(`http://localhost:3000/api/twilio`, sms_info)
     post(`https://quote.globosoftware.net/api/quote`, quote_info)
   }

@@ -48,16 +48,17 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   const [loading, setLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
   const router = useRouter()
-
   useEffect(() => {
     selectDefaultOptionFromProduct(product, setSelectedOptions)
   }, [product])
 
   const variant = getProductVariant(product, selectedOptions)
+
   //this addToCart function is to add options selectd by customers to cart.
   //besides productId and variantId, some more customized info like metafields also need to be added.
   const addToCart = async () => {
     setLoading(true)
+
     try {
       //so in product page, when you put a product into cart, you cannot choose the amount.
       //but you can update this amount in cart.
@@ -78,6 +79,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           { key: 'Main Stone Cut', value: stoneCut },
           { key: 'Carat', value: weight },
           { key: 'Text Style', value: textStyle },
+          { key: 'product id', value: String(product.id) },
         ],
       })
       openSidebar()

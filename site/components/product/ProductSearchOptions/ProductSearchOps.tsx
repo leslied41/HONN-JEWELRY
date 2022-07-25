@@ -13,7 +13,6 @@ interface Props {
 export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
   const { shape, band, mosaic, setBand, setShape, setMosaic } =
     useProductContext()
-  console.log(product)
   const router = useRouter()
 
   useEffect(() => {
