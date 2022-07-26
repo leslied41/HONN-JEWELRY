@@ -21,7 +21,6 @@ export const handler: MutationHook<AddItemHook> = {
   },
   async fetcher({ input: item, options, fetch }) {
     //add by me
-    console.log(item)
     //if quantity is not int or less that 1, throw error.
     if (
       item.quantity &&
@@ -31,6 +30,7 @@ export const handler: MutationHook<AddItemHook> = {
         message: 'The item quantity has to be a valid integer greater than 0',
       })
     }
+
     //in order to add customAttributes in lineItems, I rewrite type CartItemBody that can be found by searching.
     const lineItems = [
       {

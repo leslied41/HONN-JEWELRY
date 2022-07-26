@@ -24,6 +24,11 @@ const Skeleton: React.FC<SkeletonProps> = ({
 }) => {
   // Automatically calculate the size if there are children
   // and no fixed sizes are specified
+  //when no size like height and widht are specified and thre are children, the skleton should automatically
+  //cover this whole skeleton element and its children.
+  //but if size is specefied and there is no children, the heigh and widht would be fixed.
+  //regarding how to make it automatically cover children, pseudo selector after or before is
+  //used as well as css properties like top:0 left:0 right:0 bottom:0 absolute.
   const shouldAutoSize = !!children && !(width || height)
 
   // Defaults

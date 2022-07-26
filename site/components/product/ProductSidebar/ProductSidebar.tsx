@@ -3,6 +3,8 @@ import s from './ProductSidebar.module.css'
 import { useAddItem } from '@framework/cart'
 import { ProductOptions } from '@components/product'
 import { useUI, HtmlText, Buttons } from '@components/ui'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import {
   getProductVariant,
   selectDefaultOptionFromProduct,
@@ -45,16 +47,17 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   const { openSidebar } = useUI()
   const [loading, setLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
-
+  const router = useRouter()
   useEffect(() => {
     selectDefaultOptionFromProduct(product, setSelectedOptions)
   }, [product])
-
   const variant = getProductVariant(product, selectedOptions)
+
   //this addToCart function is to add options selectd by customers to cart.
   //besides productId and variantId, some more customized info like metafields also need to be added.
   const addToCart = async () => {
     setLoading(true)
+
     try {
       //so in product page, when you put a product into cart, you cannot choose the amount.
       //but you can update this amount in cart.
@@ -63,6 +66,8 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
         variantId: String(variant ? variant.id : product.variants[0]?.id),
         //so now metafields passed here will be passed to checkout.
         customAttributes: [
+          { key: 'product id', value: String(product.id) },
+          { key: 'product name', value: String(product.name) },
           { key: 'Main Stone Shape', value: shape },
           { key: 'Ring Band', value: band },
           { key: 'Mosaic', value: mosaic },
@@ -95,11 +100,11 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       </div>
       <ProductSearchOps product={product} allProducts={allProducts} />
       <ProductMetafields />
-      <ProductOptions
+      {/* <ProductOptions
         options={product.options}
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
-      />
+      /> */}
 
       <div className="mt-7">
         {process.env.COMMERCE_CART_ENABLED && (
@@ -135,7 +140,12 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
         </div>
         <div data-booking className="flex gap-x-2 items-center">
           <Booking />
-          <p>Book an appointemnt</p>
+          <a
+            onClick={() => router.push('/request-for-quote')}
+            className="cursor-pointer"
+          >
+            <p>Book an appointemnt</p>
+          </a>
         </div>
       </div>
 

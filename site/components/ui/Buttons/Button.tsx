@@ -69,5 +69,6 @@ const Button: FC<Props> = forwardRef((props, buttonRef) => {
     </Component>
   )
 })
+Button.displayName = 'My Button'
 
 export default Button

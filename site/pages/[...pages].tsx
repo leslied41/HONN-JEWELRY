@@ -28,7 +28,7 @@ export async function getStaticProps({
   const slug = locale ? `${locale}/${path}` : path
   const pageItem = pages.find((p: Page) =>
     p.url ? getSlug(p.url) === slug : false
-  )
+  ) //if the entered url in browser exist in pages, grab this target page.
   const data =
     pageItem &&
     (await commerce.getPage({
@@ -72,16 +72,15 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   }
 }
 
-export default function Pages({ page, path }: { page: Page, path: string }) {
+export default function Pages({ page, path }: { page: Page; path: string }) {
   const router = useRouter()
 
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
     <>
-      
       {path === 'request-for-quote' ? (
-        <Request available_time={page.availableTime?.value}/>
+        <Request available_time={page.availableTime?.value} />
       ) : (
         <div className="max-w-2xl mx-8 sm:mx-auto py-20">
           {page?.body && <Text html={page.body} />}

@@ -30,5 +30,6 @@ const Title = React.forwardRef<Ref, Props>(
     )
   }
 )
+Title.displayName = 'Title'
 
 export default Title

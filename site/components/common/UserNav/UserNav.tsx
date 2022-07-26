@@ -42,6 +42,7 @@ const UserNav: React.FC<{
             <Dropdown>
               <DropdownTrigger>
                 <Buttons
+                  Component="a"
                   aria-label="Menu"
                   variant="naked"
                   className={s.item}

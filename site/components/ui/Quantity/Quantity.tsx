@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import s from './Quantity.module.css'
 import Minus from '@components/icon/Minus'
 import Plus from '@components/icon/Plus'
+import { useRouter } from 'next/router'
 
 import cn from 'clsx'
 export interface QuantityProps {
@@ -11,6 +12,7 @@ export interface QuantityProps {
   handleRemove: React.MouseEventHandler<HTMLButtonElement>
   handleChange: React.ChangeEventHandler<HTMLInputElement>
   max?: number
+  svgColor?: string
 }
 
 const Quantity: FC<QuantityProps> = ({
@@ -20,6 +22,7 @@ const Quantity: FC<QuantityProps> = ({
   handleChange,
   handleRemove,
   max = 6,
+  svgColor,
 }) => {
   const handleDecrease = () => {
     if (value === 1) return handleRemove
@@ -38,7 +41,7 @@ const Quantity: FC<QuantityProps> = ({
           className={s.actions}
           disabled={value <= 0}
         >
-          <Minus width={6} height={18} />
+          <Minus width={6} height={18} stroke={svgColor} />
         </button>
         <label>
           <input
@@ -59,7 +62,7 @@ const Quantity: FC<QuantityProps> = ({
           className={cn(s.actions)}
           disabled={value < 1 || value >= max}
         >
-          <Plus width={8} height={8} />
+          <Plus width={8} height={8} stroke={svgColor} />
         </button>
       </div>
     </div>
