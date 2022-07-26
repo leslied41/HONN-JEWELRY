@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 // import { DatePickers } from '../../ui/DatePicker'
 import s from './AppointForm.module.css'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -18,6 +18,8 @@ interface AppointFormProps {
   startDate: Date | null
   setTime: React.Dispatch<React.SetStateAction<string>>
   setStartDate: React.Dispatch<React.SetStateAction<Date | null>>
+  twilloError: string
+  quoteError: string
 }
 
 export const AppointForm: FC<AppointFormProps> = ({
@@ -26,6 +28,8 @@ export const AppointForm: FC<AppointFormProps> = ({
   startDate,
   setTime,
   setStartDate,
+  twilloError,
+  quoteError,
 }) => {
   const {
     register,
@@ -43,8 +47,12 @@ export const AppointForm: FC<AppointFormProps> = ({
     handleClick(final_data)
     setTime('')
     setStartDate(new Date())
-    reset({ name: '', phone: '', email: '', comment: '' })
   }
+  //this useeffect is to check if the submission is successful and reset form if so.
+  useEffect(() => {
+    if (!twilloError && !quoteError)
+      reset({ name: '', phone: '', email: '', comment: '' })
+  }, [quoteError, twilloError])
   return (
     <div>
       <h2 className="text-body-1 text-brown capitalize">Contact information</h2>
@@ -106,6 +114,15 @@ export const AppointForm: FC<AppointFormProps> = ({
           shadow-sm hover:border-accent-9 hover:bg-accent-6 focus:shadow-outline-normal focus:outline-none"
         />
         {noTime && <p>Please choose a time slot</p>}
+        {(twilloError === 'error' || quoteError === 'error') && (
+          <p>somethig goes wrong...</p>
+        )}
+        {twilloError === 'wrong number' && (
+          <p>Phone number format is not right</p>
+        )}
+        {!twilloError && !quoteError && (
+          <p>Thank you for the quote, we will contact to you very soon.</p>
+        )}
       </form>
     </div>
   )

@@ -16,7 +16,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         to: customer_number,
       })
       .then((message: any) => res.send(`you have send this sms ${message.sid}`))
-      .catch((err: any) => console.log(err))
+      .catch((err: any) => {
+        res.send(err)
+        console.log(err)
+      })
   }
 }
 

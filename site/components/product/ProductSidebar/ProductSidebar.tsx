@@ -51,7 +51,6 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   useEffect(() => {
     selectDefaultOptionFromProduct(product, setSelectedOptions)
   }, [product])
-
   const variant = getProductVariant(product, selectedOptions)
 
   //this addToCart function is to add options selectd by customers to cart.
@@ -67,6 +66,8 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
         variantId: String(variant ? variant.id : product.variants[0]?.id),
         //so now metafields passed here will be passed to checkout.
         customAttributes: [
+          { key: 'product id', value: String(product.id) },
+          { key: 'product name', value: String(product.name) },
           { key: 'Main Stone Shape', value: shape },
           { key: 'Ring Band', value: band },
           { key: 'Mosaic', value: mosaic },
@@ -79,7 +80,6 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           { key: 'Main Stone Cut', value: stoneCut },
           { key: 'Carat', value: weight },
           { key: 'Text Style', value: textStyle },
-          { key: 'product id', value: String(product.id) },
         ],
       })
       openSidebar()

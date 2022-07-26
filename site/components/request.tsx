@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 const axios = require('axios').default
 import { Text, Container } from '@components/ui'
 import Button from '@components/ui/Buttons'
@@ -8,6 +8,7 @@ import useCart from '@framework/cart/use-cart'
 import usePrice from '@framework/product/use-price'
 import { CartItem } from '@components/cart'
 import { CurrentPath } from './common'
+import isNumeric from '@lib/is-number'
 
 export type HandleClickArgs = {
   name: string
@@ -24,6 +25,8 @@ const Request = ({
 }) => {
   const [time, setTime] = useState<string>('')
   const [startDate, setStartDate] = useState<Date | null>(new Date())
+  const [twilloError, setTwilloError] = useState<string>('pending')
+  const [quoteError, setQuoteError] = useState('pending')
 
   const { data, isLoading, isEmpty } = useCart()
   const { price: total } = usePrice(
@@ -32,23 +35,77 @@ const Request = ({
       currencyCode: data.currency.code,
     }
   )
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
+
   const post = (url: string, data: any) => {
     return axios
       .post(url, data)
       .then(function (response: any) {
         console.log(response)
+        if (url === 'http://localhost:3000/api/twilio') {
+          if (response.status !== 200) return setTwilloError('error')
+          if (response.data.status === 400)
+            return setTwilloError('wrong number')
+          if (response.data.includes('you have send this sms'))
+            return setTwilloError('')
+        }
+        if (url === 'https://quote.globosoftware.net/api/quote') {
+          if (response.data.success === true) return setQuoteError('')
+          else return setQuoteError('error')
+        }
       })
       .catch(function (error: any) {
+        if (url === 'http://localhost:3000/api/twilio') setTwilloError('error')
+        if (url === 'https://quote.globosoftware.net/api/quote')
+          setQuoteError('error')
         console.log(error)
       })
   }
 
+  const getId = (str: string) => {
+    const arr = window.atob(str).split('/')
+    const Id = arr[arr.length - 1]
+    return Number(Id)
+  }
+  const customAttributesToMessage = (lineItems: any) => {
+    if (!lineItems) return
+    return lineItems
+      .map((l: any) =>
+        l.customAttributes
+          .filter((c: any) => c.value)
+          ?.map((c: any) => {
+            if (c.key === 'product id' && !isNumeric(c.value))
+              c.value = getId(c.value!).toString()
+            return `${c.key}: ${c.value}`
+          })
+          .join(', ')
+      )
+      .join(';     ')
+  }
+
+  const customMessages = useMemo(
+    () => customAttributesToMessage(data?.lineItems),
+    [data?.lineItems]
+  )
+  const line_items = useMemo(
+    () =>
+      data?.lineItems.map((l) => {
+        return {
+          id: isNumeric(
+            l.customAttributes?.find((i) => i.key === 'product id')?.value!
+          )
+            ? l.customAttributes?.find((i) => i.key === 'product id')?.value!
+            : getId(
+                l.customAttributes?.find((i) => i.key === 'product id')?.value!
+              ),
+          variant_id: getId(l.variantId!),
+          quantity: l.quantity,
+        }
+      }),
+    [data?.lineItems]
+  )
+
   const handleClick = (quote_data: HandleClickArgs): void => {
+    const message = customMessages.concat(' Comment: ', quote_data.comment)
     const sms_info = {
       name: quote_data.name,
       email: quote_data.email,
@@ -58,32 +115,15 @@ const Request = ({
       customer_number: `+${quote_data.phone.toString()}`,
     }
 
-    const getId = (str: string) => {
-      const arr = window.atob(str).split('/')
-      const Id = arr[arr.length - 1]
-      return Number(Id)
-    }
-
     const quote_info = {
       shop: process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN,
       locale: 'sv',
       api_secret: process.env.NEXT_PUBLIC_QUOTA_API_SECRET,
-      line_items: [
-        {
-          id: getId(
-            data?.lineItems[0].customAttributes?.find(
-              (i) => i.key === 'product id'
-            )?.value!
-          ),
-          variant_id: getId(data?.lineItems[0].productId!),
-          quantity: data?.lineItems[0].quantity,
-        },
-      ],
-
+      line_items: line_items,
       additional_data: {
         name: quote_data.name,
         email: quote_data.email,
-        message: quote_data.comment ? quote_data.comment : 'no message',
+        message: message,
       },
     }
 
@@ -112,6 +152,8 @@ const Request = ({
           />
         </div>
         <AppointForm
+          twilloError={twilloError}
+          quoteError={quoteError}
           handleClick={handleClick}
           time={time}
           startDate={startDate}
