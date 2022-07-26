@@ -1,5 +1,4 @@
 import cn from 'clsx'
-import Link from 'next/link'
 import s from './UserNav.module.css'
 import useCart from '@framework/cart/use-cart'
 import { useUI } from '@components/ui/context'
@@ -11,14 +10,15 @@ import {
   DropdownTrigger as DropdownTriggerInst,
   Buttons,
 } from '@components/ui'
-import DragHandleIcon from '@mui/icons-material/DragHandle'
 import type { LineItem } from '@commerce/types/cart'
+import TwoLine from '@components/icon/TwoLine'
 
 const countItem = (count: number, item: LineItem) => count + item.quantity
 
 const UserNav: React.FC<{
   className?: string
-}> = ({ className }) => {
+  embeded?: string
+}> = ({ className, embeded }) => {
   const { data } = useCart()
   const { data: isCustomerLoggedIn } = useCustomer()
   const {
@@ -60,6 +60,7 @@ const UserNav: React.FC<{
           <li className={s.item}>
             <Buttons
               className={s.item}
+              style={{ left: '-20px' }}
               variant="naked"
               onClick={() => {
                 setSidebarView('CART_VIEW')
@@ -67,7 +68,6 @@ const UserNav: React.FC<{
               }}
               aria-label={`Cart items: ${itemsCount}`}
             >
-              {/* <Bag /> */}
               Cart
               {itemsCount > 0 && (
                 <span className={s.bagCount}>{itemsCount}</span>
@@ -75,19 +75,21 @@ const UserNav: React.FC<{
             </Buttons>
           </li>
         )}
-        <li className={s.mobileMenu}>
-          <Buttons
-            className={s.item}
-            aria-label="Menu"
-            variant="naked"
-            onClick={() => {
-              openSidebar()
-              setSidebarView('MOBILE_MENU_VIEW')
-            }}
-          >
-            <DragHandleIcon />
-          </Buttons>
-        </li>
+        {embeded !== 'sidebar' && (
+          <li className={s.mobileMenu}>
+            <Buttons
+              className={s.item}
+              aria-label="Menu"
+              variant="naked"
+              onClick={() => {
+                openSidebar()
+                setSidebarView('MOBILE_MENU_VIEW')
+              }}
+            >
+              <TwoLine />
+            </Buttons>
+          </li>
+        )}
       </ul>
     </nav>
   )

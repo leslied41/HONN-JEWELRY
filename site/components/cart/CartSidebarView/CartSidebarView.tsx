@@ -54,7 +54,12 @@ const CartSidebarView: FC = () => {
             </h2>
           </div>
 
-          <Button href="/" width="100%" Component="a" className="text-brown">
+          <Button
+            href="/search"
+            width="100%"
+            Component="a"
+            className="text-brown bg-gray"
+          >
             shop now
           </Button>
         </div>
@@ -81,13 +86,14 @@ const CartSidebarView: FC = () => {
         <>
           <div>
             <div>
-              <Link href="/cart">
+              {/* at this phase, no need to show cart */}
+              {/* <Link href="/cart">
                 <a>
                   <h2 className="text-h2-s" onClick={handleClose}>
                     My Cart
                   </h2>
                 </a>
-              </Link>
+              </Link> */}
               <ul className={s.lineItemsList}>
                 {data!.lineItems.map((item: any) => (
                   <CartItem
@@ -126,7 +132,7 @@ const CartSidebarView: FC = () => {
               href="/checkout"
               width="100%"
               Component="a"
-              className="text-brown"
+              className="text-brown bg-gray"
             >
               Check out
             </Button>

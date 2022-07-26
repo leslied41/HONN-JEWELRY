@@ -30,8 +30,8 @@
   @apply bg-white text-brown absolute rounded-full left-[calc(100%+2px)] -top-[2px] flex items-center justify-center font-bold text-nav;
   padding-left: 2.5px;
   padding-right: 2.5px;
-  min-width: 1.25rem;
-  min-height: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .avatarButton {
