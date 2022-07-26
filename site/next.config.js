@@ -21,6 +21,7 @@ module.exports = withCommerceConfig({
       'scontent-lax3-2.cdninstagram.com',
       'scontent-lax3-1.cdninstagram.com',
       'video.cdninstagram.com',
+      'video-lax3-1.cdninstagram.com',
     ],
   },
   rewrites() {

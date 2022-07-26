@@ -12,6 +12,7 @@ import s from './ProductPicsbar.module.css'
 import type { Product } from '@commerce/types/product'
 import { Buttons } from '@components/ui'
 import { Slider } from '@components/common'
+import { useProductContext } from '../productProvider'
 
 interface ProductPicsbarProps {
   className?: string
@@ -24,6 +25,21 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
   const [elRefs, setElRefs] = useState<
     React.MutableRefObject<HTMLDivElement>[]
   >([])
+
+  const {
+    metalColor,
+    shape,
+    band,
+    mosaic,
+    stoneColorLevel,
+    stoneClarity,
+    stoneCut,
+    textStyle,
+    littleDiamondColor,
+    size,
+    weight,
+    engraved,
+  } = useProductContext()
 
   const arrayFilter = (array: boolean[]) => {
     let tag: number[] = []
@@ -126,6 +142,60 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
         className="sm:hidden col-span-7 w-full"
       />
       <div className="hidden sm:block col-span-7  md:col-span-5 h-fit relative">
+        <div
+          className={cn('sm:mb-5')}
+          style={{
+            backgroundColor: '#fff',
+          }}
+        >
+          {band === 'a' ? (
+            <img
+              src="/band_a.png"
+              alt="square diamond"
+              className="w-full absolute pt-0"
+            />
+          ) : (
+            <img
+              src="/band_b0.png"
+              alt="round diamond"
+              className="w-full absolute pt-0"
+            />
+          )}
+          {shape === 'square' ? (
+            <img
+              src="/shape_square.png"
+              alt="square diamond"
+              className="w-full absolute pt-0"
+            />
+          ) : (
+            <img
+              src="/shape_round.png"
+              alt="round diamond"
+              className="w-full absolute pt-0"
+            />
+          )}
+          {band === 'b' && (
+            <img
+              src="/band_b1.png"
+              alt="square diamond"
+              className="w-full absolute pt-0"
+            />
+          )}
+
+          <div
+            style={{
+              paddingTop: '100%',
+              backgroundColor:
+                metalColor === '#f44336' ? 'transparent' : '#fff',
+              mixBlendMode: 'color',
+            }}
+          ></div>
+          {/* 
+          {metalColor}
+          {mosaic}
+          {engraved} */}
+        </div>
+
         {product.images.map((image, i) => (
           <div
             key={image.url}
