@@ -72,32 +72,34 @@ export const DatePickers: FC<DatePickerProps> = ({
           inline
         />
       </div>
-      <div className="mt-6">
-        <h2 className="text-body-1 text-brown">Time</h2>
-        <div className="flex w-full flex-wrap mt-2">
-          {availabeTime?.map((t, i) => {
-            return (
-              <button
-                onClick={handleClick}
-                key={i}
-                value={t.toString()}
-                className={cn(
-                  'h-[50px] max-w-[122px] px-[33px] py-[14px] text-body-2 text-brown focus:text-white border-r border-gray bg-white focus:bg-brown flex justify-center items-center',
-                  {
-                    [s.focusBtn]: time == t.toString(),
-                  }
-                )}
-              >
-                {t.toLocaleString('en-US', {
-                  hour: 'numeric',
-                  //minute: 'numeric',
-                  hour12: true,
-                })}
-              </button>
-            )
-          })}
+      {availabeTime && availabeTime.length !== 0 && (
+        <div className="mt-6">
+          <h2 className="text-body-1 text-brown">Time</h2>
+          <div className="flex-col gap-y-[1px] md:gap-x-[1px] md:gap-y-0 md:flex-row flex w-full flex-wrap mt-2">
+            {availabeTime?.map((t, i) => {
+              return (
+                <button
+                  onClick={handleClick}
+                  key={i}
+                  value={t.toString()}
+                  className={cn(
+                    'h-[50px] w-full md:max-w-[122px] px-[33px] py-[14px] text-body-2 text-brown focus:text-white  bg-white focus:bg-brown flex justify-center items-center',
+                    {
+                      [s.focusBtn]: time == t.toString(),
+                    }
+                  )}
+                >
+                  {t.toLocaleString('en-US', {
+                    hour: 'numeric',
+                    //minute: 'numeric',
+                    hour12: true,
+                  })}
+                </button>
+              )
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }

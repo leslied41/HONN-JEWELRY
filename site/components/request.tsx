@@ -133,11 +133,11 @@ const Request = ({
 
   return (
     <Container className="grid md:grid-cols-12 px-0 ">
-      <div className="col-span-9 border-r-[0.5px] border-gold">
+      <div className="hidden md:block col-span-8 border-r-[0.5px] border-gold">
         <CurrentPath className="h-[56px] sm:h-[75px] pl-10" />
       </div>
-      <div className="col-span-3"></div>
-      <div className="col-span-12 md:col-span-9 border-r-[0.5px] border-gold px-10 pb-[180px]">
+      <div className="hidden md:block col-span-4"></div>
+      <div className="col-span-12 mt-12 md:mt-0 order-2 md:col-span-8 md:order-1 border-r-[0.5px] border-gold px-10 pb-12 md:pb-[150px]">
         <div className="mb-12">
           <h2 className="text-brown text-body-1">
             Select a meeting date & Time
@@ -161,7 +161,7 @@ const Request = ({
           setStartDate={setStartDate}
         />
       </div>
-      <div className="col-span-12 md:col-span-3 px-10 flex flex-col">
+      <div className="col-span-12 order-1 md:col-span-4 md:order-2 mt-4 md:mt-0 px-10 flex flex-col">
         {isLoading || isEmpty ? (
           <div className="  flex  flex-col justify-between items-center mb-6">
             <div className="h-full flex flex-col justify-center items-center mb-6">
@@ -179,7 +179,7 @@ const Request = ({
             </Button>
           </div>
         ) : (
-          <div className="md:px-0 sm:px-6  text-brown text-nav">
+          <div className="  text-brown text-nav">
             <h2 className="text-brown text-body-1">Request List</h2>
             <ul className="mt-3 space-y-6  sm:space-y-0 sm:divide-y sm:divide-gold">
               {data!.lineItems.map((item: any) => (
