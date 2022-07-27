@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import cn from 'clsx'
 import s from './Layout.module.css'
 import dynamic from 'next/dynamic'
@@ -13,7 +14,7 @@ import { Sidebar, Button, LoadingDots } from '@components/ui'
 import PaymentMethodView from '@components/checkout/PaymentMethodView'
 import CheckoutSidebarView from '@components/checkout/CheckoutSidebarView'
 import { CheckoutProvider } from '@components/checkout/context'
-import { MenuSidebarView } from '@components/common/UserNav'
+import { MenuSidebarView, SearchSidebarView } from '@components/common/UserNav'
 import type { Page } from '@commerce/types/page'
 import type { Category } from '@commerce/types/site'
 import type { Link as LinkProps } from '../UserNav/MenuSidebarView'
@@ -87,13 +88,17 @@ const SidebarView: React.FC<{
   closeSidebar(): any
   links: LinkProps[]
 }> = ({ sidebarView, closeSidebar, links }) => {
+  const [childComponent, setChildComponent] = useState<string>('')
   return (
-    <Sidebar onClose={closeSidebar}>
+    <Sidebar onClose={closeSidebar} childComponent={childComponent}>
       {sidebarView === 'CART_VIEW' && <CartSidebarView />}
       {sidebarView === 'SHIPPING_VIEW' && <ShippingView />}
       {sidebarView === 'PAYMENT_VIEW' && <PaymentMethodView />}
       {sidebarView === 'CHECKOUT_VIEW' && <CheckoutSidebarView />}
       {sidebarView === 'MOBILE_MENU_VIEW' && <MenuSidebarView links={links} />}
+      {sidebarView === 'SEARCH_MENU_VIEW' && (
+        <SearchSidebarView setChildComponent={setChildComponent} />
+      )}
     </Sidebar>
   )
 }
@@ -115,14 +120,11 @@ const Layout: React.FC<Props> = ({
 }) => {
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   const { locale = 'en-US' } = useRouter()
-
+  //the links navbarlinks passed to MenuSidebarView and shown in that view.
   const navBarlinks = categories.slice(0, 2).map((c) => ({
     label: c.name,
     href: `/search/${c.slug}`,
   }))
-  // console
-  // console.log(categories)
-  // console.log(navBarlinks)
 
   return (
     <CommerceProvider locale={locale}>

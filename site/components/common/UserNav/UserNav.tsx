@@ -18,7 +18,8 @@ const countItem = (count: number, item: LineItem) => count + item.quantity
 const UserNav: React.FC<{
   className?: string
   embeded?: string
-}> = ({ className, embeded }) => {
+  noCart?: boolean
+}> = ({ className, embeded, noCart }) => {
   const { data } = useCart()
   const { data: isCustomerLoggedIn } = useCustomer()
   const {
@@ -56,7 +57,7 @@ const UserNav: React.FC<{
           </li>
         )}
 
-        {process.env.COMMERCE_CART_ENABLED && (
+        {process.env.COMMERCE_CART_ENABLED && !noCart && (
           <li className={s.item}>
             <Buttons
               className={s.item}

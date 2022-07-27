@@ -41,7 +41,7 @@ const Sort: FC<Props> = ({ handleClick, className }) => {
     }
     window.addEventListener('click', (e) => handleClosest(e))
     return () => {
-      window.addEventListener('click', (e) => handleClosest(e))
+      window.removeEventListener('click', (e) => handleClosest(e))
     }
   }, [])
 
@@ -61,24 +61,24 @@ const Sort: FC<Props> = ({ handleClick, className }) => {
       </button>
       <div
         className={cn(
-          'absolute left-0 z-10 shadow-xl overflow-hidden transition-all duration-150',
+          'absolute right-0 z-10 w-[100px]  top-[calc(100%+8px)]   overflow-hidden transition-all duration-150 shadow-sm border-solid border-[0.5px] border-gold bg-white',
           {
-            ['max-h-0']: open === false,
-            ['max-h-[500px] ']: open === true,
+            ['max-h-0 border-0']: open === false,
+            ['max-h-[500px] py-[10px]']: open === true,
           }
         )}
       >
-        <ul>
+        <ul className="flex flex-col gap-y-2">
           <li
-            className={cn('block text-sm leading-5 text-accent-4', {
-              underline: !sort,
-            })}
+            className={cn(
+              'block text-nav text-brown text-right capitalize px-2 hover:text-gold ',
+              {
+                ['text-gold bg-gray']: !sort,
+              }
+            )}
           >
             <Link href={{ pathname, query: filterQuery({ q }) }}>
-              <a
-                onClick={(e) => handleClick(e, 'sort')}
-                className={'inline-block px-4 py-2 '}
-              >
+              <a onClick={(e) => handleClick(e, 'sort')} className={'block'}>
                 Relevance
               </a>
             </Link>
@@ -86,9 +86,12 @@ const Sort: FC<Props> = ({ handleClick, className }) => {
           {Object.entries(SORT).map(([key, text]) => (
             <li
               key={key}
-              className={cn('block text-sm leading-5 text-accent-4  ', {
-                underline: sort === key,
-              })}
+              className={cn(
+                'block  text-nav text-brown capitalize text-right px-2 hover:text-gold',
+                {
+                  ['text-gold bg-gray']: sort === key,
+                }
+              )}
             >
               <Link
                 href={{
@@ -96,10 +99,7 @@ const Sort: FC<Props> = ({ handleClick, className }) => {
                   query: filterQuery({ q, sort: key }),
                 }}
               >
-                <a
-                  onClick={(e) => handleClick(e, 'sort')}
-                  className={'block  px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'}
-                >
+                <a onClick={(e) => handleClick(e, 'sort')} className={'block'}>
                   {text}
                 </a>
               </Link>

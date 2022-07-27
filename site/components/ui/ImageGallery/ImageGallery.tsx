@@ -15,6 +15,7 @@ interface Props {
   imageDivClassName?: string
   divClassName?: string
   link?: boolean
+  intro?: boolean
 }
 
 const ImageGallery: FC<Props> = ({
@@ -24,6 +25,7 @@ const ImageGallery: FC<Props> = ({
   imageDivClassName,
   divClassName,
   link,
+  intro,
 }) => {
   const className = cn(
     {
@@ -53,7 +55,7 @@ const ImageGallery: FC<Props> = ({
         })}
 
         {products?.map((p, index) => {
-          const { id, images, name } = p
+          const { id, images, name, price } = p
           return (
             <div
               key={id}
@@ -71,6 +73,15 @@ const ImageGallery: FC<Props> = ({
                       height="100%"
                       objectFit="cover"
                     />
+                    {intro && (
+                      <div className="text-body-2 text-brown md:hidden mt-2">
+                        <h2>{name}</h2>
+                        <p>
+                          {price.currencyCode}
+                          {price.value}
+                        </p>
+                      </div>
+                    )}
                   </a>
                 </Link>
               ) : (

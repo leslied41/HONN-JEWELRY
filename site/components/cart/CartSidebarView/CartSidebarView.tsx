@@ -1,6 +1,6 @@
 import cn from 'clsx'
 import Link from 'next/link'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import s from './CartSidebarView.module.css'
 import CartItem from '../CartItem'
 import Button from '@components/ui/Buttons/Button'
@@ -47,7 +47,7 @@ const CartSidebarView: FC = () => {
       handleClose={handleClose}
     >
       {isLoading || isEmpty ? (
-        <div className="flex-1  flex flex-col justify-between items-center">
+        <div className="flex-1  flex flex-col justify-between items-center px-4 md:px-0">
           <div className="h-full flex flex-col justify-center">
             <h2 className="text-gray text-nav uppercase  tracking-wide text-center">
               Your cart is empty
@@ -84,7 +84,7 @@ const CartSidebarView: FC = () => {
         </div>
       ) : (
         <>
-          <div>
+          <div className="px-4 md:px-0">
             <div>
               {/* at this phase, no need to show cart */}
               {/* <Link href="/cart">
@@ -127,12 +127,12 @@ const CartSidebarView: FC = () => {
             </div>
           </div>
 
-          <div>
+          <div className="mx-4 md:mx-0">
             <Button
               href="/checkout"
               width="100%"
               Component="a"
-              className="text-brown bg-gray"
+              className="text-brown bg-gray "
             >
               Check out
             </Button>

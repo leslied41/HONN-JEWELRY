@@ -19,16 +19,16 @@ const TwoLine: FC<Props> = ({ width, height, stroke, className }) => {
       <path
         d="M5 10H19"
         stroke={stroke ? stroke : '#8D5535'}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M5 14H19"
         stroke={stroke ? stroke : '#8D5535'}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

@@ -55,7 +55,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
     <Container className="px-10 mb-[120px]" clean>
       <CurrentPath className="h-[56px] sm:h-[75px]" />
       {/* Products */}
-      {(q || activeCategory || activeBrand) && (
+      {/* {(q || activeCategory || activeBrand) && (
         <div className="mb-12 transition ease-in duration-75">
           {data ? (
             <>
@@ -95,7 +95,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
             <>Searching...</>
           )}
         </div>
-      )}
+      )} */}
       <div>
         <h1 className="text-center text-h2 uppercase text-brown pt-2 pb-16">
           shop all
@@ -107,7 +107,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
             <SearchList
               handleClick={handleClick}
               categories={categories}
-              className="flex gap-x-6"
+              className="hidden md:flex gap-x-6"
             />
           </div>
           <div>
@@ -119,10 +119,11 @@ export default function Search({ categories, brands }: SearchPropsType) {
             products={data.products}
             layout="C"
             link
+            intro
             imageDivClassName="animated fadeIn"
           />
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid  gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {rangeMap(12, (i) => (
               <Skeleton key={i}>
                 <div className="w-60 h-60" />

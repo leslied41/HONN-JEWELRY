@@ -1,10 +1,10 @@
 .root {
-  @apply relative h-full flex flex-col p-10 gap-y-10;
+  @apply relative h-full flex flex-col py-4 px-0 md:p-10 gap-y-10;
 }
 
 .header {
-  @apply sticky top-0 flex items-center justify-between 
-  bg-brown box-border w-full z-10;
+  @apply sticky top-0 flex items-center justify-between  
+   box-border  z-10;
 }
 
 .container {

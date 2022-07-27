@@ -127,9 +127,6 @@ function uiReducer(state: State, action: Action) {
 
 export const UIProvider: FC = (props) => {
   const [state, dispatch] = React.useReducer(uiReducer, initialState)
-  //the reason why use useReducer instead of useState is that useReducer can
-  //reduce the amount of coding lines. If use useState, there would be mulitple
-  //useState to be defined.
 
   const openSidebar = useCallback(
     () => dispatch({ type: 'OPEN_SIDEBAR' }),
