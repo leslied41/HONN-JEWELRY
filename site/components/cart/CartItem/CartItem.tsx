@@ -131,14 +131,16 @@ const CartItem = ({
             )}
             {(position = 'requset') && (
               <ul>
-                {item.customAttributes?.map((field, i) => {
-                  if (field.value)
-                    return (
-                      <li key={i}>
-                        {field.key}:{field.value}
-                      </li>
-                    )
-                })}
+                {item.customAttributes
+                  ?.filter((f) => f.key !== 'product id')
+                  .map((field, i) => {
+                    if (field.value)
+                      return (
+                        <li key={i}>
+                          {field.key}:{field.value}
+                        </li>
+                      )
+                  })}
               </ul>
             )}
           </div>

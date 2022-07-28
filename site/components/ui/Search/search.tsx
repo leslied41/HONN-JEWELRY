@@ -52,7 +52,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
   )
 
   return (
-    <Container className="px-10 mb-[120px]" clean>
+    <Container className="px-4 md:px-10 mb-[120px]" clean>
       <CurrentPath className="h-[56px] sm:h-[75px]" />
       {/* Products */}
       {/* {(q || activeCategory || activeBrand) && (

@@ -1,5 +1,5 @@
 .root {
-  @apply relative h-full flex flex-col py-4 px-0 md:p-10 gap-y-10;
+  @apply relative h-full flex flex-col pb-4 px-0 md:p-10 gap-y-10;
 }
 
 .header {

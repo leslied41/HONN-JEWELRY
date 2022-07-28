@@ -87,7 +87,8 @@ const SidebarView: React.FC<{
   sidebarView: string
   closeSidebar(): any
   links: LinkProps[]
-}> = ({ sidebarView, closeSidebar, links }) => {
+  categories: Category[]
+}> = ({ sidebarView, closeSidebar, links, categories }) => {
   const [childComponent, setChildComponent] = useState<string>('')
   return (
     <Sidebar onClose={closeSidebar} childComponent={childComponent}>
@@ -97,19 +98,26 @@ const SidebarView: React.FC<{
       {sidebarView === 'CHECKOUT_VIEW' && <CheckoutSidebarView />}
       {sidebarView === 'MOBILE_MENU_VIEW' && <MenuSidebarView links={links} />}
       {sidebarView === 'SEARCH_MENU_VIEW' && (
-        <SearchSidebarView setChildComponent={setChildComponent} />
+        <SearchSidebarView
+          setChildComponent={setChildComponent}
+          categories={categories}
+        />
       )}
     </Sidebar>
   )
 }
 
-const SidebarUI: React.FC<{ links: LinkProps[] }> = ({ links }) => {
+const SidebarUI: React.FC<{ links: LinkProps[]; categories: Category[] }> = ({
+  categories,
+  links,
+}) => {
   const { displaySidebar, closeSidebar, sidebarView } = useUI()
   return displaySidebar ? (
     <SidebarView
       links={links}
       sidebarView={sidebarView}
       closeSidebar={closeSidebar}
+      categories={categories}
     />
   ) : null
 }
@@ -138,7 +146,7 @@ const Layout: React.FC<Props> = ({
         it is put here is because that this view should be able to appear in every page.
         So it is sensible to put it in the layout. Then every page can have access to it.  */}
         <CheckoutProvider>
-          <SidebarUI links={navBarlinks} />
+          <SidebarUI links={navBarlinks} categories={categories} />
         </CheckoutProvider>
         <FeatureBar
           title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."

@@ -13,7 +13,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   onClose,
   childComponent,
 }) => {
-  console.log(childComponent)
   const sidebarRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const contentRef = useRef() as React.MutableRefObject<HTMLDivElement>
 

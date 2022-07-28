@@ -5,6 +5,7 @@ import cn from 'clsx'
 import s from './SidebarLayout.module.css'
 import Link from 'next/link'
 import Title from '@components/icon/Title'
+import { useViewportWidth } from '@lib/hooks/useViewportWidth'
 
 interface Props {
   children: React.ReactNode
@@ -21,12 +22,14 @@ const SidebarLayout: FC<Props> = ({
   handleClose,
   child,
 }) => {
+  const viewWidth = useViewportWidth()
+
   return (
     <div className={cn(s.root, className)}>
       <header
         className={cn(
           s.header,
-          'pb-[18px]  md:px-0 border-b-[0.5px] border-gold md:border-none',
+          'py-4 max-h-[56px] md:px-0 border-b-[0.5px] border-gold md:border-none',
           {
             ['bg-brown mx-0 px-4']: child !== 'SearchSidebar',
             ['bg-gray mx-4 px-0']: child === 'SearchSidebar',
@@ -36,7 +39,13 @@ const SidebarLayout: FC<Props> = ({
         {child !== 'SearchSidebar' ? (
           <div className="md:hidden">
             <Link href="/" passHref>
-              <Title href="/" className="cursor-pointer" fill="#fff" />
+              <Title
+                href="/"
+                className="cursor-pointer"
+                fill="#fff"
+                height={viewWidth! > 768 || viewWidth === 768 ? 38 : 22}
+                width={viewWidth! > 768 || viewWidth === 768 ? 188 : 111}
+              />
             </Link>
           </div>
         ) : (

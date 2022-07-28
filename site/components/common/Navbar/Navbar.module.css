@@ -18,11 +18,11 @@ navbar. But using fixed, the navbar will cover the main content.
 }
 
 .nav {
-  @apply relative flex flex-row  justify-between text-nav items-center h-full;
+  @apply relative flex flex-row  justify-between text-nav  items-center h-full;
 }
 
 .navMenu {
-  @apply ml-6 space-x-4;
+  @apply space-x-4;
 }
 
 .link {
