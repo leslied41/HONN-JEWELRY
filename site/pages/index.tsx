@@ -80,14 +80,14 @@ export default function Home({
         {/* third section */}
         <div className="grid grid-cols-1 relative -top-40 mt-16 md:top-0">
           <div className="relative  h-[35rem]  w-full">
-            <div className="sm:hidden absolute top-16 left-4 text-h2 uppercase text-white z-10">
+            <div className="sm:hidden absolute top-16 left-4 text-h2 font-kessler uppercase text-white z-10">
               <p className="">the perfect</p>
               <p>piece of</p>
               <p className="">jewelry</p>
               <p className="">the perfect</p>
               <p>price</p>
             </div>
-            <div className="hidden sm:block absolute top-16 left-10 text-h1 uppercase text-white z-10">
+            <div className="hidden sm:block absolute top-16 left-10 text-h1 font-kessler uppercase text-white z-10">
               <p className="ml-10">the</p>
               <p>perfect piece</p>
               <p className="ml-10">of jewelry</p>
@@ -116,8 +116,10 @@ export default function Home({
         {/* fifth section */}
         <div className="grid grid-cols-12 gap-x-0 md:gap-x-16 mx-4 md:mx-10 mt-16 md:mt-30 relative -top-40 md:top-0">
           <div className="col-span-12 md:col-span-5 md:justify-self-center">
-            <p className="text-h2 text-brown md:text-h1">HIGH</p>
-            <p className="text-h2 text-brown md:text-h1 md:ml-8">JEWELLERY</p>
+            <p className="text-h2 font-kessler text-brown md:text-h1">HIGH</p>
+            <p className="text-h2 font-kessler text-brown md:text-h1 md:ml-8">
+              JEWELLERY
+            </p>
           </div>
           <div className="col-span-12 md:col-span-7 mt-6 md:mt-0">
             <p className="text-darkGray ">
@@ -145,7 +147,7 @@ export default function Home({
 
         <div className="grid grid-cols-1 mx-4 md:mx-10 mt-8 md:mt-60 ">
           <div>
-            <p className="text-h2 md:text-h1 pb-5 text-brown">
+            <p className="text-h2 font-kessler md:text-h1 pb-5 text-brown">
               FOLLOW US ON <span>#HONN</span>
             </p>
           </div>

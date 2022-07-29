@@ -16,9 +16,9 @@ const Intro = (props: Props) => {
             className="absolute -top-60 z-10 h-[610px] w-auto"
           />
         </div>
-        <div className="col-span-4 text-h1-s lg:text-h1 mt-32 mb-12">
+        <div className="col-span-4 text-h1-s font-kessler lg:text-h1 mt-32 mb-12">
           <p className="ml-8">THE</p>
-          <p>CAFTSMANSHIP</p>
+          <p>CRAFTSMANSHIP</p>
           <p className="ml-4">AND EXPERTISE SERVICES</p>
         </div>
       </div>
@@ -58,8 +58,8 @@ const Intro = (props: Props) => {
       <div className="hidden md:grid grid-cols-6 text-brown gap-x-7">
         <div className="col-span-1"></div>
         <div className="col-span-5 mb-[7.5rem] justify-self-start mt-20">
-          <p className="text-primary  text-h1">MADE </p>
-          <p className="text-primary ml-10 text-h1">FOR YOU</p>
+          <p className="text-primary font-kessler text-h1">MADE </p>
+          <p className="text-primary ml-10 font-kessler text-h1">FOR YOU</p>
           <p className="text-body-1 text-darkGray ml-10  mt-12  max-w-md">
             Honn Fine Jewelry is a Stockholm based jewelry brand since 2013. We
             have the craftsmanship and expertise to bring your inspiration to
@@ -86,10 +86,14 @@ const Intro = (props: Props) => {
       </div>
       <div className="grid grid-cols-1 gap-y-16 mx-4 relative -top-40 z-20 md:hidden">
         <div className="col-span-1">
-          <p className="text-h2 text-brown uppercase">the</p>
-          <p className="text-h2 text-brown uppercase">craftsmanship</p>
-          <p className="text-h2 text-brown uppercase">and expertise</p>
-          <p className="text-h2 text-brown uppercase">Services</p>
+          <p className="text-h2 font-kessler text-brown uppercase">the</p>
+          <p className="text-h2 font-kessler text-brown uppercase">
+            craftsmanship
+          </p>
+          <p className="text-h2 font-kessler text-brown uppercase">
+            and expertise
+          </p>
+          <p className="text-h2 font-kessler text-brown uppercase">Services</p>
           <p className="text-darkGray text-body-1 mt-6 ">
             Honn Fine Jewelry is a Stockholm based jewelry brand since 2013. We
             have the craftsmanship and expertise to bring your inspiration to

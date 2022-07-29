@@ -26,7 +26,9 @@ export default function About() {
     <Container className="w-full px-0 md:px-10 pb-16 md:pb-[100px]" clean>
       <CurrentPath className="px-4 md:px-0" />
       <div className="px-4 md:px-10  mt-8">
-        <h1 className="uppercase text-center text-brown text-h2">about us</h1>
+        <h1 className="uppercase text-center text-brown text-h2 font-kessler">
+          about us
+        </h1>
         <div className="text-body-1 text-brown mt-6 mb-10">
           <p className="text-center">
             Welcome to visit us at Birger Jarlsgatan 23,Stockholm
@@ -55,7 +57,7 @@ export default function About() {
         </div>
         <div className="grid grid-cols-2  mt-8 md:mt-16 gap-x-40 gap-y-6">
           <div className="md:col-span-1 col-span-2">
-            <div className=" text-brown text-[18px] leading-7 md:text-h2 uppercase">
+            <div className=" text-brown text-[18px] leading-7 md:text-h2 font-kessler uppercase">
               <p>As a diamond</p>
               <p>wholesaler and GIA diamonds strategic partner,</p>
               <p>
@@ -101,7 +103,7 @@ export default function About() {
         <div className="grid grid-cols-12 mt-[50px] md:mt-[100px]">
           <div className="col-span-2 hidden md:block"></div>
           <div className="col-span-12 md:col-span-8 max-w-[750px] justify-self-center">
-            <h2 className="text-[32px] leading-[44px] text-brown uppercase">
+            <h2 className="text-[32px] leading-[44px] font-kessler text-brown uppercase">
               01. specialize in custom jewelry
             </h2>
             <div className="mt-4 md:mt-8 text-brown text-body-1">

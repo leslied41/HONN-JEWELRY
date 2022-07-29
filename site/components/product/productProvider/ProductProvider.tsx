@@ -59,7 +59,7 @@ const initialState = {
   metalColor: '',
   band: '',
   mosaic: '',
-  stoneColorLevel: '1',
+  stoneColorLevel: '',
   stoneClarity: '',
   stoneCut: '',
   textStyle: '',

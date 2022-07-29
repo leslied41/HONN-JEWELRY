@@ -93,7 +93,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   return (
     <div className={className}>
       <div data-name-price className="mb-6">
-        <p className="text-brown text-h2">{product.name}</p>
+        <p className="text-brown text-h2 font-kessler">{product.name}</p>
         <p className="text-brown text-body-2">
           {product.price.value} <span>{product.price.currencyCode}</span>
         </p>

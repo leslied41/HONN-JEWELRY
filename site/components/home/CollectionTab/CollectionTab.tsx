@@ -67,7 +67,9 @@ const CollectionTab: FC<Props> = ({ className, categories }) => {
           </ul>
         </div>
         <div className="col-span-4 ">
-          <p className="text-h2 md:text-h1">MADE WITH THE FINEST MATERIALS.</p>
+          <p className="text-h2 font-kessler md:text-h1">
+            MADE WITH THE FINEST MATERIALS.
+          </p>
         </div>
         <div className="col-span-2 justify-self-end">
           <img src="/cherry.svg" alt="cherry svg" />

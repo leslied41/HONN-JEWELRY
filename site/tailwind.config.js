@@ -60,6 +60,17 @@ module.exports = {
         h1: ['56px', '64px'],
         'h1-s': ['40px', '48px'],
       },
+      fontFamily: {
+        kessler: [
+          'kessler',
+          'ui-serif',
+          'Georgia',
+          'Cambria',
+          'Times New Roman',
+          'Times',
+          'serif',
+        ],
+      },
       textColor: {
         basic: 'var(--black-0)',
         primary: 'var(--brown)',

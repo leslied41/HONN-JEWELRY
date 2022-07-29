@@ -97,7 +97,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
         </div>
       )} */}
       <div>
-        <h1 className="text-center text-h2 uppercase text-brown pt-2 pb-16">
+        <h1 className="text-center text-h2 uppercase text-brown pt-2 pb-16 font-kessler">
           shop all
         </h1>
       </div>

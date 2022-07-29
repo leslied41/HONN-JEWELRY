@@ -76,7 +76,7 @@ body {
   height: 100%;
   box-sizing: border-box;
   touch-action: manipulation;
-  font-family: var(--font-sans);
+  font-family: 'optima', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

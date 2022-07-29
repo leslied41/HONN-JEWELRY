@@ -1,3 +1,23 @@
+@font-face {
+  font-family: 'kessler';
+  src: url('../public/assets/fonts/kesslerdisplayweb-regular.woff')
+    format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'optima';
+  src: url('../public/assets/fonts/OptimaLTPro-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'optima';
+  src: url('../public/assets/fonts/OptimaLTPro-Roman.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
 @tailwind base;
 @import './base.css';
 
