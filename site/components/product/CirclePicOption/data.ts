@@ -4,7 +4,7 @@ export type dataType =
       name: string
       src: string
     }[]
-  | undefined
+
 export const dataA: dataType = [
   {
     id: 1,

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import Image from 'next/image'
 import cn from 'clsx'
 import s from './CirclePicOption.module.css'
@@ -9,49 +9,53 @@ interface Props {
   variant: 'A' | 'B'
   className?: string
 }
+type Obj =
+  | {
+      data: dataType
+      func: ((mosaic: string) => void) | undefined
+      value: string
+      title: string
+    }
+  | undefined
 
 export const CirclePicOption: FC<Props> = ({ variant, className }) => {
   const { setBand, band, setMosaic, mosaic } = useProductContext()
-  let data: dataType
-  let func: any
-  let value: string
-  let title: string
-  switch (variant) {
-    case 'A':
-      data = dataA
-      func = setMosaic
-      value = mosaic
-      title = titleA
-      break
-    case 'B':
-      data = dataB
-      func = setBand
-      value = band
-      title = titleB
-      break
 
-    default:
-      break
-  }
+  const obj: Obj = useMemo(() => {
+    if (variant === 'A')
+      return {
+        data: dataA,
+        func: setMosaic,
+        value: mosaic,
+        title: titleA,
+      }
+    if (variant === 'B')
+      return {
+        data: dataB,
+        func: setBand,
+        value: band,
+        title: titleB,
+      }
+  }, [variant, band, mosaic])
 
   return (
     <div className={className}>
       <div className="mb-2">
         <p className="uppercase text-nav">
-          {title!} <span className="text-brown">{value!}</span>
+          {obj?.title} <span className="text-brown">{obj?.value}</span>
         </p>
       </div>
       <div className="flex gap-x-2">
-        {data?.map((i) => {
+        {obj?.data?.map((i) => {
           const { name, src, id } = i
           return (
             <button
               key={id}
               className={cn(s.button, {
-                [s.outterCircle]: value === name,
+                [s.outterCircle]: obj?.value === name,
               })}
               onClick={() => {
-                func?.(name)
+                obj?.func?.(name)
               }}
             >
               <div className={s.innerCircle}>

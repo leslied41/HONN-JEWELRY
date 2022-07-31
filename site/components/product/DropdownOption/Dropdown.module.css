@@ -5,5 +5,5 @@
   @apply absolute top-1 w-full bg-white overflow-hidden rounded;
 }
 .optionItem {
-  @apply w-full p-4 list-none cursor-pointer box-border flex gap-x-4 hover:bg-slate-100;
+  @apply w-full p-4 list-none cursor-pointer box-border flex gap-x-[7px] hover:bg-slate-100;
 }

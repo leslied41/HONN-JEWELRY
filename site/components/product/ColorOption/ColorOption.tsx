@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react'
+import React, { FC, memo, useMemo } from 'react'
 import { useProductContext } from '../productProvider'
 import { titleA, titleB, dataA, dataB, colorDataType } from './data'
 import s from './ColorOption.module.css'
@@ -40,46 +40,43 @@ const InnerColoroption: FC<Props> = memo(
     littleDiamondColor,
     setLittleDiamondColor,
   }) => {
-    let data: colorDataType
-    let func: any
-    let colorValue: string | undefined
-    let title: string
-    switch (variant) {
-      case 'A':
-        data = dataA
-        func = setMetalColor
-        colorValue = metalColor
-        title = titleA
-        break
-      case 'B':
-        data = dataB
-        func = setLittleDiamondColor
-        colorValue = littleDiamondColor
-        title = titleB
-        break
-
-      default:
-        break
-    }
+    const obj = useMemo(() => {
+      if (variant === 'A')
+        return {
+          data: dataA,
+          func: setMetalColor,
+          colorValue: metalColor,
+          title: titleA,
+        }
+      if (variant === 'B')
+        return {
+          data: dataB,
+          func: setLittleDiamondColor,
+          colorValue: littleDiamondColor,
+          title: titleB,
+        }
+    }, [variant, littleDiamondColor, metalColor])
     return (
       <div className={className}>
         <div className="mb-2">
           <p className="uppercase text-nav">
-            {title!} | <span className="text-brown">{colorValue!}</span>
+            {obj?.title} |{' '}
+            <span className="text-brown">{obj?.colorValue!}</span>
           </p>
         </div>
 
         <div className="flex">
-          {data!.map((i) => {
+          {obj?.data?.map((i) => {
             const { name, value, id } = i
             return (
               <button
                 key={id}
                 className={cn(s.button, {
-                  ['border-2 border-darkGray bg-white']: value === colorValue,
+                  ['border-2 border-darkGray bg-white']:
+                    value === obj.colorValue,
                 })}
                 onClick={() => {
-                  func?.(value)
+                  obj.func?.(value)
                 }}
               >
                 <div className={cn(s.innerCircle, name)}></div>

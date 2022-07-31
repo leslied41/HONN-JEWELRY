@@ -2,17 +2,17 @@ export const dataA = [
   {
     id: 1,
     name: 'square',
-    src: '/landing_pic1.png',
+    src: '/assets/images/shapeIcon.png',
   },
   {
     id: 2,
     name: 'round',
-    src: '/landing_pic1.png',
+    src: '/assets/images/shapeIcon.png',
   },
   {
     id: 3,
     name: 'triangle',
-    src: '/landing_pic1.png',
+    src: '/assets/images/shapeIcon.png',
   },
 ]
 export const dataB = [

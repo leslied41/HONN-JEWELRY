@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import {
   dataA,
   dataB,
@@ -82,42 +82,42 @@ const InnerSquareGroupOption: FC<Props> = React.memo(
     layout,
     className,
   }) => {
-    let data: any
-    let title: string | undefined
-    let value: string | undefined
-    let func: any
-    switch (variant) {
-      case Variant.A:
-        data = dataA
-        title = titleA
-        value = stoneColorLevel
-        func = setStoneColorLevel
-        break
-      case Variant.B:
-        data = dataB
-        title = titleB
-        value = stoneClarity
-        func = setStoneClarity
-        break
-      case Variant.C:
-        data = dataC
-        title = titleC
-        value = stoneCut
-        func = setStoneCut
-        break
-      case Variant.D:
-        data = dataD
-        title = titleD
-        value = textStyle
-        func = setTextStyle
-        break
-      case Variant.E:
-        data = dataE
-        title = titleE
-        break
-      default:
-        break
-    }
+    const obj = useMemo(() => {
+      if (variant === Variant.A)
+        return {
+          data: dataA,
+          title: titleA,
+          value: stoneColorLevel,
+          func: setStoneColorLevel,
+        }
+
+      if (variant === Variant.B)
+        return {
+          data: dataB,
+          title: titleB,
+          value: stoneClarity,
+          func: setStoneClarity,
+        }
+      if (variant === Variant.C)
+        return {
+          data: dataC,
+          title: titleC,
+          value: stoneCut,
+          func: setStoneCut,
+        }
+      if (variant === Variant.D)
+        return {
+          data: dataD,
+          title: titleD,
+          value: textStyle,
+          func: setTextStyle,
+        }
+      if (variant === Variant.E)
+        return {
+          data: dataE,
+          title: titleE,
+        }
+    }, [variant, textStyle, stoneCut, stoneClarity, stoneColorLevel])
     return (
       <div
         className={cn(className, 'grid', {
@@ -126,7 +126,7 @@ const InnerSquareGroupOption: FC<Props> = React.memo(
         })}
       >
         <div className="col-span-1 mb-2">
-          <p className="text-nav uppercase">{title}</p>
+          <p className="text-nav uppercase">{obj?.title}</p>
         </div>
         <div
           className={cn(' flex flex-wrap', {
@@ -134,15 +134,15 @@ const InnerSquareGroupOption: FC<Props> = React.memo(
             ['col-span-1 ']: layout === 'A',
           })}
         >
-          {data?.map((i: any) => {
+          {obj?.data?.map((i) => {
             const { id, name } = i
             return (
               <button
                 key={id}
-                className={cn(s.button, { [s.focus]: name === value })}
+                className={cn(s.button, { [s.focus]: name === obj.value })}
                 onClick={(e) => {
                   e.preventDefault()
-                  func?.(name)
+                  obj.func?.(name)
                 }}
               >
                 {name}

@@ -54,7 +54,7 @@
 }
 
 .button {
-  @apply w-full sm:w-[265px];
+  @apply w-full sm:w-[265px] bg-brown text-gray;
 }
 
 .wishlistButton {
