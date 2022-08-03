@@ -152,9 +152,12 @@ const Layout: React.FC<Props> = ({
           title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
           hide={acceptedCookies}
           action={
-            <Button className="mx-5" onClick={() => onAcceptCookies()}>
+            <button
+              className="mx-0 bg-brown px-8 py-4 text-white uppercase font-semibold tracking-wider"
+              onClick={() => onAcceptCookies()}
+            >
               Accept cookies
-            </Button>
+            </button>
           }
         />
       </div>
