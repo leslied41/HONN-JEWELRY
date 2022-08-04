@@ -1,4 +1,3 @@
-import cn from 'clsx'
 import type { SearchPropsType } from '@lib/search-props'
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/router'
@@ -12,7 +11,6 @@ import ImageGallery from '../ImageGallery'
 import s from './search.module.css'
 import SearchList from '@components/ui/Search/SearchList'
 import Sort from './Sort'
-
 import { useSearchMeta } from '@lib/search'
 
 export default function Search({ categories, brands }: SearchPropsType) {

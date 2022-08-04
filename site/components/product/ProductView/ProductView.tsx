@@ -18,11 +18,11 @@ interface Props {
 
 const ProductView: FC<Props> = ({ product, allProducts }) => {
   const relatedProducts = allProducts.slice(0, 7)
-  const { price } = usePrice({
-    amount: product.price.value,
-    baseAmount: product.price.retailPrice,
-    currencyCode: product.price.currencyCode!,
-  })
+  // const { price } = usePrice({
+  //   amount: product.price.value,
+  //   baseAmount: product.price.retailPrice,
+  //   currencyCode: product.price.currencyCode!,
+  // })
 
   return (
     <>

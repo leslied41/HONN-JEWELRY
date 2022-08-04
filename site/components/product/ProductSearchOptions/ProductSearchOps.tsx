@@ -7,7 +7,7 @@ import useEffectSkipInitial from '@lib/hooks/useEffectSkipInitial'
 import type { Product } from '@commerce/types/product'
 
 interface Props {
-  product: Product
+  product?: Product
   allProducts: Product[]
 }
 export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
@@ -17,14 +17,13 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
 
   useEffect(() => {
     //this is to set default value for every metafield options that can determine searching.
-
-    const main_stone_obj = product.metafields?.find(
+    const main_stone_obj = product?.metafields?.find(
       (i: any) => i.key === 'main_stone'
     )
-    const ring_band_obj = product.metafields?.find(
+    const ring_band_obj = product?.metafields?.find(
       (i: any) => i.key === 'ring_band'
     )
-    const mosaic_obj = product.metafields?.find((i: any) => i.key === 'mosaic')
+    const mosaic_obj = product?.metafields?.find((i: any) => i.key === 'mosaic')
 
     if (!shape) setShape?.(main_stone_obj?.value ? main_stone_obj?.value : '')
     if (!band) setBand?.(ring_band_obj?.value ? ring_band_obj?.value : '')
@@ -32,16 +31,14 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
   }, [product, band, shape, mosaic])
 
   useEffectSkipInitial(() => {
-    const filterProduct = () => {
-      allProducts.forEach((p: any) => {
+    const findProduct = () =>
+      allProducts.find((p) => {
         const { metafields } = p
         const main_stone_obj = metafields.find(
           (i: any) => i.key === 'main_stone'
         )
-
         const ring_band_obj = metafields.find((i: any) => i.key === 'ring_band')
         const mosaic_obj = metafields.find((i: any) => i.key === 'mosaic')
-
         if (
           main_stone_obj &&
           ring_band_obj &&
@@ -50,12 +47,18 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
           ring_band_obj?.value === band &&
           mosaic_obj?.value === mosaic
         ) {
-          if (router.query.slug === p.slug) return
-          router.replace(`/product/${p.slug}`)
+          if (router.query.slug !== p.slug) {
+            router.replace(`/product/${p.slug}`)
+          }
+          return p
         }
       })
+    const target = findProduct()
+    if (!target) {
+      if (router.pathname !== '/custom') {
+        router.replace('/custom')
+      }
     }
-    filterProduct()
   }, [band, shape, mosaic, allProducts])
 
   return (

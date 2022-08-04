@@ -1,34 +1,25 @@
-import { FC, useEffect, useState } from 'react'
-import s from './ProductSidebar.module.css'
-import { useAddItem } from '@framework/cart'
-import { ProductOptions } from '@components/product'
-import { useUI, HtmlText, Buttons } from '@components/ui'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import {
-  getProductVariant,
-  selectDefaultOptionFromProduct,
-  SelectedOptions,
-} from '../helpers'
-import ProductSearchOps from '../ProductSearchOptions'
-import ProductMetafields from '../ProductMetafields'
-import { useProductContext } from '../productProvider'
-import type { Product } from '@commerce/types/product'
+import Booking from '@components/icon/Booking'
 import Estimated from '@components/icon/Estimated'
 import Warranty from '@components/icon/Warranty'
-import Booking from '@components/icon/Booking'
-interface ProductSidebarProps {
-  className?: string
-  product: Product
-  allProducts: Product[]
+import ProductMetafields from '@components/product/ProductMetafields'
+import Buttons from '@components/ui/Buttons'
+import { useUI } from '@components/ui'
+import React, { FC, useState } from 'react'
+import { useRouter } from 'next/router'
+import ProductSeatchOps from '../../product/ProductSearchOptions'
+import type { Product } from '@commerce/types/product'
+import { useAddItem } from '@framework/cart'
+import { useProductContext } from '../../product/productProvider'
+
+interface Props {
+  className: string
+  products: Product[]
 }
 
-const ProductSidebar: FC<ProductSidebarProps> = ({
-  className,
-  product,
-  allProducts,
-}) => {
-  console.log('product page render')
+const CustomSidebar: FC<Props> = ({ className, products }) => {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const { openSidebar } = useUI()
   const {
     metalColor,
     shape,
@@ -45,17 +36,6 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   } = useProductContext()
 
   const addItem = useAddItem()
-  const { openSidebar } = useUI()
-  const [loading, setLoading] = useState(false)
-  const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
-  const router = useRouter()
-  useEffect(() => {
-    selectDefaultOptionFromProduct(product, setSelectedOptions)
-  }, [product])
-  const variant = getProductVariant(product, selectedOptions)
-
-  //this addToCart function is to add options selectd by customers to cart.
-  //besides productId and variantId, some more customized info like metafields also need to be added.
   const addToCart = async () => {
     setLoading(true)
 
@@ -63,12 +43,12 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       //so in product page, when you put a product into cart, you cannot choose the amount.
       //but you can update this amount in cart.
       await addItem({
-        productId: String(product.id),
-        variantId: String(variant ? variant.id : product.variants[0]?.id),
+        productId: String('0000000001'),
+        variantId: String('0000000001'),
         //so now metafields passed here will be passed to checkout.
         customAttributes: [
-          { key: 'product id', value: String(product.id) },
-          { key: 'product name', value: String(product.name) },
+          { key: 'product id', value: String('0000000001') },
+          { key: 'product name', value: 'custom' },
           { key: 'Main Stone Shape', value: shape },
           { key: 'Ring Band', value: band },
           { key: 'Mosaic', value: mosaic },
@@ -90,37 +70,21 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       setLoading(false)
     }
   }
-
   return (
     <div className={className}>
-      <div data-name-price className="mb-6">
-        <p className="text-brown text-h2 font-kessler">{product.name}</p>
-        <p className="text-brown text-body-2">
-          {product.price.value} <span>{product.price.currencyCode}</span>
-        </p>
-      </div>
-      <ProductSearchOps product={product} allProducts={allProducts} />
+      <ProductSeatchOps allProducts={products} />
       <ProductMetafields />
-      {/* <ProductOptions
-        options={product.options}
-        selectedOptions={selectedOptions}
-        setSelectedOptions={setSelectedOptions}
-      /> */}
-
       <div className="mt-7">
         {process.env.COMMERCE_CART_ENABLED && (
           <Buttons
-            className={s.button}
+            className="w-full sm:w-[265px] bg-brown text-gray"
             variant="toRequest"
             onClick={addToCart}
             loading={loading}
-            disabled={variant?.availableForSale === false}
             aria-label="Add to Request"
             type="button"
           >
-            {variant?.availableForSale === false
-              ? 'Not Available'
-              : 'ADD TO REQUEST'}
+            ADD TO REQUEST
           </Buttons>
         )}
       </div>
@@ -149,13 +113,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           </a>
         </div>
       </div>
-
-      <HtmlText
-        html={product.descriptionHtml || product.description}
-        className="w-full sm:w-[265px] break-words mt-2 sticky top-32 "
-      />
     </div>
   )
 }
-
-export default ProductSidebar
+export default CustomSidebar
