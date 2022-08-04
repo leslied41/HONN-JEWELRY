@@ -27,10 +27,10 @@ const Navbar: FC<NavbarProps> = ({ links }) => {
               <Link href="/search">
                 <a className={s.link}>SHOP All</a>
               </Link>
-              <Link href="/search">
-                <a className={s.link}>OUR STORY</a>
+              <Link href="/about">
+                <a className={s.link}>ABOUT US</a>
               </Link>
-              <Link href="/search">
+              <Link href="/product/CUSTOM">
                 <a className={s.link}>CUSTOM</a>
               </Link>
             </nav>

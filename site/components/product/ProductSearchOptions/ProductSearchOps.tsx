@@ -55,8 +55,8 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
       })
     const target = findProduct()
     if (!target) {
-      if (router.pathname !== '/custom') {
-        router.replace('/custom')
+      if (router.pathname !== 'CUSTOM') {
+        router.replace(`/product/CUSTOM`)
       }
     }
   }, [band, shape, mosaic, allProducts])

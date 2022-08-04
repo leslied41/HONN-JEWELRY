@@ -28,7 +28,6 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   product,
   allProducts,
 }) => {
-  console.log('product page render')
   const {
     metalColor,
     shape,

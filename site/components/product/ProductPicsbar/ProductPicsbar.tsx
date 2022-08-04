@@ -123,8 +123,8 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
                 })}
               >
                 <Image
-                  src={image.url!}
-                  alt={image.alt || 'Product Image'}
+                  src={image?.url!}
+                  alt={image?.alt || 'Product Image'}
                   layout="fill"
                   priority={true}
                   quality="55"
@@ -205,8 +205,8 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
             ref={elRefs[i]}
           >
             <Image
-              src={image.url!}
-              alt={image.alt || 'Product Image'}
+              src={image?.url!}
+              alt={image?.alt || 'Product Image'}
               layout="responsive"
               width="100%"
               height="100%"

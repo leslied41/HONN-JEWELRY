@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import s from './ImageGallery.module.css'
 import cn from 'clsx'
@@ -37,6 +37,11 @@ const ImageGallery: FC<Props> = ({
   )
   const [divIndex, setDvIndex] = useState<string>('')
 
+  const filteredProducts = useMemo(
+    () => products?.filter((p) => p.name !== 'CUSTOM'),
+    [products]
+  )
+
   return (
     <>
       <div className={className} id="image-gallery-div">
@@ -54,7 +59,7 @@ const ImageGallery: FC<Props> = ({
           )
         })}
 
-        {products?.map((p, index) => {
+        {filteredProducts?.map((p, index) => {
           const { id, images, name, price } = p
           return (
             <div
@@ -66,7 +71,7 @@ const ImageGallery: FC<Props> = ({
                 <Link href={`/product/${p.slug}`}>
                   <a aria-label={p.name}>
                     <Image
-                      src={images[0].url}
+                      src={images[0]?.url}
                       alt={name}
                       layout="responsive"
                       width="100%"
@@ -86,7 +91,7 @@ const ImageGallery: FC<Props> = ({
                 </Link>
               ) : (
                 <Image
-                  src={images[0].url}
+                  src={images[0]?.url}
                   alt={name}
                   layout="responsive"
                   width="100%"
