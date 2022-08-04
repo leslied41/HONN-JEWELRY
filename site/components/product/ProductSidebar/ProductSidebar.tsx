@@ -94,9 +94,13 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
     <div className={className}>
       <div data-name-price className="mb-6">
         <p className="text-brown text-h2 font-kessler">{product.name}</p>
-        <p className="text-brown text-body-2">
-          {product.price.value} <span>{product.price.currencyCode}</span>
-        </p>
+        {router.query.slug !== 'CUSTOM' ? (
+          <p className="text-brown text-body-2 mt-2">
+            {product.price.value} <span>{product.price.currencyCode}</span>
+          </p>
+        ) : (
+          <p className="text-brown text-body-2 mt-2">Make your own style</p>
+        )}
       </div>
       <ProductSearchOps product={product} allProducts={allProducts} />
       <ProductMetafields />
