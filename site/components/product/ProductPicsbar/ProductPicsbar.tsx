@@ -23,7 +23,6 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
   const [elRefs, setElRefs] = useState<
     React.MutableRefObject<HTMLDivElement>[]
   >([])
-  console.log(isVisible)
 
   const arrayFilter = (array: boolean[]) => {
     let tag: number[] = []
@@ -161,7 +160,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
             />
           </div>
         ))}
-        <Buttons className="absolute top-2 left-2 z-[99]" variant="floating">
+        <Buttons className="absolute top-2 left-2 z-20" variant="floating">
           made to order
         </Buttons>
       </div>

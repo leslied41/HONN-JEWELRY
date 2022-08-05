@@ -61,7 +61,7 @@ const LayeredImages: FC<Props> = ({ className, embeded }) => {
         ></div>
         {embeded !== 'thumbnail' && (
           <Buttons
-            className="sm:hidden absolute top-2 left-2 z-[99]"
+            className="sm:hidden absolute top-2 left-2 z-20"
             variant="floating"
           >
             made to order

@@ -33,6 +33,7 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
   useEffectSkipInitial(() => {
     const findProduct = () =>
       allProducts.find((p) => {
+        if (!band || !shape || !mosaic) return
         const { metafields } = p
         const main_stone_obj = metafields.find(
           (i: any) => i.key === 'main_stone'
@@ -54,7 +55,7 @@ export const ProductSearchOps: FC<Props> = ({ product, allProducts }) => {
         }
       })
     const target = findProduct()
-    if (!target) {
+    if (!target && shape && mosaic && band) {
       if (router.pathname !== 'CUSTOM') {
         router.replace(`/product/CUSTOM`)
       }
