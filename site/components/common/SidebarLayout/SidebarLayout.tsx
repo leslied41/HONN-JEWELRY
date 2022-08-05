@@ -11,7 +11,7 @@ interface Props {
   children: React.ReactNode
   child?: string
   className?: string
-  handleClose: () => any
+  handleClose?: () => any
   handleBack?: () => any
 }
 
