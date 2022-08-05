@@ -1,6 +1,5 @@
 import React, { FC, useMemo } from 'react'
 import { useProductContext } from '../productProvider'
-import cn from 'clsx'
 
 interface Props {
   className?: string
@@ -12,7 +11,7 @@ const LayeredImages: FC<Props> = ({ className }) => {
   return useMemo(() => {
     return (
       <div
-        className={cn('sm:mb-5', className)}
+        className={className}
         style={{
           backgroundColor: '#fff',
         }}
@@ -60,6 +59,6 @@ const LayeredImages: FC<Props> = ({ className }) => {
         ></div>
       </div>
     )
-  }, [metalColor, shape, band, mosaic])
+  }, [metalColor, shape, band, mosaic, className])
 }
 export default LayeredImages

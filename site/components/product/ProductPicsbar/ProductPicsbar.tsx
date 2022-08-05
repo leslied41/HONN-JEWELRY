@@ -5,8 +5,6 @@ import s from './ProductPicsbar.module.css'
 import type { Product } from '@commerce/types/product'
 import { Buttons } from '@components/ui'
 import { Slider } from '@components/common'
-import { useProductContext } from '../productProvider'
-import { useRouter } from 'next/router'
 import LayeredImages from '../LayeredImages'
 
 interface ProductPicsbarProps {
@@ -23,7 +21,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
   const [elRefs, setElRefs] = useState<
     React.MutableRefObject<HTMLDivElement>[]
   >([])
-  const router = useRouter()
+  console.log(isVisible)
 
   const arrayFilter = (array: boolean[]) => {
     let tag: number[] = []
@@ -55,7 +53,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
   useEffect(() => {
     // add or remove refs
     setElRefs((elRefs) =>
-      Array(product.images.length)
+      Array(product.images.length + 1)
         .fill(null)
         .map((_, index) => elRefs[index] || createRef())
     )
@@ -98,13 +96,17 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
     <div className={cn(className, 'grid grid-cols-7 ')}>
       <div className="hidden md:block col-span-2">
         <div className="sticky top-[96px]">
-          <LayeredImages className="mb-2 sm:mb-2 w-24 h-24 relative" />
+          <LayeredImages
+            className={cn('mb-2 sm:mb-2 w-24 h-24 relative ', {
+              [s.thumbnail_border]: isVisible[0] === true,
+            })}
+          />
           {product.images.map((image, i) => (
-            <a href={`#${i}`} key={i}>
+            <a href={`#${i + 1}`} key={i + 1}>
               <div
                 key={image.url}
                 className={cn('mb-2 w-24 h-24 relative', {
-                  [s.thumbnail_border]: isVisible[i] === true,
+                  [s.thumbnail_border]: isVisible[i + 1] === true,
                 })}
               >
                 <Image
@@ -128,14 +130,16 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
         className="sm:hidden col-span-7 w-full"
       />
       <div className="hidden sm:block col-span-7  md:col-span-5 h-fit relative">
-        <LayeredImages />
+        <div ref={elRefs[0]} id={'0'} className="sm:mb-5">
+          <LayeredImages />
+        </div>
 
         {product.images.map((image, i) => (
           <div
             key={image.url}
             className={cn('sm:pb-5')}
-            id={i.toString()}
-            ref={elRefs[i]}
+            id={(i + 1).toString()}
+            ref={elRefs[i + 1]}
           >
             <Image
               src={image?.url!}
