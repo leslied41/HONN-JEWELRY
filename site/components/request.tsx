@@ -154,12 +154,12 @@ const Request = ({
   }, [])
 
   return (
-    <Container className="grid md:grid-cols-12 px-0 ">
+    <Container className="grid md:grid-cols-12 px-0" clean>
       <div className="hidden md:block col-span-8 border-r-[0.5px] border-gold">
         <CurrentPath className="h-[56px] sm:h-[75px] pl-10" />
       </div>
       <div className="hidden md:block col-span-4"></div>
-      <div className="col-span-12 mt-12 md:mt-0 order-2 md:col-span-8 md:order-1 border-r-[0.5px] border-gold px-4 md:px-10 pb-12 md:pb-[150px]">
+      <div className="col-span-12 mt-12 md:mt-0 order-2 md:col-span-8 md:order-1  sm:border-r-[0.5px] border-gold px-4 md:px-10 pb-12 md:pb-[150px]">
         <div className="mb-12">
           <h2 className="text-brown text-body-1">
             Select a meeting date & Time

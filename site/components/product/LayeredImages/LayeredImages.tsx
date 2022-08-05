@@ -1,11 +1,13 @@
 import React, { FC, useMemo } from 'react'
 import { useProductContext } from '../productProvider'
+import Buttons from 'components/ui/Buttons'
 
 interface Props {
   className?: string
+  embeded?: string
 }
 
-const LayeredImages: FC<Props> = ({ className }) => {
+const LayeredImages: FC<Props> = ({ className, embeded }) => {
   const { metalColor, shape, band, mosaic } = useProductContext()
 
   return useMemo(() => {
@@ -57,6 +59,14 @@ const LayeredImages: FC<Props> = ({ className }) => {
             mixBlendMode: 'color',
           }}
         ></div>
+        {embeded !== 'thumbnail' && (
+          <Buttons
+            className="sm:hidden absolute top-2 left-2 z-[99]"
+            variant="floating"
+          >
+            made to order
+          </Buttons>
+        )}
       </div>
     )
   }, [metalColor, shape, band, mosaic, className])

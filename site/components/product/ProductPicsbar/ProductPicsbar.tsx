@@ -6,6 +6,7 @@ import type { Product } from '@commerce/types/product'
 import { Buttons } from '@components/ui'
 import { Slider } from '@components/common'
 import LayeredImages from '../LayeredImages'
+import { useRouter } from 'next/router'
 
 interface ProductPicsbarProps {
   className?: string
@@ -13,6 +14,7 @@ interface ProductPicsbarProps {
 }
 
 const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
+  const router = useRouter()
   const newImgArray = useMemo(
     () => product.images.map((img, i) => false),
     [product.images]
@@ -97,6 +99,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
       <div className="hidden md:block col-span-2">
         <div className="sticky top-[96px]">
           <LayeredImages
+            embeded="thumbnail"
             className={cn('mb-2 sm:mb-2 w-24 h-24 relative ', {
               [s.thumbnail_border]: isVisible[0] === true,
             })}
@@ -122,13 +125,18 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
           ))}
         </div>
       </div>
-      <Slider
-        variant="product"
-        product={product}
-        addToOrder
-        mark="text"
-        className="sm:hidden col-span-7 w-full"
-      />
+      {router.query.slug !== 'CUSTOM' && (
+        <Slider
+          variant="product"
+          product={product}
+          addToOrder
+          mark="text"
+          className="sm:hidden col-span-7 w-full"
+        />
+      )}
+      {router.query.slug === 'CUSTOM' && (
+        <LayeredImages className="sm:hidden relative col-span-7 w-full" />
+      )}
       <div className="hidden sm:block col-span-7  md:col-span-5 h-fit relative">
         <div ref={elRefs[0]} id={'0'} className="sm:mb-5">
           <LayeredImages />
@@ -153,7 +161,7 @@ const ProductPicsbar: FC<ProductPicsbarProps> = ({ className, product }) => {
             />
           </div>
         ))}
-        <Buttons className="absolute top-2 left-2" variant="floating">
+        <Buttons className="absolute top-2 left-2 z-[99]" variant="floating">
           made to order
         </Buttons>
       </div>
