@@ -48,40 +48,70 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   const [loading, setLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
   const router = useRouter()
+
   useEffect(() => {
     selectDefaultOptionFromProduct(product, setSelectedOptions)
   }, [product])
   const variant = getProductVariant(product, selectedOptions)
 
-  //this addToCart function is to add options selectd by customers to cart.
-  //besides productId and variantId, some more customized info like metafields also need to be added.
+  const addToRequset = () => {
+    setLoading(true)
+    const items = localStorage.getItem('request')
+      ? JSON.parse(localStorage.getItem('request')!)
+      : []
+    const customAttributes = [
+      { key: 'product id', value: String(product.id) },
+      { key: 'product name', value: String(product.name) },
+      { key: 'Main Stone Shape', value: shape },
+      { key: 'Ring Band', value: band },
+      { key: 'Mosaic', value: mosaic },
+      { key: 'Metal Color', value: metalColor },
+      { key: 'Text Print', value: engraved },
+      { key: 'Little Diamond Color', value: littleDiamondColor },
+      { key: 'Ring Size', value: size },
+      { key: 'Main Stone Color Level', value: stoneColorLevel },
+      { key: 'Main Stone Clarity', value: stoneClarity },
+      { key: 'Main Stone Cut', value: stoneCut },
+      { key: 'Carat', value: weight },
+      { key: 'Text Style', value: textStyle },
+    ]
+    const item = {
+      productId: String(product.id),
+      variantId: String(variant ? variant.id : product.variants[0]?.id),
+      customAttributes: customAttributes,
+    }
+    items.push(item)
+    localStorage.setItem('request', JSON.stringify(items))
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }
   const addToCart = async () => {
     setLoading(true)
+    const customAttributes = [
+      { key: 'product id', value: String(product.id) },
+      { key: 'product name', value: String(product.name) },
+      { key: 'Main Stone Shape', value: shape },
+      { key: 'Ring Band', value: band },
+      { key: 'Mosaic', value: mosaic },
+      { key: 'Metal Color', value: metalColor },
+      { key: 'Text Print', value: engraved },
+      { key: 'Little Diamond Color', value: littleDiamondColor },
+      { key: 'Ring Size', value: size },
+      { key: 'Main Stone Color Level', value: stoneColorLevel },
+      { key: 'Main Stone Clarity', value: stoneClarity },
+      { key: 'Main Stone Cut', value: stoneCut },
+      { key: 'Carat', value: weight },
+      { key: 'Text Style', value: textStyle },
+    ]
 
     try {
-      //so in product page, when you put a product into cart, you cannot choose the amount.
-      //but you can update this amount in cart.
       await addItem({
         productId: String(product.id),
         variantId: String(variant ? variant.id : product.variants[0]?.id),
-        //so now metafields passed here will be passed to checkout.
-        customAttributes: [
-          { key: 'product id', value: String(product.id) },
-          { key: 'product name', value: String(product.name) },
-          { key: 'Main Stone Shape', value: shape },
-          { key: 'Ring Band', value: band },
-          { key: 'Mosaic', value: mosaic },
-          { key: 'Metal Color', value: metalColor },
-          { key: 'Text Print', value: engraved },
-          { key: 'Little Diamond Color', value: littleDiamondColor },
-          { key: 'Ring Size', value: size },
-          { key: 'Main Stone Color Level', value: stoneColorLevel },
-          { key: 'Main Stone Clarity', value: stoneClarity },
-          { key: 'Main Stone Cut', value: stoneCut },
-          { key: 'Carat', value: weight },
-          { key: 'Text Style', value: textStyle },
-        ],
+        customAttributes: customAttributes,
       })
+
       openSidebar()
       setLoading(false)
     } catch (err) {
@@ -115,7 +145,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
           <Buttons
             className={s.button}
             variant="toRequest"
-            onClick={addToCart}
+            onClick={addToRequset}
             loading={loading}
             disabled={variant?.availableForSale === false}
             aria-label="Add to Request"

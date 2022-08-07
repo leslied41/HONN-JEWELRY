@@ -20,6 +20,7 @@ interface AppointFormProps {
   setStartDate: React.Dispatch<React.SetStateAction<Date | null>>
   twilloError: string
   quoteError: string
+  error: string
 }
 
 export const AppointForm: FC<AppointFormProps> = ({
@@ -30,6 +31,7 @@ export const AppointForm: FC<AppointFormProps> = ({
   setStartDate,
   twilloError,
   quoteError,
+  error,
 }) => {
   const {
     register,
@@ -114,6 +116,7 @@ export const AppointForm: FC<AppointFormProps> = ({
           shadow-sm hover:border-accent-9 hover:bg-accent-6 focus:shadow-outline-normal focus:outline-none"
         />
         {noTime && <p>Please choose a time slot</p>}
+        {error === 'no request items' && <p>Please add request items</p>}
         {(twilloError === 'error' || quoteError === 'error') && (
           <p>somethig goes wrong...</p>
         )}

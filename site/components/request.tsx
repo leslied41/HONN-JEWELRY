@@ -27,18 +27,25 @@ const Request = ({
   const [startDate, setStartDate] = useState<Date | null>(new Date())
   const [twilloError, setTwilloError] = useState<string>('pending')
   const [quoteError, setQuoteError] = useState('pending')
+  const [error, setError] = useState('')
   //as the post request is called inside onclick event, so the controller need to be memroized
   //in ref.
   const twillioControllerRef = useRef<AbortController>(new AbortController())
   const quoteControllerRef = useRef<AbortController>(new AbortController())
 
-  const { data, isLoading, isEmpty } = useCart()
-  const { price: total } = usePrice(
-    data && {
-      amount: Number(data.totalPrice),
-      currencyCode: data.currency.code,
-    }
-  )
+  // const { data, isLoading, isEmpty } = useCart()
+  // const { price: total } = usePrice(
+  //   data && {
+  //     amount: Number(data.totalPrice),
+  //     currencyCode: data.currency.code,
+  //   }
+  // )
+
+  const items = useMemo(() => {
+    if (typeof window !== 'undefined')
+      return JSON.parse(localStorage.getItem('request')!)
+    return []
+  }, [typeof window])
 
   const post = (url: string, data: any, signal: AbortSignal) => {
     return axios
@@ -53,8 +60,13 @@ const Request = ({
             return setTwilloError('')
         }
         if (url === 'https://quote.globosoftware.net/api/quote') {
-          if (response.data.success === true) return setQuoteError('')
-          else return setQuoteError('error')
+          if (response.data.success === true) {
+            setQuoteError('')
+            localStorage.removeItem('request')
+            return
+          } else {
+            return setQuoteError('error')
+          }
         }
       })
       .catch(function (error: any) {
@@ -87,28 +99,31 @@ const Request = ({
   }
 
   const customMessages = useMemo(
-    () => customAttributesToMessage(data?.lineItems),
-    [data?.lineItems]
+    () => customAttributesToMessage(items),
+    [items]
   )
   const line_items = useMemo(
     () =>
-      data?.lineItems.map((l) => {
+      items?.map((l: any) => {
         return {
           id: isNumeric(
-            l.customAttributes?.find((i) => i.key === 'product id')?.value!
+            l.customAttributes?.find((i: any) => i.key === 'product id')?.value!
           )
-            ? l.customAttributes?.find((i) => i.key === 'product id')?.value!
+            ? l.customAttributes?.find((i: any) => i.key === 'product id')
+                ?.value!
             : getId(
-                l.customAttributes?.find((i) => i.key === 'product id')?.value!
+                l.customAttributes?.find((i: any) => i.key === 'product id')
+                  ?.value!
               ),
           variant_id: getId(l.variantId!),
-          quantity: l.quantity,
+          quantity: l.quantity || 1,
         }
       }),
-    [data?.lineItems]
+    [items]
   )
 
   const handleClick = (quote_data: HandleClickArgs): void => {
+    if (!line_items) return setError('no request items')
     const message = customMessages.concat(' Comment: ', quote_data.comment)
     const sms_info = {
       name: quote_data.name,
@@ -176,6 +191,7 @@ const Request = ({
         <AppointForm
           twilloError={twilloError}
           quoteError={quoteError}
+          error={error}
           handleClick={handleClick}
           time={time}
           startDate={startDate}
@@ -184,7 +200,7 @@ const Request = ({
         />
       </div>
       <div className="col-span-12 order-1 md:col-span-4 md:order-2 mt-4 md:mt-0 px-4 md:px-10 flex flex-col">
-        {isLoading || isEmpty ? (
+        {/* {isLoading || isEmpty ? (
           <div className="  flex  flex-col justify-between items-center mb-6">
             <div className="h-full flex flex-col justify-center items-center mb-6">
               <h2 className="text-brown text-nav uppercase  tracking-wide text-center">
@@ -218,7 +234,7 @@ const Request = ({
         <div className="flex  justify-between border-t border-gold pt-4 text-brown text-nav">
           <span>Total</span>
           <span>{total}</span>
-        </div>
+        </div> */}
       </div>
     </Container>
   )
