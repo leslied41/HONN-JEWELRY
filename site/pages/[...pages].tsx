@@ -7,7 +7,7 @@ import type {
 import commerce from '@lib/api/commerce'
 import { Text } from '@components/ui'
 import { Layout } from '@components/common'
-import Request from '@components/request'
+import Request from '@components/request/request'
 import getSlug from '@lib/get-slug'
 import { missingLocaleInPages } from '@lib/usage-warns'
 import type { Page } from '@commerce/types/page'

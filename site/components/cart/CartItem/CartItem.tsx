@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEventHandler, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import cn from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -129,20 +129,18 @@ const CartItem = ({
                 Quantity: {quantity}
               </div>
             )}
-            {(position = 'requset') && (
-              <ul>
-                {item.customAttributes
-                  ?.filter((f) => f.key !== 'product id')
-                  .map((field, i) => {
-                    if (field.value)
-                      return (
-                        <li key={i}>
-                          {field.key}:{field.value}
-                        </li>
-                      )
-                  })}
-              </ul>
-            )}
+            <ul>
+              {item.customAttributes
+                ?.filter((f) => f.key !== 'product id')
+                .map((field, i) => {
+                  if (field.value)
+                    return (
+                      <li key={i}>
+                        {field.key}:{field.value}
+                      </li>
+                    )
+                })}
+            </ul>
           </div>
 
           <div className="flex flex-col justify-between space-y-2 text-nav self-end ">

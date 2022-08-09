@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, useMemo } from 'react'
 import s from './ProductSidebar.module.css'
 import { useAddItem } from '@framework/cart'
 import { ProductOptions } from '@components/product'
@@ -28,6 +28,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   product,
   allProducts,
 }) => {
+  console.log(product)
   const {
     metalColor,
     shape,
@@ -52,8 +53,10 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   useEffect(() => {
     selectDefaultOptionFromProduct(product, setSelectedOptions)
   }, [product])
-  const variant = getProductVariant(product, selectedOptions)
-
+  const variant = useMemo(
+    () => getProductVariant(product, selectedOptions),
+    [product]
+  )
   const addToRequset = () => {
     setLoading(true)
     const items = localStorage.getItem('request')
@@ -79,6 +82,11 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       productId: String(product.id),
       variantId: String(variant ? variant.id : product.variants[0]?.id),
       customAttributes: customAttributes,
+      variant: variant,
+      image: product.images[0].url,
+      path: product.path,
+      name: product.name,
+      quantity: 1,
     }
     items.push(item)
     localStorage.setItem('request', JSON.stringify(items))

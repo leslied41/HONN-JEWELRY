@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 // import { DatePickers } from '../../ui/DatePicker'
 import s from './AppointForm.module.css'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { HandleClickArgs } from '../../request'
+import { HandleClickArgs } from '../../request/request'
 import cn from 'clsx'
 
 type FormValues = {
