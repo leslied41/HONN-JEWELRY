@@ -72,6 +72,7 @@ export default function Home({
   insData,
   categories,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  console.log(insData)
   return (
     <>
       <Container className="pb-20 w-full" clean>
