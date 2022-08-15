@@ -17,6 +17,9 @@ import type { Product } from '@commerce/types/product'
 import Estimated from '@components/icon/Estimated'
 import Warranty from '@components/icon/Warranty'
 import Booking from '@components/icon/Booking'
+import { Item } from '../../request/request'
+import { objectsCompare } from '@lib/compare-array'
+
 interface ProductSidebarProps {
   className?: string
   product: Product
@@ -28,7 +31,6 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   product,
   allProducts,
 }) => {
-  console.log(product)
   const {
     metalColor,
     shape,
@@ -57,12 +59,31 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
     () => getProductVariant(product, selectedOptions),
     [product]
   )
+
+  const isSameItemExisting = (newItem: Item, items: Item[]) => {
+    const newCompareAttributes = newItem.customAttributes.filter(
+      (c) => !['request id', 'product id'].includes(c.key)
+    )
+    const existed = items.some((i) => {
+      const compareAttributes = i.customAttributes.filter(
+        (c) => !['request id', 'product id'].includes(c.key)
+      )
+      if (
+        i.productId === newItem.productId &&
+        objectsCompare(newCompareAttributes, compareAttributes)
+      )
+        return true
+    })
+    if (existed) return true
+    return false
+  }
   const addToRequset = () => {
     setLoading(true)
-    const items = localStorage.getItem('request')
+    const items: Item[] = localStorage.getItem('request')
       ? JSON.parse(localStorage.getItem('request')!)
       : []
     const customAttributes = [
+      { key: 'request id', value: String(new Date().getTime()) },
       { key: 'product id', value: String(product.id) },
       { key: 'product name', value: String(product.name) },
       { key: 'Main Stone Shape', value: shape },
@@ -78,7 +99,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       { key: 'Carat', value: weight },
       { key: 'Text Style', value: textStyle },
     ]
-    const item = {
+    const item: Item = {
       productId: String(product.id),
       variantId: String(variant ? variant.id : product.variants[0]?.id),
       customAttributes: customAttributes,
@@ -88,7 +109,8 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       name: product.name,
       quantity: 1,
     }
-    items.push(item)
+    if (!isSameItemExisting(item, items)) items.push(item)
+
     localStorage.setItem('request', JSON.stringify(items))
     setTimeout(() => {
       setLoading(false)

@@ -24,7 +24,7 @@ export type Item = {
   productId: string
   variant: any
   variantId: string
-  path: string
+  path?: string
   name: string
   quantity: number
 }
@@ -87,7 +87,11 @@ const Request = ({
 
   const removeItem = useMemo(
     () => (id: string) => {
-      const filteredItems = items?.filter((item) => item.productId !== id)
+      const filteredItems = items?.filter(
+        (item) =>
+          item.customAttributes.find((item) => item.key === 'request id')
+            ?.value !== id
+      )
       setItems(filteredItems!)
     },
     [items]

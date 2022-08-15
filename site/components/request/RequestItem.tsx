@@ -15,13 +15,22 @@ const RequestItem: FC<Props> = ({ item, removeItem, setItems, ...rest }) => {
   const [updateQuantity, setUpdateQuantity] = useState(false)
   const quantityRef = useRef<number>(item.quantity)
 
+  const requestId = useMemo(
+    () =>
+      item.customAttributes.find((item) => item.key === 'request id')?.value,
+    [item]
+  )
+
   const calculatePrice = (quantity: number, price: number) => {
     return quantity * price
   }
   const updateLocalStorage = (id: string, quantity: number) => {
     const items = JSON.parse(localStorage.getItem('request')!)
     const updatedItems = items.map((item: Item) => {
-      if (item.productId === id) {
+      if (
+        item.customAttributes.find((item) => item.key === 'request id')
+          ?.value === id
+      ) {
         item.quantity = quantity
       }
       return item
@@ -77,16 +86,17 @@ const RequestItem: FC<Props> = ({ item, removeItem, setItems, ...rest }) => {
             </Link>
             <Quantity
               value={quantityRef.current}
-              handleRemove={() => handleRemove(item.productId)}
-              handleIncrease={() => handleIncrease(item.productId)}
-              handleDecrease={() => handleDecrease(item.productId)}
-              //updateQuantity={updateQuantity}
+              handleRemove={() => handleRemove(requestId!)}
+              handleIncrease={() => handleIncrease(requestId!)}
+              handleDecrease={() => handleDecrease(requestId!)}
               svgColor={'#8D5535'}
             />
 
             <ul>
               {item.customAttributes
-                ?.filter((f) => f.key !== 'product id')
+                ?.filter((f) => {
+                  if (!['request id', 'product id'].includes(f.key)) return f
+                })
                 .map((field, i) => {
                   if (field.value)
                     return (
