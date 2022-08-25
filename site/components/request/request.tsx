@@ -99,12 +99,12 @@ const Request = ({
 
   const getTotal = (items: Item[]) =>
     items.reduce((p, c) => (p = p + c.quantity * c.variant.price), 0)
-
   const getId = (str: string) => {
     const arr = window.atob(str).split('/')
     const Id = arr[arr.length - 1]
     return Number(Id)
   }
+
   const customAttributesToMessage = (lineItems: any) => {
     if (!lineItems) return
     return lineItems
@@ -125,6 +125,7 @@ const Request = ({
     () => customAttributesToMessage(items),
     [items]
   )
+
   const line_items = useMemo(
     () =>
       items?.map((l: any) => {

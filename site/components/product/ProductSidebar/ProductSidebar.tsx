@@ -55,6 +55,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
   useEffect(() => {
     selectDefaultOptionFromProduct(product, setSelectedOptions)
   }, [product])
+
   const variant = useMemo(
     () => getProductVariant(product, selectedOptions),
     [product]
@@ -110,7 +111,6 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       quantity: 1,
     }
     if (!isSameItemExisting(item, items)) items.push(item)
-
     localStorage.setItem('request', JSON.stringify(items))
     setTimeout(() => {
       setLoading(false)
@@ -134,14 +134,12 @@ const ProductSidebar: FC<ProductSidebarProps> = ({
       { key: 'Carat', value: weight },
       { key: 'Text Style', value: textStyle },
     ]
-
     try {
       await addItem({
         productId: String(product.id),
         variantId: String(variant ? variant.id : product.variants[0]?.id),
         customAttributes: customAttributes,
       })
-
       openSidebar()
       setLoading(false)
     } catch (err) {
