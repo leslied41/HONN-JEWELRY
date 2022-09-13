@@ -142,9 +142,7 @@ const Layout: React.FC<Props> = ({
         <main className="fit">{children}</main>
         <Footer />
         <ModalUI />
-        {/* this ModalUI includes login and signup view, the reason why
-        it is put here is because that this view should be able to appear in every page.
-        So it is sensible to put it in the layout. Then every page can have access to it.  */}
+        {/* this ModalUI includes login and signup view */}
         <CheckoutProvider>
           <SidebarUI links={navBarlinks} categories={categories} />
         </CheckoutProvider>

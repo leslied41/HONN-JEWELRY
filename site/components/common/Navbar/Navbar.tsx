@@ -3,7 +3,7 @@ import Link from 'next/link'
 import s from './Navbar.module.css'
 import NavbarRoot from './NavbarRoot'
 import { Container } from '@components/ui'
-import { Searchbar, UserNav } from '@components/common'
+import { UserNav } from '@components/common'
 import Title from '@components/icon/Title'
 import { useViewportWidth } from '@lib/hooks/useViewportWidth'
 

@@ -12,7 +12,7 @@ import mergeRefs from 'react-merge-refs'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
-  variant?: 'toRequest' | 'naked' | 'floating'
+  variant?: 'toRequest' | 'naked' | 'floating' | 'slim'
   active?: boolean
   type?: 'submit' | 'reset' | 'button'
   loading?: boolean
@@ -46,6 +46,7 @@ const Button: FC<Props> = forwardRef((props, buttonRef) => {
       [s.disabled]: disabled,
       [s.naked]: variant === 'naked',
       [s.floating]: variant === 'floating',
+      [s.slim]: variant === 'slim',
     },
     className
   )

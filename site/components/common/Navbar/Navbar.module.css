@@ -29,21 +29,22 @@ navbar. But using fixed, the navbar will cover the main content.
   @apply inline-flex items-center leading-6
   transition ease-in-out duration-75 cursor-pointer
   text-brown;
-}
-
-.link:hover {
-  @apply text-accent-9;
-}
-
-.link:focus {
-  @apply outline-none text-accent-8;
-}
-
-.logo {
-  @apply cursor-pointer rounded-full border transform duration-100 ease-in-out;
+  position: relative;
+  &::after {
+    @apply bg-brown transition-all;
+    transform-origin: center;
+    transform: scale(0);
+    position: absolute;
+    content: '';
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+  }
 
   &:hover {
-    @apply shadow-md;
-    transform: scale(1.05);
+    &::after {
+      transform: scale(1);
+    }
   }
 }

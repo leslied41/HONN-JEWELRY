@@ -5,7 +5,7 @@ interface Props {
   height?: number
   fill?: string
   className?: string
-  href: string
+  href?: string
 }
 type Ref = HTMLAnchorElement
 
