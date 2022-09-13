@@ -46,7 +46,7 @@ const UserNav: React.FC<{
                   Component="a"
                   aria-label="Menu"
                   variant="naked"
-                  className={s.item}
+                  className={cn(s.item, s.bottomLine)}
                   onClick={() => (isCustomerLoggedIn ? null : openModal())}
                 >
                   Account
@@ -60,7 +60,7 @@ const UserNav: React.FC<{
         {process.env.COMMERCE_CART_ENABLED && !noCart && (
           <li className={s.item}>
             <Buttons
-              className={s.item}
+              className={cn(s.item, s.bottomLine)}
               style={{ left: '-20px' }}
               variant="naked"
               onClick={() => {

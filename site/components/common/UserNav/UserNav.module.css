@@ -7,12 +7,7 @@
 }
 
 .item {
-  @apply cursor-pointer relative transition ease-in-out
-  duration-100 flex items-center outline-none text-nav;
-}
-
-.item:hover {
-  @apply transition scale-110 duration-100;
+  @apply cursor-pointer relative flex items-center outline-none text-nav;
 }
 
 .item:first-child {
@@ -26,6 +21,27 @@
 .account {
   @apply hidden md:block;
 }
+
+.bottomLine {
+  position: relative;
+  &::after {
+    @apply bg-brown transition-all;
+    transform-origin: center;
+    transform: scale(0);
+    position: absolute;
+    content: '';
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+  }
+  &:hover {
+    &::after {
+      transform: scale(1);
+    }
+  }
+}
+
 .bagCount {
   @apply bg-white text-brown absolute rounded-full left-[calc(100%+2px)] -top-[2px] flex items-center justify-center font-bold text-nav;
   padding-left: 2.5px;
