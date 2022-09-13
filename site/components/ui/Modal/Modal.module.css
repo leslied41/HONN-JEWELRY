@@ -1,11 +1,10 @@
 .root {
-  @apply fixed bg-black bg-opacity-40 flex items-center inset-0 z-50 justify-center;
-  backdrop-filter: blur(0.8px);
-  -webkit-backdrop-filter: blur(0.8px);
+  @apply fixed  flex items-center inset-0 z-50 justify-center;
+  background-color: rgba(247, 242, 238, 0.8);
 }
 
 .modal {
-  @apply bg-primary p-12 border border-accent-2 relative;
+  @apply bg-brown p-12 border border-accent-2 relative;
 }
 
 .modal:focus {
@@ -13,5 +12,5 @@
 }
 
 .close {
-  @apply hover:text-accent-5 transition ease-in-out duration-150 focus:outline-none absolute right-0 top-0 m-6;
+  @apply hover:opacity-70 transition ease-in-out duration-150 focus:outline-none absolute right-0 top-0 m-6;
 }

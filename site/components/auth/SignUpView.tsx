@@ -1,8 +1,10 @@
-import { FC, useEffect, useState, useCallback } from 'react'
+import { FC, useState, useMemo } from 'react'
 import { validate } from 'email-validator'
 import { Info } from '@components/icons'
 import { useUI } from '@components/ui/context'
-import { Logo, Button, Input } from '@components/ui'
+import Title from '../icon/Title'
+
+import { Buttons, Input } from '@components/ui'
 import useSignup from '@framework/auth/use-signup'
 
 interface Props {}
@@ -16,17 +18,22 @@ const SignUpView: FC<Props> = () => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [dirty, setDirty] = useState(false)
-  const [disabled, setDisabled] = useState(false)
 
   const signup = useSignup()
   const { setModalView, closeModal } = useUI()
 
+  const isDisable = useMemo(() => {
+    const validPassword = /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)
+    return dirty
+      ? !validate(email) || password.length < 7 || !validPassword
+      : false
+  }, [email, password, dirty])
+
   const handleSignup = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
     //at beginning, dirty and disabled are false.
-    if (!dirty && !disabled) {
+    if (!dirty && !isDisable) {
       setDirty(true)
-      handleValidation()
     }
 
     try {
@@ -46,33 +53,17 @@ const SignUpView: FC<Props> = () => {
     }
   }
 
-  const handleValidation = useCallback(() => {
-    //this function is to validate if password match the requirments like length and foramt.
-    // Test for Alphanumeric password
-    const validPassword = /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)
-
-    // Unable to send form unless fields are valid.
-    if (dirty) {
-      setDisabled(!validate(email) || password.length < 7 || !validPassword)
-      //if not match the password requirements, set disabled===true
-    }
-  }, [email, password, dirty])
-
-  useEffect(() => {
-    handleValidation()
-  }, [handleValidation])
-
   return (
     <form
       onSubmit={handleSignup}
       className="w-80 flex flex-col justify-between p-3"
     >
       <div className="flex justify-center pb-12 ">
-        <Logo width="64px" height="64px" />
+        <Title fill="white" />
       </div>
       <div className="flex flex-col space-y-4">
         {message && (
-          <div className="text-red border border-red p-3">{message}</div>
+          <div className="text-white border border-white p-3">{message}</div>
         )}
         <Input placeholder="First Name" onChange={setFirstName} />
         <Input placeholder="Last Name" onChange={setLastName} />
@@ -88,14 +79,15 @@ const SignUpView: FC<Props> = () => {
           </span>
         </span>
         <div className="pt-2 w-full flex flex-col">
-          <Button
+          <Buttons
             variant="slim"
             type="submit"
             loading={loading}
-            disabled={disabled}
+            disabled={isDisable}
+            className="bg-white"
           >
             Sign Up
-          </Button>
+          </Buttons>
         </div>
 
         <span className="pt-1 text-center text-sm">

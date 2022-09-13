@@ -1,7 +1,8 @@
-import { FC, useEffect, useState, useCallback } from 'react'
+import { FC, useEffect, useState, useCallback, useMemo } from 'react'
 import { validate } from 'email-validator'
 import { useUI } from '@components/ui/context'
-import { Logo, Button, Input } from '@components/ui'
+import Title from '../icon/Title'
+import { Buttons, Input } from '@components/ui'
 
 interface Props {}
 
@@ -11,29 +12,20 @@ const ForgotPassword: FC<Props> = () => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [dirty, setDirty] = useState(false)
-  const [disabled, setDisabled] = useState(false)
 
   const { setModalView, closeModal } = useUI()
+
+  const isDisable = useMemo(() => {
+    return dirty ? !validate(email) : false
+  }, [email, dirty])
 
   const handleResetPassword = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
-    if (!dirty && !disabled) {
+    if (!dirty && !isDisable) {
       setDirty(true)
-      handleValidation()
     }
   }
-
-  const handleValidation = useCallback(() => {
-    // Unable to send form unless fields are valid.
-    if (dirty) {
-      setDisabled(!validate(email))
-    }
-  }, [email, dirty])
-
-  useEffect(() => {
-    handleValidation()
-  }, [handleValidation])
 
   return (
     <form
@@ -41,7 +33,7 @@ const ForgotPassword: FC<Props> = () => {
       className="w-80 flex flex-col justify-between p-3"
     >
       <div className="flex justify-center pb-12 ">
-        <Logo width="64px" height="64px" />
+        <Title fill="white" />
       </div>
       <div className="flex flex-col space-y-4">
         {message && (
@@ -50,14 +42,15 @@ const ForgotPassword: FC<Props> = () => {
 
         <Input placeholder="Email" onChange={setEmail} type="email" />
         <div className="pt-2 w-full flex flex-col">
-          <Button
+          <Buttons
             variant="slim"
             type="submit"
             loading={loading}
-            disabled={disabled}
+            disabled={isDisable}
+            className="bg-white text-brown "
           >
             Recover Password
-          </Button>
+          </Buttons>
         </div>
 
         <span className="pt-3 text-center text-sm">

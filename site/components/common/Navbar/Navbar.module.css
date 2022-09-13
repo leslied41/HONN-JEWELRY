@@ -38,12 +38,3 @@ navbar. But using fixed, the navbar will cover the main content.
 .link:focus {
   @apply outline-none text-accent-8;
 }
-
-.logo {
-  @apply cursor-pointer rounded-full border transform duration-100 ease-in-out;
-
-  &:hover {
-    @apply shadow-md;
-    transform: scale(1.05);
-  }
-}

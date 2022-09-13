@@ -1,7 +1,8 @@
 import { FC, useRef, useEffect, useCallback } from 'react'
 import s from './Modal.module.css'
 import FocusTrap from '@lib/focus-trap'
-import { Cross } from '@components/icons'
+import Close from '@components/icon/Close'
+
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 
 interface ModalProps {
@@ -44,7 +45,7 @@ const Modal: FC<ModalProps> = ({ children, onClose }) => {
           aria-label="Close panel"
           className={s.close}
         >
-          <Cross className="h-6 w-6" />
+          <Close width={16} height={16} />
         </button>
         <FocusTrap focusFirst>{children}</FocusTrap>
       </div>
