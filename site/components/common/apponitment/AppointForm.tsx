@@ -56,7 +56,7 @@ export const AppointForm: FC<AppointFormProps> = ({
       reset({ name: '', phone: '', email: '', comment: '' })
   }, [quoteError, twilloError])
   return (
-    <div>
+    <section>
       <h2 className="text-body-1 text-brown capitalize">Contact information</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -67,6 +67,7 @@ export const AppointForm: FC<AppointFormProps> = ({
             className={cn(s.input, {
               [s.inputError]: errors.name?.type === 'required',
             })}
+            aria-label="name"
             type="text"
             placeholder={
               errors.name?.type === 'required' ? 'Name is required' : 'Name'
@@ -79,6 +80,7 @@ export const AppointForm: FC<AppointFormProps> = ({
             className={cn(s.input, {
               [s.inputError]: errors.phone?.type === 'required',
             })}
+            aria-label="phone number"
             type="number"
             placeholder={
               errors.phone?.type === 'required'
@@ -105,6 +107,7 @@ export const AppointForm: FC<AppointFormProps> = ({
         <div>
           <textarea
             className={cn(s.input, '!h-16', '!mb-6')}
+            aria-label="comment"
             placeholder="Please give us some tips before we start."
             {...register('comment', { required: false, maxLength: 500 })}
           />
@@ -112,6 +115,7 @@ export const AppointForm: FC<AppointFormProps> = ({
         <input
           type="submit"
           value="Submit"
+          aria-label="submit"
           className="cursor-pointer h-12 w-full md:w-80 bg-brown text-gray text-body-2 uppercase transition ease-in-out duration-150
           shadow-sm hover:border-accent-9 hover:bg-accent-6 focus:shadow-outline-normal focus:outline-none"
         />
@@ -127,7 +131,7 @@ export const AppointForm: FC<AppointFormProps> = ({
           <p>Thank you for the quote, we will contact to you very soon.</p>
         )}
       </form>
-    </div>
+    </section>
   )
 }
 export default AppointForm

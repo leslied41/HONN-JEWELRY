@@ -201,9 +201,9 @@ const Request = ({
       <div className="hidden md:block col-span-4"></div>
       <div className="col-span-12 mt-12 md:mt-0 order-2 md:col-span-8 md:order-1  sm:border-r-[0.5px] border-gold px-4 md:px-10 pb-12 md:pb-[150px]">
         <div className="mb-12">
-          <h2 className="text-brown text-body-1">
+          <h1 className="text-brown text-body-1">
             Select a meeting date & Time
-          </h2>
+          </h1>
           <DatePickers
             className="mt-6"
             setTime={setTime}
