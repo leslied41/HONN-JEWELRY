@@ -99,6 +99,7 @@ const Request = ({
 
   const getTotal = (items: Item[]) =>
     items.reduce((p, c) => (p = p + c.quantity * c.variant.price), 0)
+
   const getId = (str: string) => {
     const arr = window.atob(str).split('/')
     const Id = arr[arr.length - 1]

@@ -1,8 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
-// import { DatePickers } from '../../ui/DatePicker'
-import s from './AppointForm.module.css'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { HandleClickArgs } from '../../request/request'
+import s from './AppointForm.module.css'
 import cn from 'clsx'
 
 type FormValues = {
@@ -55,6 +54,7 @@ export const AppointForm: FC<AppointFormProps> = ({
     if (!twilloError && !quoteError)
       reset({ name: '', phone: '', email: '', comment: '' })
   }, [quoteError, twilloError])
+
   return (
     <section>
       <h2 className="text-body-1 text-brown capitalize">Contact information</h2>

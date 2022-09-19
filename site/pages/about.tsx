@@ -25,7 +25,7 @@ export default function About() {
   return (
     <Container className="w-full px-0 md:px-10 pb-16 md:pb-[100px]" clean>
       <CurrentPath className="px-4 md:px-0" />
-      <div className="px-4 md:px-10  mt-8">
+      <section className="px-4 md:px-10  mt-8">
         <h1 className="uppercase text-center text-brown text-h2 font-kessler">
           about us
         </h1>
@@ -134,7 +134,7 @@ export default function About() {
           </div>
           <div className="col-span-2 hidden md:block"></div>
         </div>
-      </div>
+      </section>
     </Container>
   )
 }
